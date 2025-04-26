@@ -32,6 +32,14 @@ class AppCubit extends Cubit<AppState> {
     address = newAddress;
     emit(ChangeIndex());
   }
+int drawerIndex = -1;
+  void changedrawerIndex({required int index}) {
+    if (drawerIndex != index) {
+      drawerIndex = index;
+      emit(ChangeIndex());
+    }
+    emit(ChangeIndex());
+  }
 
   int paymentIndex = -1;
   void changePaymentIndex({required int index}) {

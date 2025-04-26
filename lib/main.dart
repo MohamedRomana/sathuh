@@ -17,9 +17,10 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
-  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -33,12 +34,14 @@ void main() async {
       supportedLocales: const [Locale('en'), Locale('ar')],
       saveLocale: true,
       useOnlyLangCode: true,
-      startLocale:
-          Locale(CacheHelper.getLang() == "" ? "ar" : CacheHelper.getLang()),
+      startLocale: Locale(
+        CacheHelper.getLang() == "" ? "ar" : CacheHelper.getLang(),
+      ),
       assetLoader: const CodegenLoader(),
       path: 'assets/Lang',
-      fallbackLocale:
-          Locale(CacheHelper.getLang() == "" ? "ar" : CacheHelper.getLang()),
+      fallbackLocale: Locale(
+        CacheHelper.getLang() == "" ? "ar" : CacheHelper.getLang(),
+      ),
       child: const MyApp(),
     ),
   );
@@ -74,11 +77,12 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             theme: ThemeData(
               fontFamily: FontFamily.tajawalMedium,
-              scaffoldBackgroundColor: Color(0xffF4F4F4),
+              scaffoldBackgroundColor: const Color(0xffF4F4F4),
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: AppColors.primary, // Cursor color
-                selectionColor: AppColors.primary
-                    .withOpacity(0.3), // Highlighted text background color
+                selectionColor: AppColors.primary.withOpacity(
+                  0.3,
+                ), // Highlighted text background color
                 selectionHandleColor: AppColors.primary,
                 // Handle color
               ),
