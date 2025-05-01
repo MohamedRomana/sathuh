@@ -72,7 +72,7 @@ class AppButton extends StatelessWidget {
             //         const Color(0xff0C69E5),
             //       ],
             // ),
-            borderRadius: BorderRadius.circular(radius ?? 10.r),
+            borderRadius: BorderRadius.circular(radius ?? 100.r),
             // border:
             //     Border.all(color: borderColor ?? color ?? AppColors.primary),
           ),

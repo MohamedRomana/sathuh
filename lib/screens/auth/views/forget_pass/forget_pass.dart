@@ -42,7 +42,7 @@ class _ForgetPassState extends State<ForgetPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
@@ -71,7 +71,7 @@ class _ForgetPassState extends State<ForgetPass> {
                 top: 27.h,
                 bottom: 24.h,
                 filled: true,
-                enabledBorderColor: Colors.transparent,
+                enabledBorderColor: Colors.grey,
                 prefixIcon: Icon(
                   Icons.email_outlined,
                   size: 24.sp,
@@ -121,6 +121,12 @@ class _ForgetPassState extends State<ForgetPass> {
                             context,
                           ).forgetPass(phone: _emailController.text);
                         }
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPass(),
+                          ),
+                        );
                       },
                       child:
                           state is ForgetPassLoading

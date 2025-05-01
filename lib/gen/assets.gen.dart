@@ -53,8 +53,14 @@ class $AssetsImgGen {
   /// File path: assets/img/car2.png
   AssetGenImage get car2 => const AssetGenImage('assets/img/car2.png');
 
+  /// File path: assets/img/client.png
+  AssetGenImage get client => const AssetGenImage('assets/img/client.png');
+
   /// File path: assets/img/clock.png
   AssetGenImage get clock => const AssetGenImage('assets/img/clock.png');
+
+  /// File path: assets/img/driver.png
+  AssetGenImage get driver => const AssetGenImage('assets/img/driver.png');
 
   /// File path: assets/img/easy.png
   AssetGenImage get easy => const AssetGenImage('assets/img/easy.png');
@@ -81,6 +87,9 @@ class $AssetsImgGen {
   /// File path: assets/img/mail.png
   AssetGenImage get mail => const AssetGenImage('assets/img/mail.png');
 
+  /// File path: assets/img/manager.png
+  AssetGenImage get manager => const AssetGenImage('assets/img/manager.png');
+
   /// File path: assets/img/noti_empty.json
   String get notiEmpty => 'assets/img/noti_empty.json';
 
@@ -104,7 +113,9 @@ class $AssetsImgGen {
     alert,
     car,
     car2,
+    client,
     clock,
+    driver,
     easy,
     emptyorder,
     emptyseach,
@@ -113,6 +124,7 @@ class $AssetsImgGen {
     login,
     logo,
     mail,
+    manager,
     notiEmpty,
     saudiArabia,
     savemony,
@@ -133,6 +145,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/driver.svg
   String get driver => 'assets/svg/driver.svg';
 
+  /// File path: assets/svg/faceId.svg
+  String get faceId => 'assets/svg/faceId.svg';
+
   /// File path: assets/svg/file.svg
   String get file => 'assets/svg/file.svg';
 
@@ -148,27 +163,24 @@ class $AssetsSvgGen {
   /// File path: assets/svg/logout.svg
   String get logout => 'assets/svg/logout.svg';
 
-  /// File path: assets/svg/privacy.png
-  AssetGenImage get privacyPng => const AssetGenImage('assets/svg/privacy.png');
-
   /// File path: assets/svg/privacy.svg
-  String get privacySvg => 'assets/svg/privacy.svg';
+  String get privacy => 'assets/svg/privacy.svg';
 
   /// File path: assets/svg/time.svg
   String get time => 'assets/svg/time.svg';
 
   /// List of all assets
-  List<dynamic> get values => [
+  List<String> get values => [
     chat,
     document,
     driver,
+    faceId,
     file,
     home,
     language,
     location,
     logout,
-    privacyPng,
-    privacySvg,
+    privacy,
     time,
   ];
 }

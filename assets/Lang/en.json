@@ -497,5 +497,10 @@
       "client": "Client",
       "create_new_account": "Create New Account",
       "login_to_use_services": "Log in to use these services",
-      "welcome_back": "Welcome Back"
+      "welcome_back": "Welcome Back",
+      "login_with_face_id": "Login with Face ID",
+      "login_with_fingerprint": "Login with Fingerprint",
+      "no_saved_data_login_manually_first": "No saved data. Please log in manually first.",
+      "face_id_authentication_failed": "Face ID authentication failed",
+      "fingerprint_authentication_failed": "Fingerprint authentication failed"
 }

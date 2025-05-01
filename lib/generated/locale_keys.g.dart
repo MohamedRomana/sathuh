@@ -502,5 +502,10 @@ abstract class  LocaleKeys {
   static const create_new_account = 'create_new_account';
   static const login_to_use_services = 'login_to_use_services';
   static const welcome_back = 'welcome_back';
+  static const login_with_face_id = 'login_with_face_id';
+  static const login_with_fingerprint = 'login_with_fingerprint';
+  static const no_saved_data_login_manually_first = 'no_saved_data_login_manually_first';
+  static const face_id_authentication_failed = 'face_id_authentication_failed';
+  static const fingerprint_authentication_failed = 'fingerprint_authentication_failed';
 
 }

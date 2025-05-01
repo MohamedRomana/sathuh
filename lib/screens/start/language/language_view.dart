@@ -31,213 +31,172 @@ class LanguageView extends StatelessWidget {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return Scaffold(
-          body: Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: 24.w,
-              end: 24.w,
-              top: 90.h,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 250.h,
-                  child: Column(
-                    children: [
-                      TweenAnimationBuilder(
-                        curve: Curves.fastOutSlowIn,
-                        tween: Tween<double>(begin: 0, end: 128.w),
-                        duration: const Duration(seconds: 1),
-                        builder:
-                            (context, value, child) => Image.asset(
-                              Assets.img.logo.path,
-                              height: value.h,
-                              width: value.w,
-                              fit: BoxFit.fill,
-                            ),
+          body: Column(
+            children: [
+              Image.asset(
+                Assets.img.logo.path,
+                height: 300.h,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+              Align(
+                alignment: AlignmentDirectional.center,
+                child: AppText(
+                  top: 30.h,
+                  bottom: 30.h,
+                  text: LocaleKeys.chooseLang.tr(),
+                  color: AppColors.secondray,
+                  size: 20.sp,
+                  family: FontFamily.tajawalBold,
+                ),
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  if (AppCubit.get(context).changeLangIndex == 0) {
+                    AppCubit.get(context).changeLangIndexs(index: -1);
+                  } else {
+                    AppCubit.get(context).changeLangIndexs(index: 0);
+                  }
+                },
+                child: Container(
+                  width: 311.w,
+                  padding: EdgeInsets.all(16.r),
+                  margin: EdgeInsets.symmetric(vertical: 16.h),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffEFEFEF),
+                    borderRadius: BorderRadius.circular(15.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            AppCubit.get(context).changeLangIndex == 0
+                                ? AppColors.primary.withAlpha(50)
+                                : Colors.grey.withAlpha(100),
+                        spreadRadius: 1.r,
+                        blurRadius: 5.r,
+                        offset: Offset(3, 5.r),
                       ),
-                      TweenAnimationBuilder(
-                        curve: Curves.fastOutSlowIn,
-                        tween: Tween<double>(begin: 0, end: 30.sp),
-                        duration: const Duration(seconds: 1),
-                        builder:
-                            (context, value, child) => AppText(
-                              top: 15.h,
-                              textAlign: TextAlign.center,
-                              text: 'سطحه',
-                              color: AppColors.primary,
-                              size: value.sp,
-                              family: FontFamily.tajawalBold,
-                            ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(
+                        text: LocaleKeys.ar.tr(),
+                        size: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            AppCubit.get(context).changeLangIndex == 0
+                                ? AppColors.secondray
+                                : Colors.grey,
+                      ),
+                      Container(
+                        height: 22.w,
+                        width: 22.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.all(2.r),
+                          decoration: BoxDecoration(
+                            color:
+                                AppCubit.get(context).changeLangIndex == 0
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: AppText(
-                    text: LocaleKeys.chooseLang.tr(),
-                    color: AppColors.fontColor,
-                    size: 20.sp,
-                    family: FontFamily.tajawalBold,
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  if (AppCubit.get(context).changeLangIndex == 1) {
+                    AppCubit.get(context).changeLangIndexs(index: -1);
+                  } else {
+                    AppCubit.get(context).changeLangIndexs(index: 1);
+                  }
+                },
+                child: Container(
+                  width: 311.w,
+                  padding: EdgeInsets.all(16.r),
+                  margin: EdgeInsets.symmetric(vertical: 16.h),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffEFEFEF),
+                    borderRadius: BorderRadius.circular(15.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            AppCubit.get(context).changeLangIndex == 1
+                                ? AppColors.primary.withAlpha(50)
+                                : Colors.grey.withAlpha(100),
+                        spreadRadius: 1.r,
+                        blurRadius: 5.r,
+                        offset: Offset(3, 5.r),
+                      ),
+                    ],
                   ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: AppText(
-                    top: 18.h,
-                    bottom: 30.h,
-                    text: LocaleKeys.please_select_language.tr(),
-                    color: AppColors.fontColor.withOpacity(0.5),
-                    size: 16.sp,
-                    family: FontFamily.tajawalMedium,
-                  ),
-                ),
-                Column(
-                  children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        AppCubit.get(context).changeLangIndexs(index: 0);
-                      },
-                      child: Container(
-                        width: 343.w,
-                        padding: EdgeInsetsDirectional.symmetric(
-                          horizontal: 10.w,
-                          vertical: 18.h,
-                        ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(
+                        text: LocaleKeys.en.tr(),
+                        size: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            AppCubit.get(context).changeLangIndex == 1
+                                ? AppColors.secondray
+                                : Colors.grey,
+                      ),
+                      Container(
+                        height: 22.w,
+                        width: 22.w,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(color: Colors.grey),
+                          shape: BoxShape.circle,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  Assets.img.saudiArabia.path,
-                                  height: 24.w,
-                                  width: 24.w,
-                                  fit: BoxFit.cover,
-                                ),
-                                AppText(
-                                  start: 23.w,
-                                  text: "العربية",
-                                  color: AppColors.fontColor,
-                                  size: 18.sp,
-                                  family: FontFamily.tajawalMedium,
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 20.w,
-                              width: 20.w,
-                              decoration: const BoxDecoration(
-                                color: AppColors.borderColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.all(3.w),
-                                height: 20.w,
-                                width: 20.w,
-                                decoration: BoxDecoration(
-                                  color:
-                                      AppCubit.get(context).changeLangIndex == 0
-                                          ? AppColors.primary
-                                          : Colors.transparent,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: Container(
+                          margin: EdgeInsets.all(2.r),
+                          decoration: BoxDecoration(
+                            color:
+                                AppCubit.get(context).changeLangIndex == 1
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        AppCubit.get(context).changeLangIndexs(index: 1);
-                      },
-                      child: Container(
-                        padding: EdgeInsetsDirectional.symmetric(
-                          horizontal: 10.w,
-                          vertical: 18.h,
-                        ),
-                        margin: EdgeInsets.only(top: 18.h, bottom: 100.h),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  Assets.img.unitedKingdom.path,
-                                  height: 24.w,
-                                  width: 24.w,
-                                  fit: BoxFit.cover,
-                                ),
-                                AppText(
-                                  start: 23.w,
-                                  text: "English",
-                                  color: AppColors.fontColor,
-                                  size: 18.sp,
-                                  family: FontFamily.tajawalMedium,
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 20.w,
-                              width: 20.w,
-                              decoration: const BoxDecoration(
-                                color: AppColors.borderColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.all(3.w),
-                                height: 20.w,
-                                width: 20.w,
-                                decoration: BoxDecoration(
-                                  color:
-                                      AppCubit.get(context).changeLangIndex == 1
-                                          ? AppColors.primary
-                                          : Colors.transparent,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                AppButton(
-                  onPressed: () {
-                    if (AppCubit.get(context).changeLangIndex == 0) {
-                      CacheHelper.setLang('ar');
-                      context.setLocale(const Locale('ar'));
-                      AppRouter.navigateAndFinish(context, const OnBoarding());
-                    } else if (AppCubit.get(context).changeLangIndex == 1) {
-                      CacheHelper.setLang('en');
-                      context.setLocale(const Locale('en'));
-                      AppRouter.navigateAndFinish(context, const OnBoarding());
-                    }
-                  },
-                  child: AppText(
-                    text: LocaleKeys.confirm.tr(),
-                    color: Colors.white,
-                    size: 21.sp,
-                    family: FontFamily.tajawalBold,
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              AppButton(
+                top: 35.h,
+                onPressed: () {
+                  if (AppCubit.get(context).changeLangIndex == 0) {
+                    CacheHelper.setLang('ar');
+                    context.setLocale(const Locale('ar'));
+                    AppRouter.navigateAndFinish(context, const OnBoarding());
+                  } else if (AppCubit.get(context).changeLangIndex == 1) {
+                    CacheHelper.setLang('en');
+                    context.setLocale(const Locale('en'));
+                    AppRouter.navigateAndFinish(context, const OnBoarding());
+                  }
+                },
+                child: AppText(
+                  text: LocaleKeys.confirm.tr(),
+                  color: Colors.white,
+                  size: 21.sp,
+                  family: FontFamily.tajawalBold,
+                ),
+              ),
+            ],
           ),
         );
       },

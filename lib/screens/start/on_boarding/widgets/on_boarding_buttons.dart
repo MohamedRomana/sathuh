@@ -71,9 +71,9 @@ class CustomOnBoardingButtons extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 15.w),
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(25.r),
-                  bottomRight: Radius.circular(25.r),
+                borderRadius:  BorderRadiusDirectional.only(
+                  topStart: Radius.circular(25.r),
+                  bottomStart: Radius.circular(25.r),
                 ),
               ),
               child: Row(

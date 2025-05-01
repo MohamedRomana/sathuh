@@ -53,21 +53,11 @@ class _CustomLoginFieldsState extends State<CustomLoginFields> {
           Align(
             alignment: Alignment.center,
             child: AppText(
-              bottom: 10.h,
-              text: LocaleKeys.welcome_back.tr(),
+              bottom: 25.h,
+              text: LocaleKeys.login.tr(),
               size: 24.sp,
               family: FontFamily.tajawalBold,
-              color: AppColors.fontColor,
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: AppText(
-              text: LocaleKeys.login_to_use_services.tr(),
-              bottom: 52.h,
-              size: 16.sp,
-              fontWeight: FontWeight.bold,
-              color: AppColors.fontColor.withOpacity(0.5),
+              color: AppColors.secondray,
             ),
           ),
           AppText(

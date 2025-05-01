@@ -20,14 +20,14 @@ class OTPscreen extends StatelessWidget {
     String otpCode = "";
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: [
             const CustomAuthHeader(),
             AppText(
               top: 23.h,
               text: LocaleKeys.enterActivationCode.tr(),
-              color: AppColors.fontColor,
+              color: AppColors.secondray,
               bottom: 32.h,
               family: FontFamily.tajawalBold,
             ),

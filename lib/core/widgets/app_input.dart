@@ -120,35 +120,35 @@ class AppInput extends StatelessWidget {
         autofocus: autofocus ?? false,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide: BorderSide(
               // width: .1.w,
               color: enabledBorderColor ?? AppColors.primary,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide:
                 BorderSide(color: focusedBorderColor ?? AppColors.primary),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide:
                 BorderSide(color: errorBorderColor ?? AppColors.primary),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide:
                 BorderSide(color: focusedErrorBorderColor ?? AppColors.primary),
           ),
           disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide: BorderSide(color: disableBorderColor ?? Colors.white),
           ),
           contentPadding: contentPadding ?? EdgeInsets.symmetric(
               vertical: contentTop ?? 12.h, horizontal: contentRight ?? 10.w),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(border ?? 8.r),
+            borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide:
                 BorderSide(color: outLineInputColorColor ?? AppColors.primary),
           ),

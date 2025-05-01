@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             theme: ThemeData(
               fontFamily: FontFamily.tajawalMedium,
-              scaffoldBackgroundColor: const Color(0xffF4F4F4),
+              scaffoldBackgroundColor: Colors.white,
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: AppColors.primary, // Cursor color
                 selectionColor: AppColors.primary.withOpacity(

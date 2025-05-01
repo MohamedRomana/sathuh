@@ -2,12 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../../core/widgets/app_button.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/flash_message.dart';
+import '../../../../../gen/fonts.gen.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/widgets/app_button.dart';
+import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_router.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/flash_message.dart';
-import '../../../../gen/fonts.gen.dart';
+import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../data/auth_cubit.dart';
 import '../forget_pass/forget_pass.dart';
@@ -20,14 +25,61 @@ final _phoneController = TextEditingController();
 final _passController = TextEditingController();
 String phoneCode = "";
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
   const LogIn({super.key});
+
+  @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  final auth = LocalAuthentication();
+
+  Future<bool> authenticateWithBiometrics() async {
+    final isAvailable = await auth.canCheckBiometrics;
+    if (!isAvailable) return false;
+    final availableBiometrics = await auth.getAvailableBiometrics();
+    final didAuthenticate = await auth.authenticate(
+      localizedReason:
+          availableBiometrics.contains(BiometricType.face)
+              ? LocaleKeys.login_with_face_id.tr()
+              : LocaleKeys.login_with_fingerprint.tr(),
+      options: const AuthenticationOptions(biometricOnly: true),
+    );
+
+    return didAuthenticate;
+  }
+
+  @override
+  void initState() {
+    _phoneController.clear();
+    _passController.clear();
+    super.initState();
+  }
+
+  static Future<bool> saveData({
+    required String key,
+    required String value,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (value.isEmpty) {
+      return false;
+    } else {
+      return prefs.setString(key, value);
+    }
+  }
+
+  static Future<String?> getData({required String key}) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: [
             const CustomAuthHeader(),
@@ -36,24 +88,15 @@ class LogIn extends StatelessWidget {
               phoneController: _phoneController,
               passController: _passController,
             ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: TextButton(
-                onPressed:
-                    () => AppRouter.navigateTo(context, const ForgetPass()),
-                child: AppText(
-                  start: 16.w,
-                  text: LocaleKeys.forgetPass.tr(),
-                  size: 14.sp,
-                  color: AppColors.darkRed,
-                ),
-              ),
-            ),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is LogInSuccess) {
-                  // AppCubit.get(context).changebottomNavIndex(2);
-                  // AppRouter.navigateAndFinish(context, const HomeLayout());
+                  saveData(key: 'phone', value: _phoneController.text);
+                  saveData(key: 'password', value: _passController.text);
+
+                  //   AppCubit.get(context).changebottomNavIndex(0);
+                  // AppRouter.navigateAndFinish(context, const HomeLayout())
+
                   _phoneController.clear();
                   _passController.clear();
                   showFlashMessage(
@@ -72,6 +115,7 @@ class LogIn extends StatelessWidget {
               builder: (context, state) {
                 return AppButton(
                   top: 24.h,
+                  bottom: 20.h,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await AuthCubit.get(context).logIn(
@@ -91,13 +135,57 @@ class LogIn extends StatelessWidget {
                 );
               },
             ),
+            InkWell(
+              onTap: () async {
+                final availableBiometrics = await auth.getAvailableBiometrics();
+                bool authenticated = await authenticateWithBiometrics();
+                if (authenticated) {
+                  final cachedPhone = await getData(key: 'phone');
+                  final cachedPass = await getData(key: 'password');
+                  debugPrint("phone : $cachedPhone , pass : $cachedPass");
+
+                  if (cachedPhone != null && cachedPass != null) {
+                    saveData(key: 'phone', value: _phoneController.text);
+                    saveData(key: 'password', value: _passController.text);
+
+                    await AuthCubit.get(
+                      context,
+                    ).logIn(phone: cachedPhone, password: cachedPass);
+                  } else {
+                    showFlashMessage(
+                      context: context,
+                      type: FlashMessageType.error,
+                      message:
+                          LocaleKeys.no_saved_data_login_manually_first.tr(),
+                    );
+                  }
+                } else {
+                  showFlashMessage(
+                    context: context,
+                    type: FlashMessageType.error,
+                    message:
+                        availableBiometrics.contains(BiometricType.face)
+                            ? LocaleKeys.face_id_authentication_failed.tr()
+                            : LocaleKeys.fingerprint_authentication_failed.tr(),
+                  );
+                }
+              },
+              child: SvgPicture.asset(
+                Assets.svg.faceId,
+                height: 86.w,
+                width: 86.w,
+                color: AppColors.secondray,
+                fit: BoxFit.cover,
+              ),
+            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppText(
                   text: LocaleKeys.dontHaveAccount.tr(),
                   size: 14.sp,
-                  color: Colors.black,
+                  color: AppColors.secondray,
                 ),
                 TextButton(
                   onPressed: () {
@@ -111,14 +199,22 @@ class LogIn extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16.h),
-
+            // SizedBox(height: 16.h),
+            TextButton(
+              onPressed:
+                  () => AppRouter.navigateTo(context, const ForgetPass()),
+              child: AppText(
+                text: LocaleKeys.forgetPass.tr(),
+                size: 14.sp,
+                color: AppColors.darkRed,
+              ),
+            ),
             SizedBox(height: 10.h),
             InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                // AppCubit.get(context).changebottomNavIndex(2);
+                AppCubit.get(context).changebottomNavIndex(0);
                 // AppRouter.navigateTo(context, const HomeLayout());
               },
               child: SizedBox(
@@ -127,12 +223,13 @@ class LogIn extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: LocaleKeys.skiptohome.tr(),
                   size: 14.sp,
-                  color: Colors.black,
+                  color: AppColors.secondray,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
             SizedBox(height: 60.h),
           ],
         ),

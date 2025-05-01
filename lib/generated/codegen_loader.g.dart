@@ -513,7 +513,12 @@ class CodegenLoader extends AssetLoader{
   "client": "العميل",
   "create_new_account": "إنشاء حساب جديد",
   "login_to_use_services": "سجل دخولك لتتمكن من استخدام هذه الخدمات",
-  "welcome_back": "مرحباً بك من جديد"
+  "welcome_back": "مرحباً بك من جديد",
+  "login_with_face_id": "سجل الدخول باستخدام Face ID",
+  "login_with_fingerprint": "سجل الدخول باستخدام Fingerprint",
+  "no_saved_data_login_manually_first": "لا يوجد بيانات محفوظة. سجل الدخول يدويًا أولاً.",
+  "face_id_authentication_failed": "فشل التوثيق عبر Face ID",
+  "fingerprint_authentication_failed": "فشل التوثيق باستخدام Fingerprint"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1014,7 +1019,12 @@ static const Map<String,dynamic> _en = {
   "client": "Client",
   "create_new_account": "Create New Account",
   "login_to_use_services": "Log in to use these services",
-  "welcome_back": "Welcome Back"
+  "welcome_back": "Welcome Back",
+  "login_with_face_id": "Login with Face ID",
+  "login_with_fingerprint": "Login with Fingerprint",
+  "no_saved_data_login_manually_first": "No saved data. Please log in manually first.",
+  "face_id_authentication_failed": "Face ID authentication failed",
+  "fingerprint_authentication_failed": "Fingerprint authentication failed"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

@@ -47,7 +47,7 @@ class _ResetPassState extends State<ResetPass> {
     String otpCode = "";
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
@@ -56,7 +56,7 @@ class _ResetPassState extends State<ResetPass> {
               AppText(
                 text: LocaleKeys.enterActivationCode.tr(),
                 top: 26.h,
-                color: AppColors.fontColor,
+                color: AppColors.secondray,
                 family: FontFamily.tajawalBold,
                 bottom: 27.h,
               ),
@@ -119,6 +119,7 @@ class _ResetPassState extends State<ResetPass> {
                                   : Colors.grey,
                           size: 24.sp,
                         ),
+                        enabledBorderColor: Colors.grey,
                         filled: true,
                         bottom: 16.h,
                         hint: LocaleKeys.password.tr(),
@@ -130,7 +131,6 @@ class _ResetPassState extends State<ResetPass> {
                             return null;
                           }
                         },
-
                         secureText: AuthCubit.get(context).isSecureNewPass1,
                         suffixIcon:
                             AuthCubit.get(context).isSecureNewPass1
@@ -185,6 +185,7 @@ class _ResetPassState extends State<ResetPass> {
                         size: 14.sp,
                       ),
                       AppInput(
+                        enabledBorderColor: Colors.grey,
                         focusNode: confirmPassFocus,
                         prefixIcon: Icon(
                           Icons.lock_outline,
