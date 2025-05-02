@@ -14,6 +14,7 @@ import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_router.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../user_screens/home_layout/home_layout.dart';
 import '../../data/auth_cubit.dart';
 import '../forget_pass/forget_pass.dart';
 import '../register/register.dart';
@@ -94,8 +95,8 @@ class _LogInState extends State<LogIn> {
                   saveData(key: 'phone', value: _phoneController.text);
                   saveData(key: 'password', value: _passController.text);
 
-                  //   AppCubit.get(context).changebottomNavIndex(0);
-                  // AppRouter.navigateAndFinish(context, const HomeLayout())
+                  AppCubit.get(context).changebottomNavIndex(1);
+                  AppRouter.navigateAndFinish(context, const HomeLayout());
 
                   _phoneController.clear();
                   _passController.clear();
@@ -214,8 +215,8 @@ class _LogInState extends State<LogIn> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppCubit.get(context).changebottomNavIndex(0);
-                // AppRouter.navigateTo(context, const HomeLayout());
+                AppCubit.get(context).changebottomNavIndex(1);
+                AppRouter.navigateTo(context, const HomeLayout());
               },
               child: SizedBox(
                 width: 150.w,

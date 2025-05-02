@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
 import '../../../generated/locale_keys.g.dart';
+import '../../../screens/user_screens/home_layout/chats/chats.dart';
+import '../../../screens/user_screens/home_layout/home/home.dart';
+import '../../../screens/user_screens/home_layout/orders/orders.dart';
 import '../../cache/cache_helper.dart';
 import '../../constants/contsants.dart';
 part 'app_state.dart';
@@ -20,9 +24,10 @@ class AppCubit extends Cubit<AppState> {
 
   int bottomNavIndex = 1;
   List<Widget> bottomNavScreens = [
-    // const Orders(),
-    // const NewOrders(),
-    // const Profile(),
+    const MyCars(),
+    const Home(),
+    const Orders(),
+    const Chats(),
   ];
 
   double? lat = 0;
@@ -32,7 +37,8 @@ class AppCubit extends Cubit<AppState> {
     address = newAddress;
     emit(ChangeIndex());
   }
-int drawerIndex = -1;
+
+  int drawerIndex = -1;
   void changedrawerIndex({required int index}) {
     if (drawerIndex != index) {
       drawerIndex = index;

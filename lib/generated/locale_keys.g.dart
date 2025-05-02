@@ -507,5 +507,12 @@ abstract class  LocaleKeys {
   static const no_saved_data_login_manually_first = 'no_saved_data_login_manually_first';
   static const face_id_authentication_failed = 'face_id_authentication_failed';
   static const fingerprint_authentication_failed = 'fingerprint_authentication_failed';
+  static const my_cars = 'my_cars';
+  static const add_car = 'add_car';
+  static const car_model = 'car_model';
+  static const enter_car_model = 'enter_car_model';
+  static const car_number = 'car_number';
+  static const enter_car_number = 'enter_car_number';
+  static const car_color = 'car_color';
 
 }

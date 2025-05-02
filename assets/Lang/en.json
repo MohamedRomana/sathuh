@@ -502,5 +502,13 @@
       "login_with_fingerprint": "Login with Fingerprint",
       "no_saved_data_login_manually_first": "No saved data. Please log in manually first.",
       "face_id_authentication_failed": "Face ID authentication failed",
-      "fingerprint_authentication_failed": "Fingerprint authentication failed"
+      "fingerprint_authentication_failed": "Fingerprint authentication failed",
+      "my_cars" : "My Cars",
+      "add_car" : "Add Car",
+      "car_model" : "Car Model",
+      "enter_car_model" : "Enter Car Model",
+      "car_number" : "Car Number",
+      "enter_car_number" : "Enter Car Number",
+      "car_color" : "Car Color"
+      
 }

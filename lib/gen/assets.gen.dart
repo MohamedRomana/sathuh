@@ -132,52 +132,160 @@ class $AssetsImgGen {
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
-  /// File path: assets/svg/chat.svg
-  String get chat => 'assets/svg/chat.svg';
+  /// File path: assets/svg/Delete.svg
+  String get delete => 'assets/svg/Delete.svg';
 
-  /// File path: assets/svg/document.svg
-  String get document => 'assets/svg/document.svg';
+  /// File path: assets/svg/arrow.svg
+  String get arrow => 'assets/svg/arrow.svg';
 
-  /// File path: assets/svg/driver.svg
-  String get driver => 'assets/svg/driver.svg';
+  /// File path: assets/svg/call.svg
+  String get call => 'assets/svg/call.svg';
+
+  /// File path: assets/svg/car.svg
+  String get car => 'assets/svg/car.svg';
+
+  /// File path: assets/svg/chats.svg
+  String get chats => 'assets/svg/chats.svg';
+
+  /// File path: assets/svg/clipboard.svg
+  String get clipboard => 'assets/svg/clipboard.svg';
+
+  /// File path: assets/svg/decoration.svg
+  String get decoration => 'assets/svg/decoration.svg';
+
+  /// File path: assets/svg/drawer_home.svg
+  String get drawerHome => 'assets/svg/drawer_home.svg';
+
+  /// File path: assets/svg/drawer_logout.svg
+  String get drawerLogout => 'assets/svg/drawer_logout.svg';
+
+  /// File path: assets/svg/drawer_people.svg
+  String get drawerPeople => 'assets/svg/drawer_people.svg';
+
+  /// File path: assets/svg/drawer_privacy.svg
+  String get drawerPrivacy => 'assets/svg/drawer_privacy.svg';
+
+  /// File path: assets/svg/drawer_profile.svg
+  String get drawerProfile => 'assets/svg/drawer_profile.svg';
+
+  /// File path: assets/svg/drawer_share.svg
+  String get drawerShare => 'assets/svg/drawer_share.svg';
+
+  /// File path: assets/svg/drawer_sms.svg
+  String get drawerSms => 'assets/svg/drawer_sms.svg';
+
+  /// File path: assets/svg/edit.svg
+  String get edit => 'assets/svg/edit.svg';
 
   /// File path: assets/svg/faceId.svg
   String get faceId => 'assets/svg/faceId.svg';
 
-  /// File path: assets/svg/file.svg
-  String get file => 'assets/svg/file.svg';
+  /// File path: assets/svg/gallery.svg
+  String get gallery => 'assets/svg/gallery.svg';
+
+  /// File path: assets/svg/have_noti.svg
+  String get haveNoti => 'assets/svg/have_noti.svg';
 
   /// File path: assets/svg/home.svg
   String get home => 'assets/svg/home.svg';
 
-  /// File path: assets/svg/language.svg
-  String get language => 'assets/svg/language.svg';
-
   /// File path: assets/svg/location.svg
   String get location => 'assets/svg/location.svg';
 
-  /// File path: assets/svg/logout.svg
-  String get logout => 'assets/svg/logout.svg';
+  /// File path: assets/svg/lock.svg
+  String get lock => 'assets/svg/lock.svg';
 
-  /// File path: assets/svg/privacy.svg
-  String get privacy => 'assets/svg/privacy.svg';
+  /// File path: assets/svg/more.svg
+  String get more => 'assets/svg/more.svg';
 
-  /// File path: assets/svg/time.svg
-  String get time => 'assets/svg/time.svg';
+  /// File path: assets/svg/notifications.svg
+  String get notifications => 'assets/svg/notifications.svg';
+
+  /// File path: assets/svg/order_details.svg
+  String get orderDetails => 'assets/svg/order_details.svg';
+
+  /// File path: assets/svg/order_name.svg
+  String get orderName => 'assets/svg/order_name.svg';
+
+  /// File path: assets/svg/orders.svg
+  String get orders => 'assets/svg/orders.svg';
+
+  /// File path: assets/svg/phone.svg
+  String get phone => 'assets/svg/phone.svg';
+
+  /// File path: assets/svg/product.svg
+  String get product => 'assets/svg/product.svg';
+
+  /// File path: assets/svg/search.svg
+  String get search => 'assets/svg/search.svg';
+
+  /// File path: assets/svg/send.svg
+  String get send => 'assets/svg/send.svg';
+
+  /// File path: assets/svg/service.svg
+  String get service => 'assets/svg/service.svg';
+
+  /// File path: assets/svg/shop.svg
+  String get shop => 'assets/svg/shop.svg';
+
+  /// File path: assets/svg/shopping.svg
+  String get shopping => 'assets/svg/shopping.svg';
+
+  /// File path: assets/svg/store.svg
+  String get store => 'assets/svg/store.svg';
+
+  /// File path: assets/svg/table.svg
+  String get table => 'assets/svg/table.svg';
+
+  /// File path: assets/svg/upload.svg
+  String get upload => 'assets/svg/upload.svg';
+
+  /// File path: assets/svg/user.svg
+  String get user => 'assets/svg/user.svg';
+
+  /// File path: assets/svg/wallet-money.svg
+  String get walletMoney => 'assets/svg/wallet-money.svg';
 
   /// List of all assets
   List<String> get values => [
-    chat,
-    document,
-    driver,
+    delete,
+    arrow,
+    call,
+    car,
+    chats,
+    clipboard,
+    decoration,
+    drawerHome,
+    drawerLogout,
+    drawerPeople,
+    drawerPrivacy,
+    drawerProfile,
+    drawerShare,
+    drawerSms,
+    edit,
     faceId,
-    file,
+    gallery,
+    haveNoti,
     home,
-    language,
     location,
-    logout,
-    privacy,
-    time,
+    lock,
+    more,
+    notifications,
+    orderDetails,
+    orderName,
+    orders,
+    phone,
+    product,
+    search,
+    send,
+    service,
+    shop,
+    shopping,
+    store,
+    table,
+    upload,
+    user,
+    walletMoney,
   ];
 }
 

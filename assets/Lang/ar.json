@@ -502,5 +502,12 @@
   "login_with_fingerprint": "سجل الدخول باستخدام Fingerprint",
   "no_saved_data_login_manually_first": "لا يوجد بيانات محفوظة. سجل الدخول يدويًا أولاً.",
   "face_id_authentication_failed": "فشل التوثيق عبر Face ID",
-  "fingerprint_authentication_failed": "فشل التوثيق باستخدام Fingerprint"
+  "fingerprint_authentication_failed": "فشل التوثيق باستخدام Fingerprint",
+  "my_cars" : "سياراتي",
+  "add_car" : "اضافة سيارة",
+  "car_model" : "موديل السيارة",
+  "enter_car_model" : "ادخل موديل السيارة",
+  "car_number" : "رقم السيارة",
+  "enter_car_number" : "ادخل رقم السيارة",
+  "car_color" : "لون السيارة"
 }

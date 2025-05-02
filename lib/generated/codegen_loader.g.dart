@@ -518,7 +518,14 @@ class CodegenLoader extends AssetLoader{
   "login_with_fingerprint": "سجل الدخول باستخدام Fingerprint",
   "no_saved_data_login_manually_first": "لا يوجد بيانات محفوظة. سجل الدخول يدويًا أولاً.",
   "face_id_authentication_failed": "فشل التوثيق عبر Face ID",
-  "fingerprint_authentication_failed": "فشل التوثيق باستخدام Fingerprint"
+  "fingerprint_authentication_failed": "فشل التوثيق باستخدام Fingerprint",
+  "my_cars": "سياراتي",
+  "add_car": "اضافة سيارة",
+  "car_model": "موديل السيارة",
+  "enter_car_model": "ادخل موديل السيارة",
+  "car_number": "رقم السيارة",
+  "enter_car_number": "ادخل رقم السيارة",
+  "car_color": "لون السيارة"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1024,7 +1031,14 @@ static const Map<String,dynamic> _en = {
   "login_with_fingerprint": "Login with Fingerprint",
   "no_saved_data_login_manually_first": "No saved data. Please log in manually first.",
   "face_id_authentication_failed": "Face ID authentication failed",
-  "fingerprint_authentication_failed": "Fingerprint authentication failed"
+  "fingerprint_authentication_failed": "Fingerprint authentication failed",
+  "my_cars": "My Cars",
+  "add_car": "Add Car",
+  "car_model": "Car Model",
+  "enter_car_model": "Enter Car Model",
+  "car_number": "Car Number",
+  "enter_car_number": "Enter Car Number",
+  "car_color": "Car Color"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }
