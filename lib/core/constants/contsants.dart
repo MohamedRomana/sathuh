@@ -5,8 +5,9 @@ String? token;
 String? userId;
 const String baseUrl = "https://abdo.efadh.net/aswaq/";
 void openGoogleMap(double lat, double lng) async {
-  Uri googleMapUrl =
-      Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng");
+  Uri googleMapUrl = Uri.parse(
+    "https://www.google.com/maps/search/?api=1&query=$lat,$lng",
+  );
 
   if (!await launchUrl(googleMapUrl)) {
     throw Exception('Could not launch $googleMapUrl');
@@ -24,8 +25,17 @@ Future<void> launchPDF({required String pdfUrl}) async {
   }
 }
 
+Future<void> makePhoneCall(String phoneNumber) async {
+  final Uri phoneUri = Uri.parse('tel:$phoneNumber');
+
+  if (await canLaunchUrl(phoneUri)) {
+    await launchUrl(phoneUri);
+  } else {
+    throw 'تعذر إجراء المكالمة: $phoneNumber';
+  }
+}
+
 void shareLocation(double lat, double lng) {
   String location = 'Latitude: $lat, Longitude: $lng';
   Share.share(location);
 }
-

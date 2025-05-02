@@ -44,6 +44,13 @@ class $AssetsImgGen {
   /// File path: assets/img/alert.json
   String get alert => 'assets/img/alert.json';
 
+  /// File path: assets/img/background.png
+  AssetGenImage get background =>
+      const AssetGenImage('assets/img/background.png');
+
+  /// File path: assets/img/bmw.jpg
+  AssetGenImage get bmw => const AssetGenImage('assets/img/bmw.jpg');
+
   /// File path: assets/img/car.json
   String get car => 'assets/img/car.json';
 
@@ -107,6 +114,8 @@ class $AssetsImgGen {
   /// List of all assets
   List<dynamic> get values => [
     alert,
+    background,
+    bmw,
     car,
     client,
     driver,
@@ -140,6 +149,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/call.svg
   String get call => 'assets/svg/call.svg';
+
+  /// File path: assets/svg/car (2).svg
+  String get car2 => 'assets/svg/car (2).svg';
 
   /// File path: assets/svg/car.svg
   String get car => 'assets/svg/car.svg';
@@ -251,6 +263,7 @@ class $AssetsSvgGen {
     delete,
     arrow,
     call,
+    car2,
     car,
     chats,
     clipboard,

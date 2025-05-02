@@ -36,7 +36,7 @@ class _HomeLayoutState extends State<HomeLayout>
     );
 
     _animation2 = Tween<double>(
-      begin:CacheHelper.getLang() == 'en' ? -200.0 : 200.0,
+      begin: CacheHelper.getLang() == 'en' ? -200.0 : 200.0,
       end: 0.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
@@ -193,7 +193,7 @@ class _HomeLayoutState extends State<HomeLayout>
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              Assets.svg.car,
+                              Assets.svg.car2,
                               height: 24.w,
                               width: 24.w,
                               fit: BoxFit.cover,

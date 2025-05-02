@@ -33,47 +33,11 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AppText(text: title, size: 24.sp, family: FontFamily.tajawalBold),
-          if (isHomeLayout!) ...{
-            CacheHelper.getUserType() == "client"
-                ? InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () {},
-                  child: Container(
-                    height: 32.w,
-                    width: 32.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.third.withOpacity(0.52.r),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(Icons.search, color: Colors.white, size: 20.sp),
-                  ),
-                )
-                : const SizedBox.shrink(),
-          } else ...{
+          if (isHomeLayout!)
+            ...{}
+          else ...{
             Row(
               children: [
-                CacheHelper.getUserType() == "client"
-                    ? InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {},
-                      child: Container(
-                        height: 32.w,
-                        width: 32.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.third.withOpacity(0.52.r),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 20.sp,
-                        ),
-                      ),
-                    )
-                    : const SizedBox.shrink(),
-                SizedBox(width: 6.w),
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -82,7 +46,7 @@ class CustomAppBar extends StatelessWidget {
                     height: 32.w,
                     width: 32.w,
                     decoration: BoxDecoration(
-                      color: AppColors.third.withOpacity(0.52.r),
+                      color: AppColors.secondray.withOpacity(0.52.r),
                       shape: BoxShape.circle,
                     ),
                     child: Center(

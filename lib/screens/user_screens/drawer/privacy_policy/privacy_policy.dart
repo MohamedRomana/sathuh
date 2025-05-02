@@ -30,54 +30,48 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return CustomBottomNav(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(70.h),
-            child: CustomAppBar(title: LocaleKeys.privacy_policy.tr()),
-          ),
           body:
               state is PrivacyPolicyLoading
                   ? const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primary,
-                    ),
+                    child: CircularProgressIndicator(color: AppColors.primary),
                   )
-                  : SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30.w,
-                        vertical: 1.h,
+                  : Stack(
+                    children: [
+                      Image.asset(
+                        Assets.img.background.path,
+                        height: double.infinity,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
                       ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 300.h,
-                            child: TweenAnimationBuilder(
-                              curve: Curves.fastOutSlowIn,
-                              tween: Tween<double>(begin: 0, end: 208.w),
-                              duration: const Duration(seconds: 1),
-                              builder:
-                                  (context, value, child) => Center(
-                                    child: SizedBox(
-                                      height: value.h,
-                                      width: value.w,
-                                      child: Image.asset(
-                                        Assets.img.logo.path,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
+                      Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        color: Colors.white.withAlpha(210),
+                      ),
+                      SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            CustomAppBar(title: LocaleKeys.privacy_policy.tr()),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 20.h),
+                              child: Image.asset(
+                                Assets.img.logo.path,
+                                height: 300.h,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                          AppText(
-                            text: AppCubit.get(context).privacyPolicyTitle,
-                            lines: 100,
-                            size: 16.sp,
-                          ),
-                          SizedBox(height: 120.h),
-                        ],
+                            AppText(
+                              text: AppCubit.get(context).privacyPolicyTitle,
+                              lines: 100,
+                              size: 16.sp,
+                            ),
+                            SizedBox(height: 120.h),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
         );
       },

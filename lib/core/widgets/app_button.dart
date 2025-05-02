@@ -73,8 +73,8 @@ class AppButton extends StatelessWidget {
             //       ],
             // ),
             borderRadius: BorderRadius.circular(radius ?? 100.r),
-            // border:
-            //     Border.all(color: borderColor ?? color ?? AppColors.primary),
+            border:
+                Border.all(color: borderColor ?? Colors.transparent, width: 1.w),
           ),
           child: Container(
             constraints: BoxConstraints(

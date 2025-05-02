@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sathuh/screens/user_screens/notifications/notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
@@ -206,7 +207,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         color:
                             AppCubit.get(context).bottomNavIndex == 1 &&
                                     AppCubit.get(context).drawerIndex == 0
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -252,7 +253,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                        AppCubit.get(context).changedrawerIndex(index: 1);
+                      AppCubit.get(context).changedrawerIndex(index: 1);
                       if (CacheHelper.getUserType() == "client") {
                         // AppRouter.pop(context);
                         // AppRouter.navigateTo(context, const Profile());
@@ -271,7 +272,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       decoration: BoxDecoration(
                         color:
                             AppCubit.get(context).drawerIndex == 1
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -329,7 +330,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       decoration: BoxDecoration(
                         color:
                             AppCubit.get(context).drawerIndex == 2
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -387,7 +388,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       decoration: BoxDecoration(
                         color:
                             AppCubit.get(context).drawerIndex == 3
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -445,7 +446,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       decoration: BoxDecoration(
                         color:
                             AppCubit.get(context).drawerIndex == 4
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -528,6 +529,60 @@ class _CustomDrawerState extends State<CustomDrawer>
                   ),
                 ),
                 AnimatedBuilder(
+                  animation: _animation7,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(_animation7.value, 0),
+                      child: child,
+                    );
+                  },
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      AppRouter.navigateTo(context, const Notifications());
+                    },
+                    child: Container(
+                      width: 250.w,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                      decoration: BoxDecoration(
+                        color:
+                            AppCubit.get(context).drawerIndex == 5
+                                ? AppColors.secondray
+                                : Colors.transparent,
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            Assets.svg.notifications,
+                            height: 24.w,
+                            width: 24.w,
+                            color:  AppCubit.get(context).drawerIndex == 5
+                                    ? Colors.white
+                                    : AppColors.secondray,
+                            fit: BoxFit.cover,
+                          ),
+                          AppText(
+                            start: 6.w,
+                            text: LocaleKeys.notifications.tr(),
+                            color:
+                                AppCubit.get(context).drawerIndex == 5
+                                    ? Colors.white
+                                    : Colors.black,
+                            size: 16.sp,
+                            family: FontFamily.tajawalBold,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                AnimatedBuilder(
                   animation: _animation9,
                   builder: (context, child) {
                     return Transform.translate(
@@ -558,7 +613,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         color:
                             AppCubit.get(context).bottomNavIndex == 1 &&
                                     AppCubit.get(context).drawerIndex == 0
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -612,7 +667,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         color:
                             AppCubit.get(context).bottomNavIndex == 1 &&
                                     AppCubit.get(context).drawerIndex == 0
-                                ? AppColors.secondray
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),

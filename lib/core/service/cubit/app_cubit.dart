@@ -115,9 +115,9 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeIndex());
   }
 
-  int changeTypeIndex = 0;
-  void changeTypeIndexs({required int index}) {
-    changeTypeIndex = index;
+  List<int> selectedCarIndexes = [-1];
+  void changeSelectedCar({required int index}) {
+    selectedCarIndexes = [index];
     emit(ChangeIndex());
   }
 

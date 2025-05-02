@@ -54,7 +54,7 @@ class CustomBottomNav extends StatelessWidget {
           width: 65.w,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.third,
+            color: AppColors.secondray,
           ),
           child: Center(
             child: SvgPicture.asset(
@@ -128,7 +128,7 @@ class CustomBottomNav extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       CacheHelper.getUserType() == "client"
-                          ? Assets.svg.store
+                          ? Assets.svg.car2
                           : Assets.svg.orders,
                       height: 24.w,
                       width: 24.w,
@@ -138,7 +138,7 @@ class CustomBottomNav extends StatelessWidget {
                     AppText(
                       text:
                           CacheHelper.getUserType() == "client"
-                              ? LocaleKeys.store.tr()
+                              ? LocaleKeys.my_cars.tr()
                               : LocaleKeys.orders.tr(),
                       size:
                           CacheHelper.getUserType() == "provider" &&

@@ -55,174 +55,179 @@ class _ContactUsState extends State<ContactUs> {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return CustomBottomNav(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(70.h),
-            child: CustomAppBar(title: LocaleKeys.contactUs.tr()),
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 45.h),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 208.h,
-                      child: TweenAnimationBuilder(
-                        curve: Curves.fastOutSlowIn,
-                        tween: Tween<double>(begin: 0, end: 208.w),
-                        duration: const Duration(seconds: 1),
-                        builder:
-                            (context, value, child) => Center(
-                              child: SizedBox(
-                                height: value.h,
-                                width: value.w,
-                                child: Image.asset(
-                                  Assets.img.logo.path,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-
-                    AppInput(
-                      filled: true,
-                      bottom: 16.h,
-                      focusNode: nameFocusNode,
-                      color: const Color(0xffFBFBFB),
-                      enabledBorderColor: Colors.grey,
-                      focusedBorderColor: AppColors.primary,
-                      hint: LocaleKeys.fullName.tr(),
-                      start: 0,
-                      end: 0,
-                      controller: _nameController,
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(10.r),
-                        child: SvgPicture.asset(
-                          Assets.svg.user,
-                          color:
-                              nameFocusNode.hasFocus
-                                  ? AppColors.primary
-                                  : Colors.grey,
+          body: Stack(
+            children: [
+              Image.asset(
+                Assets.img.background.path,
+                height: double.infinity,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.white.withAlpha(210),
+              ),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomAppBar(title: LocaleKeys.contactUs.tr()),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20.h),
+                        child: Image.asset(
+                          Assets.img.logo.path,
+                          height: 300.h,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                      validate: (value) {
-                        if (value!.isEmpty) {
-                          return LocaleKeys.nameValidate.tr();
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                      SizedBox(height: 24.h),
 
-                    AppInput(
-                      bottom: 16.h,
-                      filled: true,
-                      focusNode: phoneFocusNode,
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(10.r),
-                        child: SvgPicture.asset(
-                          Assets.svg.phone,
-                          color:
-                              phoneFocusNode.hasFocus
-                                  ? AppColors.primary
-                                  : Colors.grey,
+                      AppInput(
+                        filled: true,
+                        bottom: 16.h,
+                        focusNode: nameFocusNode,
+                        color: const Color(0xffFBFBFB),
+                        enabledBorderColor: Colors.grey,
+                        focusedBorderColor: AppColors.primary,
+                        hint: LocaleKeys.fullName.tr(),
+                        controller: _nameController,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(10.r),
+                          child: SvgPicture.asset(
+                            Assets.svg.user,
+                            color:
+                                nameFocusNode.hasFocus
+                                    ? AppColors.primary
+                                    : Colors.grey,
+                          ),
                         ),
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return LocaleKeys.nameValidate.tr();
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
 
-                      color: const Color(0xffFBFBFB),
-                      enabledBorderColor: Colors.grey,
-                      focusedBorderColor: AppColors.primary,
-                      hint: LocaleKeys.phone.tr(),
-                      start: 0,
-                      end: 0,
-                      controller: _phoneController,
-                      validate: (value) {
-                        if (value!.isEmpty) {
-                          return LocaleKeys.phoneValidate.tr();
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    AppInput(
-                      filled: true,
-                      color: const Color(0xffFBFBFB),
-                      enabledBorderColor: Colors.grey,
-                      focusedBorderColor: AppColors.primary,
-                      hint: LocaleKeys.yourMessage.tr(),
-                      maxLines: 5,
-                      start: 0,
-                      end: 0,
-                      controller: _messageController,
-                      validate: (value) {
-                        if (value!.isEmpty) {
-                          return LocaleKeys.yourMessage.tr();
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    BlocConsumer<AppCubit, AppState>(
-                      listener: (context, state) {
-                        if (state is ContactUsSuccess) {
-                          AppCubit.get(context).changebottomNavIndex(0);
-                          AppRouter.navigateAndFinish(
-                            context,
-                            const HomeLayout(),
+                      AppInput(
+                        bottom: 16.h,
+                        filled: true,
+                        focusNode: phoneFocusNode,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(10.r),
+                          child: SvgPicture.asset(
+                            Assets.svg.phone,
+                            color:
+                                phoneFocusNode.hasFocus
+                                    ? AppColors.primary
+                                    : Colors.grey,
+                          ),
+                        ),
+
+                        color: const Color(0xffFBFBFB),
+                        enabledBorderColor: Colors.grey,
+                        focusedBorderColor: AppColors.primary,
+                        hint: LocaleKeys.phone.tr(),
+                        controller: _phoneController,
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return LocaleKeys.phoneValidate.tr();
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      AppInput(
+                        filled: true,
+                        color: const Color(0xffFBFBFB),
+                        enabledBorderColor: Colors.grey,
+                        focusedBorderColor: AppColors.primary,
+                        hint: LocaleKeys.yourMessage.tr(),
+                        maxLines: 5,
+                        border: 15.r,
+                        controller: _messageController,
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return LocaleKeys.yourMessage.tr();
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      BlocConsumer<AppCubit, AppState>(
+                        listener: (context, state) {
+                          if (state is ContactUsSuccess) {
+                            AppCubit.get(context).changebottomNavIndex(0);
+                            AppRouter.navigateAndFinish(
+                              context,
+                              const HomeLayout(),
+                            );
+                            _nameController.clear();
+                            _phoneController.clear();
+                            _messageController.clear();
+                            showFlashMessage(
+                              message: state.message,
+                              type: FlashMessageType.success,
+                              context: context,
+                            );
+                          } else if (state is ContactUsFailure) {
+                            showFlashMessage(
+                              message: state.error,
+                              type: FlashMessageType.error,
+                              context: context,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return AppButton(
+                            top: 24.h,
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await AppCubit.get(context).contactUs(
+                                  name: _nameController.text,
+                                  phone: _phoneController.text,
+                                  message: _messageController.text,
+                                );
+                              }
+                            },
+                            width: 343.w,
+                            child:
+                                state is ContactUsLoading
+                                    ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                    : AppText(
+                                      text: LocaleKeys.send.tr(),
+                                      color: Colors.white,
+                                      family: FontFamily.tajawalBold,
+                                      size: 20.sp,
+                                    ),
                           );
-                          _nameController.clear();
-                          _phoneController.clear();
-                          _messageController.clear();
-                          showFlashMessage(
-                            message: state.message,
-                            type: FlashMessageType.success,
-                            context: context,
-                          );
-                        } else if (state is ContactUsFailure) {
-                          showFlashMessage(
-                            message: state.error,
-                            type: FlashMessageType.error,
-                            context: context,
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        return AppButton(
-                          top: 24.h,
+                        },
+                      ),
+                      AppButton(
+                        top: 16.h,
+                        borderColor: AppColors.secondray,
+                        color: Colors.white,
+                        onPressed: () {},
+                        child: AppText(
+                          text: 'تواصل عبر واتساب',
                           color: AppColors.secondray,
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              await AppCubit.get(context).contactUs(
-                                name: _nameController.text,
-                                phone: _phoneController.text,
-                                message: _messageController.text,
-                              );
-                            }
-                          },
-                          width: 343.w,
-                          child:
-                              state is ContactUsLoading
-                                  ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                  : AppText(
-                                    text: LocaleKeys.send.tr(),
-                                    color: Colors.white,
-                                    family: FontFamily.tajawalBold,
-                                    size: 20.sp,
-                                  ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 120.h),
-                  ],
+                          family: FontFamily.tajawalBold,
+                          size: 20.sp,
+                        ),
+                      ),
+                      SizedBox(height: 120.h),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },
