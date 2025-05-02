@@ -41,29 +41,20 @@ class $AssetsFontsGen {
 class $AssetsImgGen {
   const $AssetsImgGen();
 
-  /// File path: assets/img/NoCar.png
-  AssetGenImage get noCar => const AssetGenImage('assets/img/NoCar.png');
-
   /// File path: assets/img/alert.json
   String get alert => 'assets/img/alert.json';
 
-  /// File path: assets/img/car.png
-  AssetGenImage get car => const AssetGenImage('assets/img/car.png');
-
-  /// File path: assets/img/car2.png
-  AssetGenImage get car2 => const AssetGenImage('assets/img/car2.png');
+  /// File path: assets/img/car.json
+  String get car => 'assets/img/car.json';
 
   /// File path: assets/img/client.png
   AssetGenImage get client => const AssetGenImage('assets/img/client.png');
 
-  /// File path: assets/img/clock.png
-  AssetGenImage get clock => const AssetGenImage('assets/img/clock.png');
-
   /// File path: assets/img/driver.png
   AssetGenImage get driver => const AssetGenImage('assets/img/driver.png');
 
-  /// File path: assets/img/easy.png
-  AssetGenImage get easy => const AssetGenImage('assets/img/easy.png');
+  /// File path: assets/img/easy.json
+  String get easy => 'assets/img/easy.json';
 
   /// File path: assets/img/emptyorder.json
   String get emptyorder => 'assets/img/emptyorder.json';
@@ -90,6 +81,9 @@ class $AssetsImgGen {
   /// File path: assets/img/manager.png
   AssetGenImage get manager => const AssetGenImage('assets/img/manager.png');
 
+  /// File path: assets/img/mony.json
+  String get mony => 'assets/img/mony.json';
+
   /// File path: assets/img/noti_empty.json
   String get notiEmpty => 'assets/img/noti_empty.json';
 
@@ -97,11 +91,14 @@ class $AssetsImgGen {
   AssetGenImage get saudiArabia =>
       const AssetGenImage('assets/img/saudi-arabia.png');
 
-  /// File path: assets/img/savemony.png
-  AssetGenImage get savemony => const AssetGenImage('assets/img/savemony.png');
+  /// File path: assets/img/swiper.png
+  AssetGenImage get swiper => const AssetGenImage('assets/img/swiper.png');
 
-  /// File path: assets/img/saver.png
-  AssetGenImage get saver => const AssetGenImage('assets/img/saver.png');
+  /// File path: assets/img/time.json
+  String get time => 'assets/img/time.json';
+
+  /// File path: assets/img/trak.png
+  AssetGenImage get trak => const AssetGenImage('assets/img/trak.png');
 
   /// File path: assets/img/united-kingdom.png
   AssetGenImage get unitedKingdom =>
@@ -109,12 +106,9 @@ class $AssetsImgGen {
 
   /// List of all assets
   List<dynamic> get values => [
-    noCar,
     alert,
     car,
-    car2,
     client,
-    clock,
     driver,
     easy,
     emptyorder,
@@ -125,10 +119,12 @@ class $AssetsImgGen {
     logo,
     mail,
     manager,
+    mony,
     notiEmpty,
     saudiArabia,
-    savemony,
-    saver,
+    swiper,
+    time,
+    trak,
     unitedKingdom,
   ];
 }

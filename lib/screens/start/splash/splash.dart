@@ -71,7 +71,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
 
   Future _customNavigation() {
-    return Future.delayed(const Duration(seconds: 3), () {
+    return Future.delayed(const Duration(milliseconds: 1800), () {
       _shakeController.forward();
 
       AppRouter.navigateAndPop(context, const LanguageView());
@@ -105,7 +105,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 
     // Shake animation controller
     _shakeController = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 1800),
       vsync: this,
     );
 

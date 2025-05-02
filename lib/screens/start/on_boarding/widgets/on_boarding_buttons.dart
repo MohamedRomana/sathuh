@@ -2,6 +2,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:sathuh/gen/fonts.gen.dart';
 import 'package:sathuh/screens/start/types/types_view.dart';
 import '../../../../core/constants/colors.dart';
@@ -25,7 +26,7 @@ class CustomOnBoardingButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return PositionedDirectional(
       end: 0,
-      top: 48.h,
+      bottom: 48.h,
       child: Row(
         children: [
           Visibility(
@@ -66,12 +67,12 @@ class CustomOnBoardingButtons extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             child: Container(
-              width: 125.w,
+              width: CacheHelper.getLang() == 'en' ? 140.w : 125.w,
               height: 50.h,
               padding: EdgeInsets.symmetric(horizontal: 15.w),
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius:  BorderRadiusDirectional.only(
+                borderRadius: BorderRadiusDirectional.only(
                   topStart: Radius.circular(25.r),
                   bottomStart: Radius.circular(25.r),
                 ),
