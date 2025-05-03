@@ -17,12 +17,17 @@ class CustomBottomNav extends StatelessWidget {
   final Widget body;
   final Color? backgroundColor;
   final PreferredSizeWidget? appBar;
-
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final bool? resizeToAvoidBottomInset;
   const CustomBottomNav({
     super.key,
     required this.body,
     this.backgroundColor,
     this.appBar,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
+    this.resizeToAvoidBottomInset,
   });
 
   @override
@@ -31,42 +36,46 @@ class CustomBottomNav extends StatelessWidget {
 
     return Scaffold(
       key: scaffoldKey,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? false,
       drawer: const CustomDrawer(),
       extendBody: true,
       backgroundColor: backgroundColor,
       appBar: appBar,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: InkWell(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onTap: () {
-          if (CacheHelper.getUserType() == "client") {
-            AppCubit.get(context).changebottomNavIndex(1);
-            AppRouter.navigateAndFinish(context, const HomeLayout());
-          } else {
-            // AppCubit.get(context).changebottomProviderNavIndex(1);
-            // AppRouter.navigateAndFinish(context, const ProviderHomeLayout());
-          }
-        },
-        child: Container(
-          height: 65.w,
-          width: 65.w,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.secondray,
-          ),
-          child: Center(
-            child: SvgPicture.asset(
-              Assets.svg.home,
-              height: 25.w,
-              width: 25.w,
-              color: Colors.white,
-              fit: BoxFit.cover,
+      floatingActionButtonLocation:
+          floatingActionButtonLocation ??
+          FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+          floatingActionButton ??
+          InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () {
+              if (CacheHelper.getUserType() == "client") {
+                AppCubit.get(context).changebottomNavIndex(1);
+                AppRouter.navigateAndFinish(context, const HomeLayout());
+              } else {
+                // AppCubit.get(context).changebottomProviderNavIndex(1);
+                // AppRouter.navigateAndFinish(context, const ProviderHomeLayout());
+              }
+            },
+            child: Container(
+              height: 65.w,
+              width: 65.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.secondray,
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  Assets.svg.home,
+                  height: 25.w,
+                  width: 25.w,
+                  color: Colors.white,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
       bottomNavigationBar: BottomAppBar(
         elevation: 5,
         notchMargin: 13.r,

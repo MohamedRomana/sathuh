@@ -63,6 +63,9 @@ class _AboutUsState extends State<AboutUs> {
                               ),
                             ),
                             AppText(
+                              start: 16.w,
+                              end: 16.w,
+                              textAlign: TextAlign.center,
                               text: AppCubit.get(context).aboutUsTitle,
                               lines: 100,
                               size: 16.sp,

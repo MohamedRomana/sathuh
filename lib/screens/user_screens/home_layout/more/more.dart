@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sathuh/screens/user_screens/notifications/notifications.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/contsants.dart' show baseUrl;
@@ -19,6 +19,7 @@ import '../../../auth/views/login/login.dart';
 import '../../drawer/about_us/about_us.dart';
 import '../../drawer/contact_us/contact_us.dart';
 import '../../drawer/privacy_policy/privacy_policy.dart';
+import '../home_layout.dart';
 import 'widgets/logout_dialog.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -183,8 +184,11 @@ class _CustomDrawerState extends State<CustomDrawer>
                     onTap: () {
                       AppCubit.get(context).changedrawerIndex(index: 0);
                       if (CacheHelper.getUserType() == "client") {
-                        // AppCubit.get(context).changebottomNavIndex(1);
-                        // AppRouter.navigateTo(context, const HomeLayout());
+                        AppCubit.get(context).changebottomNavIndex(1);
+                        AppRouter.navigateAndFinish(
+                          context,
+                          const HomeLayout(),
+                        );
                       } else {
                         // AppCubit.get(context).changebottomProviderNavIndex(1);
                         // AppRouter.navigateTo(
@@ -205,8 +209,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                       decoration: BoxDecoration(
                         color:
-                            AppCubit.get(context).bottomNavIndex == 1 &&
-                                    AppCubit.get(context).drawerIndex == 0
+                            AppCubit.get(context).drawerIndex == 0
                                 ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
@@ -218,8 +221,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                             height: 24.w,
                             width: 24.w,
                             color:
-                                AppCubit.get(context).bottomNavIndex == 1 &&
-                                        AppCubit.get(context).drawerIndex == 0
+                                AppCubit.get(context).drawerIndex == 0
                                     ? Colors.white
                                     : AppColors.secondray,
                             fit: BoxFit.cover,
@@ -228,8 +230,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                             start: 6.w,
                             text: LocaleKeys.home.tr(),
                             color:
-                                AppCubit.get(context).bottomNavIndex == 1 &&
-                                        AppCubit.get(context).drawerIndex == 0
+                                AppCubit.get(context).drawerIndex == 0
                                     ? Colors.white
                                     : Colors.black,
                             size: 16.sp,
@@ -490,7 +491,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      launchUrl(Uri.parse(baseUrl));
+                      AppCubit.get(context).changedrawerIndex(index: 5);
+                      Share.share(baseUrl);
                     },
                     child: Container(
                       width: 250.w,
@@ -501,9 +503,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                       margin: EdgeInsetsDirectional.only(bottom: 8.h),
                       decoration: BoxDecoration(
                         color:
-                            AppCubit.get(context).bottomNavIndex == 1 &&
-                                    AppCubit.get(context).drawerIndex == 0
-                                ? AppColors.secondray
+                            AppCubit.get(context).drawerIndex == 5
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -513,13 +514,19 @@ class _CustomDrawerState extends State<CustomDrawer>
                             Assets.svg.drawerShare,
                             height: 24.w,
                             width: 24.w,
-                            color: AppColors.secondray,
+                            color:
+                                AppCubit.get(context).drawerIndex == 5
+                                    ? Colors.white
+                                    : AppColors.secondray,
                             fit: BoxFit.cover,
                           ),
                           AppText(
                             start: 6.w,
                             text: LocaleKeys.share_app.tr(),
-                            color: Colors.black,
+                            color:
+                                AppCubit.get(context).drawerIndex == 5
+                                    ? Colors.white
+                                    : Colors.black,
                             size: 16.sp,
                             family: FontFamily.tajawalBold,
                           ),
@@ -540,6 +547,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      AppCubit.get(context).changedrawerIndex(index: 6);
                       AppRouter.navigateTo(context, const Notifications());
                     },
                     child: Container(
@@ -551,8 +559,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                       margin: EdgeInsetsDirectional.only(bottom: 8.h),
                       decoration: BoxDecoration(
                         color:
-                            AppCubit.get(context).drawerIndex == 5
-                                ? AppColors.secondray
+                            AppCubit.get(context).drawerIndex == 6
+                                ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
                       ),
@@ -562,7 +570,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                             Assets.svg.notifications,
                             height: 24.w,
                             width: 24.w,
-                            color:  AppCubit.get(context).drawerIndex == 5
+                            color:
+                                AppCubit.get(context).drawerIndex == 6
                                     ? Colors.white
                                     : AppColors.secondray,
                             fit: BoxFit.cover,
@@ -571,7 +580,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                             start: 6.w,
                             text: LocaleKeys.notifications.tr(),
                             color:
-                                AppCubit.get(context).drawerIndex == 5
+                                AppCubit.get(context).drawerIndex == 6
                                     ? Colors.white
                                     : Colors.black,
                             size: 16.sp,
@@ -594,6 +603,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      AppCubit.get(context).changedrawerIndex(index: 7);
                       if (CacheHelper.getUserType() == "client") {
                         CacheHelper.setUserType('saler');
                         AppRouter.navigateTo(context, const LogIn());
@@ -611,8 +621,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       margin: EdgeInsetsDirectional.only(bottom: 8.h),
                       decoration: BoxDecoration(
                         color:
-                            AppCubit.get(context).bottomNavIndex == 1 &&
-                                    AppCubit.get(context).drawerIndex == 0
+                            AppCubit.get(context).drawerIndex == 7
                                 ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
@@ -623,13 +632,19 @@ class _CustomDrawerState extends State<CustomDrawer>
                             Assets.svg.drawerLogout,
                             height: 24.w,
                             width: 24.w,
-                            color: AppColors.secondray,
+                            color:
+                                AppCubit.get(context).drawerIndex == 7
+                                    ? Colors.white
+                                    : AppColors.secondray,
                             fit: BoxFit.cover,
                           ),
                           AppText(
                             start: 6.w,
                             text: 'تسجيل كسائق',
-                            color: Colors.black,
+                            color:
+                                AppCubit.get(context).drawerIndex == 7
+                                    ? Colors.white
+                                    : Colors.black,
                             size: 16.sp,
                             family: FontFamily.tajawalBold,
                           ),
@@ -651,6 +666,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      AppCubit.get(context).changedrawerIndex(index: 8);
                       customAlertDialog(
                         context: context,
                         dialogBackGroundColor: Colors.white,
@@ -665,8 +681,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                       decoration: BoxDecoration(
                         color:
-                            AppCubit.get(context).bottomNavIndex == 1 &&
-                                    AppCubit.get(context).drawerIndex == 0
+                            AppCubit.get(context).drawerIndex == 8
                                 ? AppColors.primary
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(100.r),
@@ -677,13 +692,19 @@ class _CustomDrawerState extends State<CustomDrawer>
                             Assets.svg.drawerLogout,
                             height: 24.w,
                             width: 24.w,
-                            color: AppColors.secondray,
+                            color:
+                                AppCubit.get(context).drawerIndex == 8
+                                    ? Colors.white
+                                    : AppColors.secondray,
                             fit: BoxFit.cover,
                           ),
                           AppText(
                             start: 6.w,
                             text: LocaleKeys.logout.tr(),
-                            color: Colors.black,
+                            color:
+                                AppCubit.get(context).drawerIndex == 8
+                                    ? Colors.white
+                                    : Colors.black,
                             size: 16.sp,
                             family: FontFamily.tajawalBold,
                           ),

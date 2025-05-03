@@ -63,6 +63,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                               ),
                             ),
                             AppText(
+                              start: 16.w,
+                              end: 16.w,
+                              textAlign: TextAlign.center,
                               text: AppCubit.get(context).privacyPolicyTitle,
                               lines: 100,
                               size: 16.sp,
