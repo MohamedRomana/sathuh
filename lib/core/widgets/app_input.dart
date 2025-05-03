@@ -46,6 +46,7 @@ class AppInput extends StatelessWidget {
   final TextInputAction? textInputAction;
   final EdgeInsetsGeometry? contentPadding;
   final FocusNode? focusNode;
+  final TextAlign? textAlign;
 
   const AppInput({
     super.key,
@@ -91,6 +92,7 @@ class AppInput extends StatelessWidget {
     this.cursorColor,
     this.contentPadding,
     this.focusNode,
+    this.textAlign,
   });
   @override
   Widget build(BuildContext context) {
@@ -110,6 +112,7 @@ class AppInput extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         onFieldSubmitted: onSubmitted,
+        textAlign: textAlign ?? TextAlign.start,
         style: TextStyle(color: AppColors.primary, fontSize: 16.sp),
         obscureText: secureText ?? false,
         cursorColor: cursorColor ?? AppColors.primary,
@@ -128,29 +131,37 @@ class AppInput extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(border ?? 100.r),
-            borderSide:
-                BorderSide(color: focusedBorderColor ?? AppColors.primary),
+            borderSide: BorderSide(
+              color: focusedBorderColor ?? AppColors.primary,
+            ),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(border ?? 100.r),
-            borderSide:
-                BorderSide(color: errorBorderColor ?? AppColors.primary),
+            borderSide: BorderSide(
+              color: errorBorderColor ?? AppColors.primary,
+            ),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(border ?? 100.r),
-            borderSide:
-                BorderSide(color: focusedErrorBorderColor ?? AppColors.primary),
+            borderSide: BorderSide(
+              color: focusedErrorBorderColor ?? AppColors.primary,
+            ),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(border ?? 100.r),
             borderSide: BorderSide(color: disableBorderColor ?? Colors.white),
           ),
-          contentPadding: contentPadding ?? EdgeInsets.symmetric(
-              vertical: contentTop ?? 12.h, horizontal: contentRight ?? 10.w),
+          contentPadding:
+              contentPadding ??
+              EdgeInsets.symmetric(
+                vertical: contentTop ?? 12.h,
+                horizontal: contentRight ?? 10.w,
+              ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(border ?? 100.r),
-            borderSide:
-                BorderSide(color: outLineInputColorColor ?? AppColors.primary),
+            borderSide: BorderSide(
+              color: outLineInputColorColor ?? AppColors.primary,
+            ),
           ),
           filled: filled ?? false,
           fillColor: color ?? Colors.white,

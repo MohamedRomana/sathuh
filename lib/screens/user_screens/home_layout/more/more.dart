@@ -19,6 +19,7 @@ import '../../../auth/views/login/login.dart';
 import '../../drawer/about_us/about_us.dart';
 import '../../drawer/contact_us/contact_us.dart';
 import '../../drawer/privacy_policy/privacy_policy.dart';
+import '../../profile/profile.dart';
 import '../home_layout.dart';
 import 'widgets/logout_dialog.dart';
 
@@ -256,8 +257,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                     onTap: () {
                       AppCubit.get(context).changedrawerIndex(index: 1);
                       if (CacheHelper.getUserType() == "client") {
-                        // AppRouter.pop(context);
-                        // AppRouter.navigateTo(context, const Profile());
+                        AppRouter.pop(context);
+                        AppRouter.navigateTo(context, const Profile());
                       } else {
                         // AppRouter.pop(context);
                         // AppRouter.navigateTo(context, const ProviderProfile());
@@ -585,6 +586,102 @@ class _CustomDrawerState extends State<CustomDrawer>
                                     : Colors.black,
                             size: 16.sp,
                             family: FontFamily.tajawalBold,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                AnimatedBuilder(
+                  animation: _animation7,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(_animation7.value, 0),
+                      child: child,
+                    );
+                  },
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      AppCubit.get(context).changedrawerIndex(index: 10);
+                    },
+                    child: Container(
+                      width: 250.w,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        // vertical: 8.h,
+                      ),
+                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                      decoration: BoxDecoration(
+                        color:
+                            AppCubit.get(context).drawerIndex == 10
+                                ? AppColors.primary
+                                : Colors.transparent,
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.language,
+                                size: 24.sp,
+                                color: AppColors.secondray,
+                              ),
+                              SizedBox(width: 6.w),
+                              AppText(
+                                text:
+                                    CacheHelper.getLang() != "en"
+                                        ? LocaleKeys.en.tr()
+                                        : LocaleKeys.ar.tr(),
+                                size: 16.sp,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 10
+                                        ? Colors.white
+                                        : Colors.black,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(width: 6.w),
+                              Transform.scale(
+                                scale: 0.8.r,
+                                child: Switch(
+                                  padding: EdgeInsets.zero,
+                                  trackOutlineColor:
+                                      const WidgetStatePropertyAll(
+                                        Colors.transparent,
+                                      ),
+                                  activeColor: AppColors.primary,
+                                  activeTrackColor: const Color(0xffD4D4D4),
+                                  inactiveThumbColor: const Color(0xffB5B2B2),
+                                  inactiveTrackColor: const Color(0xffDCDCDC),
+                                  value:
+                                      CacheHelper.getLang() == "en"
+                                          ? true
+                                          : false,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      // AppRouter.navigateAndFinish(
+                                      //   context,
+                                      //   const Splash(),
+                                      // );
+                                      if (CacheHelper.getLang() == "ar") {
+                                        CacheHelper.setLang('en');
+                                        context.setLocale(const Locale('en'));
+                                      } else {
+                                        CacheHelper.setLang('ar');
+                                        context.setLocale(const Locale('ar'));
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

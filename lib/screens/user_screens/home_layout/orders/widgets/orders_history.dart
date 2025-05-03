@@ -23,7 +23,12 @@ class _OrderHistoryState extends State<OrderHistory> {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+          padding: EdgeInsetsDirectional.only(
+            start: 16.w,
+            end: 16.w,
+            top: 24.h,
+            bottom: 120.h,
+          ),
           separatorBuilder:
               (BuildContext context, int index) => SizedBox(height: 16.h),
           itemCount: 10,

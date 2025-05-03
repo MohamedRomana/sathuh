@@ -11,6 +11,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../add_cars/add_cars.dart';
+import '../../edit_car/edit_car.dart';
 
 class MyCars extends StatelessWidget {
   const MyCars({super.key});
@@ -132,26 +133,34 @@ class MyCars extends StatelessWidget {
                                 ],
                               ),
                               const Spacer(),
-                              Container(
-                                height: 22.w,
-                                width: 22.w,
-                                margin: EdgeInsetsDirectional.only(end: 16.w),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Container(
-                                  margin: EdgeInsets.all(2.r),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        AppCubit.get(
-                                              context,
-                                            ).selectedCarIndexes.contains(index)
-                                            ? AppColors.primary
-                                            : Colors.transparent,
-                                    shape: BoxShape.circle,
+                              Row(
+                                children: [
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () {
+                                      AppRouter.navigateTo(
+                                        context,
+                                        const EditCar(),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: AppColors.primary,
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(width: 16.w),
+
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () {},
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

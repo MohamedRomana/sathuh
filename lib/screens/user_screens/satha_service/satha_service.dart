@@ -11,6 +11,7 @@ import '../../../core/widgets/app_text.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../add_cars/add_cars.dart';
+import '../proplem_type/problem_type.dart';
 
 class SathaService extends StatefulWidget {
   const SathaService({super.key});
@@ -68,6 +69,10 @@ class _SathaServiceState extends State<SathaService> {
                                   context,
                                 ).changeSelectedCar(index: -1);
                               } else {
+                                AppRouter.navigateTo(
+                                  context,
+                                  const ProblemType(),
+                                );
                                 AppCubit.get(
                                   context,
                                 ).changeSelectedCar(index: index);

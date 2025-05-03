@@ -121,6 +121,12 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeIndex());
   }
 
+  List<int> selectedProblemIndexes = [-1];
+  void changeSelectedProblem({required int index}) {
+    selectedProblemIndexes = [index];
+    emit(ChangeIndex());
+  }
+
   int changeIndex = 0;
   void changeIndexs({required int index}) {
     changeIndex = index;
@@ -192,6 +198,58 @@ class AppCubit extends Cubit<AppState> {
     requestImage.removeAt(index);
     emit(RemoveImageSuccess());
   }
+
+  List<File> profileCoverImage = [];
+  Future<void> getProfileCoverImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final int? pickedOption = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.select_image_source.tr()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () => Navigator.pop(context, 1),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () => Navigator.pop(context, 2),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedOption == null) return;
+
+    XFile? pickedImage;
+
+    if (pickedOption == 1) {
+      pickedImage = await picker.pickImage(source: ImageSource.camera);
+    } else if (pickedOption == 2) {
+      final pickedImages = await picker.pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        pickedImage = pickedImages.first;
+      }
+    }
+
+    if (pickedImage != null) {
+      profileCoverImage = [File(pickedImage.path)];
+      emit(ChooseImageSuccess());
+    }
+  }
+
+  void removeProfileCoverImage() {
+    profileCoverImage.clear();
+    emit(RemoveImageSuccess());
+  }
+
 
   List<File> profileImage = [];
   Future<void> getProfileImage(BuildContext context) async {

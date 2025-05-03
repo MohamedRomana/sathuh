@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/widgets/app_button.dart';
-import 'package:sathuh/core/widgets/app_input.dart';
-import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
+
+import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/app_input.dart';
 import '../../../core/widgets/app_router.dart';
+import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_app_bar.dart';
+import '../../../core/widgets/custom_bottom_nav.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 
-class AddCars extends StatelessWidget {
-  const AddCars({super.key});
+class EditCar extends StatelessWidget {
+  const EditCar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class AddCars extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomAppBar(title: 'اضافة سيارة'),
+                const CustomAppBar(title: 'تعديل بيانات السياره'),
                 AppText(
                   text: 'نوع السيارة',
                   bottom: 8.h,
@@ -44,7 +46,7 @@ class AddCars extends StatelessWidget {
                 const AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'نوع السيارة',
+                  hint: 'سيدان',
                 ),
                 AppText(
                   text: 'موديل السيارة',
@@ -57,7 +59,7 @@ class AddCars extends StatelessWidget {
                 const AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'موديل السيارة',
+                  hint: 'BMW',
                 ),
                 AppText(
                   text: 'سنة الصنع',
@@ -70,7 +72,7 @@ class AddCars extends StatelessWidget {
                 const AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'سنة الصنع',
+                  hint: '2022',
                 ),
                 AppText(
                   text: 'اللون',
@@ -83,7 +85,7 @@ class AddCars extends StatelessWidget {
                 const AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'اللون',
+                  hint: 'زرقاء',
                 ),
                 AppText(
                   text: 'رقم الشاسيه (كما هو مكتوب في الرخصه)',
@@ -96,7 +98,7 @@ class AddCars extends StatelessWidget {
                 const AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'رقم الشاسيه',
+                  hint: '01151515154515154',
                 ),
                 AppText(
                   text: 'رقم لوحة السياره',
@@ -115,6 +117,7 @@ class AddCars extends StatelessWidget {
                         border: 10.r,
                         end: 0,
                         enabledBorderColor: Colors.grey,
+                        hint: 'ا',
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -125,6 +128,7 @@ class AddCars extends StatelessWidget {
                         border: 10.r,
                         end: 0,
                         enabledBorderColor: Colors.grey,
+                        hint: 'ب',
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -135,6 +139,7 @@ class AddCars extends StatelessWidget {
                         filled: true,
                         border: 10.r,
                         enabledBorderColor: Colors.grey,
+                        hint: 'ج',
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -143,7 +148,7 @@ class AddCars extends StatelessWidget {
                       child: AppInput(
                         end: 0,
                         filled: true,
-                        hint: '- - - - - -',
+                        hint: '123',
                         textAlign: TextAlign.center,
                         border: 10.r,
                         enabledBorderColor: Colors.grey,
