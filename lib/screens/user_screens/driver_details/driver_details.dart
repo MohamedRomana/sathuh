@@ -9,6 +9,7 @@ import 'package:sathuh/core/widgets/app_text.dart';
 import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import 'package:sathuh/screens/user_screens/home_layout/home_layout.dart';
 import '../../../core/constants/colors.dart';
+import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
@@ -42,6 +43,31 @@ class DriverDetails extends StatelessWidget {
                 const ProviderHeader(),
                 const CustomAboutProvider(),
                 const ProductRates(),
+                AppButton(
+                  onPressed: () {
+                    openWhatsApp('0100020202020');
+                  },
+                  color: AppColors.secondray,
+                  top: 24.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.img.social.path,
+                        height: 30.w,
+                        width: 30.w,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(width: 8.w),
+                      AppText(
+                        text: 'تواصل عبر الواتساب',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        size: 16.sp,
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 120.h),
               ],
             ),

@@ -14,6 +14,9 @@ class CustomUserRegisterFields extends StatefulWidget {
   final TextEditingController phoneController;
   final TextEditingController fullNameController;
   final TextEditingController emailController;
+  final TextEditingController countryController;
+  final TextEditingController cityController;
+  final TextEditingController townController;
   final TextEditingController passController;
   final TextEditingController confirmPassController;
 
@@ -25,6 +28,9 @@ class CustomUserRegisterFields extends StatefulWidget {
     required this.confirmPassController,
     required this.emailController,
     required this.fullNameController,
+    required this.countryController,
+    required this.cityController,
+    required this.townController,
   });
 
   @override
@@ -36,6 +42,9 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
   final FocusNode nameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
+  final FocusNode countryFocus = FocusNode();
+  final FocusNode cityFocus = FocusNode();
+  final FocusNode townFocus = FocusNode();
   final FocusNode passFocus = FocusNode();
   final FocusNode confirmPassFocus = FocusNode();
 
@@ -45,6 +54,9 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
     nameFocus.addListener(() => setState(() {}));
     phoneFocus.addListener(() => setState(() {}));
     emailFocus.addListener(() => setState(() {}));
+    countryFocus.addListener(() => setState(() {}));
+    cityFocus.addListener(() => setState(() {}));
+    townFocus.addListener(() => setState(() {}));
     passFocus.addListener(() => setState(() {}));
     confirmPassFocus.addListener(() => setState(() {}));
   }
@@ -54,6 +66,9 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
     nameFocus.dispose();
     phoneFocus.dispose();
     emailFocus.dispose();
+    countryFocus.dispose();
+    cityFocus.dispose();
+    townFocus.dispose();
     passFocus.dispose();
     confirmPassFocus.dispose();
     super.dispose();
@@ -160,6 +175,94 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
                 validate: (value) {
                   if (value!.isEmpty) {
                     return LocaleKeys.yourEmailValidate.tr();
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              AppText(
+                start: 16.w,
+                bottom: 8.h,
+                text: 'الدوله',
+                color: AppColors.secondray,
+                fontWeight: FontWeight.w400,
+                size: 14.sp,
+              ),
+              AppInput(
+                focusNode: countryFocus,
+                enabledBorderColor: Colors.grey,
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  size: 24.sp,
+                  color:
+                      countryFocus.hasFocus ? AppColors.primary : Colors.grey,
+                ),
+                bottom: 16.h,
+                filled: true,
+                hint: 'الدوله',
+                controller: widget.countryController,
+                inputType: TextInputType.emailAddress,
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return 'ادخل الدوله';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              AppText(
+                start: 16.w,
+                bottom: 8.h,
+                text: 'المدينه',
+                color: AppColors.secondray,
+                fontWeight: FontWeight.w400,
+                size: 14.sp,
+              ),
+              AppInput(
+                focusNode: cityFocus,
+                enabledBorderColor: Colors.grey,
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  size: 24.sp,
+                  color: cityFocus.hasFocus ? AppColors.primary : Colors.grey,
+                ),
+                bottom: 16.h,
+                filled: true,
+                hint: 'المدينه',
+                controller: widget.cityController,
+                inputType: TextInputType.emailAddress,
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return 'ادخل المدينه';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              AppText(
+                start: 16.w,
+                bottom: 8.h,
+                text: 'المنطقه',
+                color: AppColors.secondray,
+                fontWeight: FontWeight.w400,
+                size: 14.sp,
+              ),
+              AppInput(
+                focusNode: townFocus  ,
+                enabledBorderColor: Colors.grey,
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  size: 24.sp,
+                  color: townFocus  .hasFocus ? AppColors.primary : Colors.grey,
+                ),
+                bottom: 16.h,
+                filled: true,
+                hint: 'المنطقه',
+                controller: widget.townController,
+                inputType: TextInputType.emailAddress,
+                validate: (value) {
+                  if (value!.isEmpty) {
+                    return 'ادخل المنطقه';
                   } else {
                     return null;
                   }

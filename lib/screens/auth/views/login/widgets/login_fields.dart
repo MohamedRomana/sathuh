@@ -73,19 +73,19 @@ class _CustomLoginFieldsState extends State<CustomLoginFields> {
             bottom: 16.h,
             filled: true,
             enabledBorderColor: Colors.grey,
-            hint: LocaleKeys.phone.tr(),
+            hint: LocaleKeys.email.tr(),
             color: Colors.white,
             controller: widget.phoneController,
-            inputType: TextInputType.phone,
+            inputType: TextInputType.emailAddress,
             validate: (value) {
               if (value!.isEmpty) {
-                return LocaleKeys.phoneValidate.tr();
+                return LocaleKeys.yourEmailValidate.tr();
               } else {
                 return null;
               }
             },
             prefixIcon: Icon(
-              Icons.phone_outlined,
+              Icons.email_outlined,
               size: 24.sp,
               color: phoneFocusNode.hasFocus ? AppColors.primary : Colors.grey,
             ),

@@ -52,41 +52,55 @@ class AuthCubit extends Cubit<AuthState> {
   String sectionId = "";
   Future register({
     required String fullName,
-    required String phone,
+    required String email,
+    required String phoneNumber,
     required String password,
+    required String confirmPassword,
+    required String country,
+    required String city,
+    required String town,
   }) async {
     emit(RegisterLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/register"), body: {
-      "lang": CacheHelper.getLang(),
-      "first_name": fullName,
-      "city_id": cityId,
-      "phone": phone,
-      "password": password,
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
-    debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      cityId = "";
-      sectionId = "";
-      await CacheHelper.setUserId(data["data"]["id"].toString());
-      emit(RegisterSuccess(message: data["msg"]));
-    } else {
-      debugPrint(data["msg"]);
-      emit(RegisterFailure(error: data["msg"]));
+    final response = await http.post(
+      Uri.parse("${baseUrl}api/SignUp-User"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "fullName": fullName,
+        "email": email,
+        "phoneNumber": phoneNumber,
+        "password": password,
+        "confirmPassword": confirmPassword,
+        "country": country,
+        "city": city,
+        "town": town,
+      }),
+    );
+
+    try {
+      final data = jsonDecode(response.body);
+      debugPrint(data.toString());
+
+      final message = data["message"] ?? "تم التسجيل بنجاح";
+
+      emit(RegisterSuccess(message: message));
+    } catch (e) {
+      debugPrint("Decoding error: $e");
+      emit(RegisterFailure(error: "حدث خطأ في التسجيل"));
     }
   }
 
   Future otp({required String code}) async {
     emit(OTPLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/active-account"), body: {
-      "lang": CacheHelper.getLang(),
-      "user_id": CacheHelper.getUserId(),
-      "code": code,
-      "device_id": CacheHelper.getDeviceToken(),
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/active-account"),
+      body: {
+        "lang": CacheHelper.getLang(),
+        "user_id": CacheHelper.getUserId(),
+        "code": code,
+        "device_id": CacheHelper.getDeviceToken(),
+      },
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
@@ -98,40 +112,41 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future logIn({
-    required String phone,
-    required String password,
-  }) async {
+  Future logIn({required String email, required String password}) async {
     emit(LogInLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/login"), body: {
-      "lang": CacheHelper.getLang(),
-      "phone": phone,
-      "password": password,
-      "device_id": CacheHelper.getDeviceToken(),
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
-    debugPrint(data.toString());
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/SignIn-User"),
+      headers: {"Content-Type": "application/json"},
+      body: {
+        // "lang": CacheHelper.getLang(),
+        "email": email,
+        "password": password,
+        // "device_id": CacheHelper.getDeviceToken(),
+      },
+    );
+   try {
+      final data = jsonDecode(response.body);
+      debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      // await CacheHelper.setUserToken(data["data"]["api_token"]);
-      await CacheHelper.setUserType(data["data"]["user_type"]);
-      await CacheHelper.setUserId(data["data"]["id"].toString());
+      final message = data["message"] ?? "تم التسجيل بنجاح";
 
-      emit(LogInSuccess());
-    } else {
-      emit(LogInFailure(error: data["msg"]));
+      emit(LogInSuccess(message: message));
+    } catch (e) {
+      debugPrint("Decoding error: $e");
+      emit(LogInFailure(error: "حدث خطأ في التسجيل"));
     }
   }
 
   Future logOut() async {
     emit(LogOutLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/logout"), body: {
-      "lang": CacheHelper.getLang(),
-      "user_id": CacheHelper.getUserId(),
-      "device_id": CacheHelper.getDeviceToken(),
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/logout"),
+      body: {
+        "lang": CacheHelper.getLang(),
+        "user_id": CacheHelper.getUserId(),
+        "device_id": CacheHelper.getDeviceToken(),
+      },
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
@@ -147,11 +162,10 @@ class AuthCubit extends Cubit<AuthState> {
   String resetPassId = "";
   Future forgetPass({required String phone}) async {
     emit(ForgetPassLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/forget-password"), body: {
-      "lang": CacheHelper.getLang(),
-      "phone": phone,
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/forget-password"),
+      body: {"lang": CacheHelper.getLang(), "phone": phone},
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     if (data["data"] != null) {
       resetPassId = data["data"]["id"].toString();
@@ -168,11 +182,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future resendCode() async {
     emit(ResendCodeLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/resend-code"), body: {
-      "lang": CacheHelper.getLang(),
-      "user_id": CacheHelper.getUserId(),
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/resend-code"),
+      body: {"lang": CacheHelper.getLang(), "user_id": CacheHelper.getUserId()},
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
@@ -184,18 +197,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future resetPass({
-    required String code,
-    required String password,
-  }) async {
+  Future resetPass({required String code, required String password}) async {
     emit(ResetPassLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/reset-password"), body: {
-      "lang": CacheHelper.getLang(),
-      "user_id": resetPassId,
-      "code": code,
-      "password": password,
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/reset-password"),
+      body: {
+        "lang": CacheHelper.getLang(),
+        "user_id": resetPassId,
+        "code": code,
+        "password": password,
+      },
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
@@ -208,12 +220,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future deleteAccount() async {
     emit(DeleteAccountLoading());
-    http.Response response =
-        await http.post(Uri.parse("${baseUrl}api/destroy-user"), body: {
-      "lang": CacheHelper.getLang(),
-      "user_id": CacheHelper.getUserId(),
-      "device_id": CacheHelper.getDeviceToken(),
-    });
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}api/destroy-user"),
+      body: {
+        "lang": CacheHelper.getLang(),
+        "user_id": CacheHelper.getUserId(),
+        "device_id": CacheHelper.getDeviceToken(),
+      },
+    );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
@@ -230,8 +244,10 @@ class AuthCubit extends Cubit<AuthState> {
   String? identityImageUrl;
   Future uploadIdentityImage({required List<File> identityImage}) async {
     emit(UploadImageLoading());
-    final request =
-        http.MultipartRequest('POST', Uri.parse("${baseUrl}api/upload-image"));
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse("${baseUrl}api/upload-image"),
+    );
     request.fields['lang'] = CacheHelper.getLang();
 
     for (var image in identityImage) {
@@ -262,8 +278,10 @@ class AuthCubit extends Cubit<AuthState> {
   String? licenseImageUrl;
   Future uploadLicenseImage({required List<File> licenseImage}) async {
     emit(UploadImageLoading());
-    final request =
-        http.MultipartRequest('POST', Uri.parse("${baseUrl}api/upload-image"));
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse("${baseUrl}api/upload-image"),
+    );
     request.fields['lang'] = CacheHelper.getLang();
 
     for (var image in licenseImage) {
@@ -294,8 +312,10 @@ class AuthCubit extends Cubit<AuthState> {
   String? carImageUrl;
   Future uploadCarImage({required List<File> carImage}) async {
     emit(UploadImageLoading());
-    final request =
-        http.MultipartRequest('POST', Uri.parse("${baseUrl}api/upload-image"));
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse("${baseUrl}api/upload-image"),
+    );
     request.fields['lang'] = CacheHelper.getLang();
 
     for (var image in carImage) {

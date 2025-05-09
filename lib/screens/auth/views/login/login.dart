@@ -92,7 +92,7 @@ class _LogInState extends State<LogIn> {
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is LogInSuccess) {
-                  saveData(key: 'phone', value: _phoneController.text);
+                  saveData(key: 'email', value: _phoneController.text);
                   saveData(key: 'password', value: _passController.text);
 
                   AppCubit.get(context).changebottomNavIndex(1);
@@ -120,7 +120,7 @@ class _LogInState extends State<LogIn> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await AuthCubit.get(context).logIn(
-                        phone: _phoneController.text,
+                        email: _phoneController.text,
                         password: _passController.text,
                       );
                     }
@@ -151,7 +151,7 @@ class _LogInState extends State<LogIn> {
 
                     await AuthCubit.get(
                       context,
-                    ).logIn(phone: cachedPhone, password: cachedPass);
+                    ).logIn(email: cachedPhone, password: cachedPass);
                   } else {
                     showFlashMessage(
                       context: context,

@@ -98,6 +98,9 @@ class $AssetsImgGen {
   AssetGenImage get saudiArabia =>
       const AssetGenImage('assets/img/saudi-arabia.png');
 
+  /// File path: assets/img/social.png
+  AssetGenImage get social => const AssetGenImage('assets/img/social.png');
+
   /// File path: assets/img/swiper.png
   AssetGenImage get swiper => const AssetGenImage('assets/img/swiper.png');
 
@@ -131,6 +134,7 @@ class $AssetsImgGen {
     mony,
     notiEmpty,
     saudiArabia,
+    social,
     swiper,
     time,
     trak,

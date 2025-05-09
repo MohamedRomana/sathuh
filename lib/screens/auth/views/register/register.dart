@@ -18,6 +18,9 @@ final _formKey = GlobalKey<FormState>();
 final _fullNameController = TextEditingController();
 final _phoneController = TextEditingController();
 final _emailController = TextEditingController();
+final _countryController = TextEditingController();
+final _cityController = TextEditingController();
+final _townController = TextEditingController();
 final _passController = TextEditingController();
 final _confirmPassController = TextEditingController();
 
@@ -39,6 +42,9 @@ class Register extends StatelessWidget {
               confirmPassController: _confirmPassController,
               fullNameController: _fullNameController,
               emailController: _emailController,
+              countryController: _countryController,
+              cityController: _cityController,
+              townController: _townController,
             ),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
@@ -67,13 +73,18 @@ class Register extends StatelessWidget {
                   top: 24.h,
                   bottom: 29.h,
                   onPressed: () async {
-                    // if (_formKey.currentState!.validate()) {
-                    // await AuthCubit.get(context).register(
-                    //   fullName: _fullNameController.text,
-                    //   phone: _phoneController.text,
-                    //   password: _passController.text,
-                    // );
-                    // }
+                    if (_formKey.currentState!.validate()) {
+                      await AuthCubit.get(context).register(
+                        fullName: _fullNameController.text,
+                        password: _passController.text,
+                        email: _emailController.text,
+                        phoneNumber: _phoneController.text,
+                        confirmPassword: _confirmPassController.text,
+                        country: _countryController.text,
+                        city: _cityController.text,
+                        town: _townController.text,
+                      );
+                    }
                     AppRouter.navigateTo(context, const OTPscreen());
                   },
                   child:

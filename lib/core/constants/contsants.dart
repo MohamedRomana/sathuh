@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 String? token;
 String? userId;
-const String baseUrl = "https://abdo.efadh.net/aswaq/";
+const String baseUrl = "https://freelancer.runasp.net/";
 void openGoogleMap(double lat, double lng) async {
   Uri googleMapUrl = Uri.parse(
     "https://www.google.com/maps/search/?api=1&query=$lat,$lng",
@@ -38,4 +38,11 @@ Future<void> makePhoneCall(String phoneNumber) async {
 void shareLocation(double lat, double lng) {
   String location = 'Latitude: $lat, Longitude: $lng';
   Share.share(location);
+}
+
+Future<void> openWhatsApp(String phoneNumber) async {
+  final Uri launchUri = Uri.parse(
+    "https://wa.me/$phoneNumber",
+  );
+  await launchUrl(launchUri);
 }
