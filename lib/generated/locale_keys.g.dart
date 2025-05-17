@@ -539,5 +539,6 @@ abstract class  LocaleKeys {
   static const manufacture_year = 'manufacture_year';
   static const color = 'color';
   static const car_plate_number = 'car_plate_number';
+  static const complaints = 'complaints';
 
 }

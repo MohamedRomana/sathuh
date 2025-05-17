@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/contsants.dart';
-import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -11,6 +10,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../admin_driver_details.dart/admin_driver_details.dart';
+import '../chats/chat_details/adm_chat_details.dart';
 
 class Drivers extends StatelessWidget {
   const Drivers({super.key});
@@ -47,7 +47,10 @@ class Drivers extends StatelessWidget {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          AppRouter.navigateTo(context, const AdminDriverDetails());
+                          AppRouter.navigateTo(
+                            context,
+                            const AdminDriverDetails(),
+                          );
                         },
                         child: Container(
                           width: 343.w,
@@ -139,9 +142,10 @@ class Drivers extends StatelessWidget {
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () {
-                                      AppCubit.get(
+                                      AppRouter.navigateTo(
                                         context,
-                                      ).changebottomNavIndex(3);
+                                        const AdmChatDetails(),
+                                      );
                                     },
                                     child: const Icon(
                                       Icons.chat,

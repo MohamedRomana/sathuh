@@ -1,303 +1,269 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:sathuh/core/widgets/app_input.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/fonts.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
-class EditPrice extends StatelessWidget {
-  const EditPrice({super.key});
+class EditPrice extends StatefulWidget {
+  final TextEditingController priceController;
+  final TextEditingController priceController2;
+  const EditPrice({
+    super.key,
+    required this.priceController,
+    required this.priceController2,
+  });
+
+  @override
+  State<EditPrice> createState() => _EditPriceState();
+}
+
+class _EditPriceState extends State<EditPrice> {
+  int selectedValue = 1;
+  final TextEditingController priceController = TextEditingController(
+    text: '1',
+  );
+  @override
+  void initState() {
+    widget.priceController.text = '1';
+    widget.priceController2.text = '1';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            AppText(
-              text: 'ضبط التسعير',
-              size: 20.sp,
-              color: AppColors.primary,
-              family: FontFamily.tajawalBold,
-            ),
-            SizedBox(height: 24.h),
-            Container(
-              width: 343.w,
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withAlpha(100),
-                    blurRadius: 5.r,
-                    spreadRadius: 1.r,
-                    offset: Offset(0, 5.r),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 110.w,
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: AppColors.borderColor,
-                      borderRadius: BorderRadius.circular(15.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(100),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 24.h),
+              Container(
+                width: 343.w,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withAlpha(100),
+                      blurRadius: 5.r,
+                      spreadRadius: 1.r,
+                      offset: Offset(0, 5.r),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            AppCubit.get(context).increseCount();
-                          },
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 20.sp,
-                          ),
-                        ),
-                        AppText(
-                          start: 11.w,
-                          end: 11.w,
-                          text: AppCubit.get(context).count.toString(),
-                          size: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            AppCubit.get(context).decreseCount();
-                          },
-                          child: Icon(
-                            Icons.remove,
-                            color: Colors.grey,
-                            size: 20.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 130.w,
-                    child: AppText(
-                      start: 8.w,
-                      text: 'سعر المتر في السطحه',
-                      color: Colors.black,
-                      lines: 2,
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      text: 'سعر المتر في سطحه',
+                      size: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    Assets.img.winchCar.path,
-                    height: 60.w,
-                    width: 60.w,
-                    fit: BoxFit.cover,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 343.w,
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              margin: EdgeInsetsDirectional.symmetric(
-                horizontal: 16.w,
-                vertical: 24.h,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withAlpha(100),
-                    blurRadius: 5.r,
-                    spreadRadius: 1.r,
-                    offset: Offset(0, 5.r),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 110.w,
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: AppColors.borderColor,
-                      borderRadius: BorderRadius.circular(15.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(100),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    SizedBox(height: 10.h),
+                    Row(
                       children: [
                         InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           onTap: () {
-                            AppCubit.get(context).increseCount2();
+                            if (selectedValue > 1) {
+                              selectedValue--;
+                              priceController.text = selectedValue.toString();
+                            }
                           },
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 20.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.borderColor,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        AppText(
-                          start: 11.w,
-                          end: 11.w,
-                          text: AppCubit.get(context).count2.toString(),
-                          size: 18.sp,
-                          fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 100.w,
+                          child: AppInput(
+                            filled: true,
+                            controller: priceController,
+                            border: 10.r,
+                            enabledBorderColor: Colors.grey,
+                            inputType: TextInputType.number,
+                            onChanged: (value) {
+                              final num = int.tryParse(value!);
+                              if (num != null && num >= 1 && num <= 100) {
+                                selectedValue = num;
+                              }
+                            },
+                          ),
                         ),
                         InkWell(
+                          onTap: () {
+                            if (selectedValue < 100) {
+                              selectedValue++;
+                              priceController.text = selectedValue.toString();
+                            }
+                          },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
-                          onTap: () {
-                            AppCubit.get(context).decreseCount2();
-                          },
-                          child: Icon(
-                            Icons.remove,
-                            color: Colors.grey,
-                            size: 20.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(Icons.add, color: Colors.white),
                           ),
+                        ),
+                        const Spacer(),
+
+                        DropdownButton<int>(
+                          value: selectedValue,
+                          items: List.generate(100, (index) {
+                            final val = index + 1;
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(val.toString()),
+                            );
+                          }),
+                          onChanged: (value) {
+                            if (value != null) {
+                              selectedValue = value;
+                              priceController.text = selectedValue.toString();
+                            }
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: 130.w,
-                    child: AppText(
-                      start: 8.w,
+                  ],
+                ),
+              ),
+              SizedBox(height: 24.h),
+              Container(
+                width: 343.w,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withAlpha(100),
+                      blurRadius: 5.r,
+                      spreadRadius: 1.r,
+                      offset: Offset(0, 5.r),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
                       text: 'سعر المتر في سطحة هيدروليك',
-                      color: Colors.black,
-                      lines: 2,
+                      size: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    Assets.img.winchCar.path,
-                    height: 60.w,
-                    width: 60.w,
-                    fit: BoxFit.cover,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 343.w,
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withAlpha(100),
-                    blurRadius: 5.r,
-                    spreadRadius: 1.r,
-                    offset: Offset(0, 5.r),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 110.w,
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: AppColors.borderColor,
-                      borderRadius: BorderRadius.circular(15.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(100),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    SizedBox(height: 10.h),
+                    Row(
                       children: [
                         InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           onTap: () {
-                            AppCubit.get(context).increseCount3();
+                            if (selectedValue > 1) {
+                              selectedValue--;
+                              widget.priceController2.text =
+                                  selectedValue.toString();
+                            }
                           },
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 20.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.borderColor,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        AppText(
-                          start: 11.w,
-                          end: 11.w,
-                          text: "${AppCubit.get(context).count3.toString()}%",
-                          size: 18.sp,
-                          fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 100.w,
+                          child: AppInput(
+                            filled: true,
+                            controller: widget.priceController2,
+                            border: 10.r,
+                            enabledBorderColor: Colors.grey,
+                            inputType: TextInputType.number,
+                            onChanged: (value) {
+                              final num = int.tryParse(value!);
+                              if (num != null && num >= 1 && num <= 100) {
+                                selectedValue = num;
+                              }
+                            },
+                          ),
                         ),
                         InkWell(
+                          onTap: () {
+                            if (selectedValue < 100) {
+                              selectedValue++;
+                              widget.priceController2.text =
+                                  selectedValue.toString();
+                            }
+                          },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
-                          onTap: () {
-                            AppCubit.get(context).decreseCount3();
-                          },
-                          child: Icon(
-                            Icons.remove,
-                            color: Colors.grey,
-                            size: 20.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(Icons.add, color: Colors.white),
                           ),
+                        ),
+                        const Spacer(),
+
+                        DropdownButton<int>(
+                          value: selectedValue,
+                          items: List.generate(100, (index) {
+                            final val = index + 1;
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text(val.toString()),
+                            );
+                          }),
+                          onChanged: (value) {
+                            if (value != null) {
+                              selectedValue = value;
+                              widget.priceController2.text =
+                                  selectedValue.toString();
+                            }
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: 130.w,
-                    child: AppText(
-                      start: 8.w,
-                      text: 'نسبة السائق',
-                      color: Colors.black,
-                      lines: 2,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    Assets.img.driver.path,
-                    height: 60.w,
-                    width: 60.w,
-                    fit: BoxFit.cover,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+              AppButton(
+                top: 30.h,
+                onPressed: () {},
+                child: AppText(
+                  text: LocaleKeys.save.tr(),
+                  color: Colors.white,
+                  size: 21.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

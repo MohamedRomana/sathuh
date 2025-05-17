@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
@@ -10,6 +9,12 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import 'widgets/edit_price.dart';
+import 'widgets/sub_price.dart';
+
+final _priceController = TextEditingController();
+final _monthPriceController = TextEditingController();
+final _yearPriceController = TextEditingController();
+final _priceController2 = TextEditingController();
 
 class Price extends StatefulWidget {
   const Price({super.key});
@@ -22,7 +27,7 @@ class _PriceState extends State<Price> {
   @override
   initState() {
     super.initState();
-    AppCubit.get(context).count = 0;
+    
   }
 
   @override
@@ -71,7 +76,7 @@ class _PriceState extends State<Price> {
                           SizedBox(
                             width: 150.w,
                             child: AppText(
-                              text: LocaleKeys.welcome_dear_customer.tr(),
+                              text: LocaleKeys.welcome.tr(),
                               size: 12.sp,
                               color: AppColors.secondray,
                               family: FontFamily.tajawalBold,
@@ -92,15 +97,60 @@ class _PriceState extends State<Price> {
                     ],
                   ),
                   SizedBox(height: 24.h),
-                  const EditPrice(),
-                  AppButton(
-                    top: 30.h,
-                    onPressed: () {},
-                    child: AppText(
-                      text: LocaleKeys.save.tr(),
-                      color: Colors.white,
-                      size: 21.sp,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: DefaultTabController(
+                      length: 2,
+                      child: Column(
+                        children: [
+                          AppText(
+                            text: 'ضبط التسعير',
+                            size: 20.sp,
+                            color: AppColors.primary,
+                            family: FontFamily.tajawalBold,
+                            bottom: 16.h,
+                          ),
+                          Container(
+                            width: 343.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: AppColors.secondray,
+                            ),
+                            child: TabBar(
+                              dividerColor: Colors.transparent,
+                              indicatorColor: AppColors.primary,
+                              labelColor: Colors.white,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicator: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              unselectedLabelColor: Colors.grey,
+                              labelStyle: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              tabs: const [
+                                Tab(text: 'تسعير سطحة'),
+                                Tab(text: 'تسعير الاشتراك'),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                EditPrice(
+                                  priceController: _priceController,
+                                  priceController2: _priceController2,
+                                ),
+                                SubscribePrice(
+                                  monthPriceController2: _monthPriceController,
+                                  yearspriceController: _yearPriceController,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

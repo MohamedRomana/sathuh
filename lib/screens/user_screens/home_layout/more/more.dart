@@ -15,6 +15,8 @@ import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../admin_screens/home_layout/admin_home_layout.dart';
+import '../../../admin_screens/notifications/notifications.dart';
 import '../../../auth/views/login/login.dart';
 import '../../drawer/about_us/about_us.dart';
 import '../../drawer/contact_us/contact_us.dart';
@@ -191,11 +193,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                           const HomeLayout(),
                         );
                       } else {
-                        // AppCubit.get(context).changebottomProviderNavIndex(1);
-                        // AppRouter.navigateTo(
-                        //   context,
-                        //   const ProviderHomeLayout(),
-                        // );
+                        AppCubit.get(context).changebottomAdminNavIndex(1);
+                        AppRouter.navigateTo(context, const AdminHomeLayout());
                       }
                     },
                     child: Container(
@@ -217,22 +216,33 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                       child: Row(
                         children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerHome,
-                            height: 24.w,
-                            width: 24.w,
+                          CacheHelper.getUserType() == "client"
+                              ? SvgPicture.asset(
+                                Assets.svg.drawerHome,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 0
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              )
+                              : Icon(
+                                Icons.paid,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 0
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                              ),
+                          AppText(
+                            start: 6.w,
+                            text:
+                                CacheHelper.getUserType() == "client"
+                                    ? LocaleKeys.home.tr()
+                                    : 'الاسعار',
                             color:
                                 AppCubit.get(context).drawerIndex == 0
                                     ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
-                          ),
-                          AppText(
-                            start: 6.w,
-                            text: LocaleKeys.home.tr(),
-                            color:
-                                AppCubit.get(context).drawerIndex == 0
-                                    ? Colors.white
                                     : Colors.black,
                             size: 16.sp,
                             family: FontFamily.tajawalBold,
@@ -243,242 +253,250 @@ class _CustomDrawerState extends State<CustomDrawer>
                   ),
                 ),
 
-                AnimatedBuilder(
-                  animation: _animation3,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation3.value, 0),
-                      child: child,
-                    );
-                  },
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 1);
-                      if (CacheHelper.getUserType() == "client") {
-                        AppRouter.pop(context);
-                        AppRouter.navigateTo(context, const Profile());
-                      } else {
-                        // AppRouter.pop(context);
-                        // AppRouter.navigateTo(context, const ProviderProfile());
-                      }
-                    },
-                    child: Container(
-                      width: 250.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).drawerIndex == 1
-                                ? AppColors.primary
-                                : Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerProfile,
-                            height: 24.w,
-                            width: 24.w,
+                CacheHelper.getUserType() == "client"
+                    ? AnimatedBuilder(
+                      animation: _animation3,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation3.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 1);
+                          if (CacheHelper.getUserType() == "client") {
+                            AppRouter.pop(context);
+                            AppRouter.navigateTo(context, const Profile());
+                          } else {
+                            // AppRouter.pop(context);
+                            // AppRouter.navigateTo(context, const ProviderProfile());
+                          }
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
                             color:
                                 AppCubit.get(context).drawerIndex == 1
-                                    ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
-                          AppText(
-                            start: 6.w,
-                            text: LocaleKeys.profile.tr(),
-                            color:
-                                AppCubit.get(context).drawerIndex == 1
-                                    ? Colors.white
-                                    : Colors.black,
-                            size: 16.sp,
-                            family: FontFamily.tajawalBold,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.drawerProfile,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 1
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.profile.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 1
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : Container(),
 
-                AnimatedBuilder(
-                  animation: _animation4,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation4.value, 0),
-                      child: child,
-                    );
-                  },
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 2);
-                      AppRouter.pop(context);
-                      AppRouter.navigateTo(context, const AboutUs());
-                    },
-                    child: Container(
-                      width: 250.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).drawerIndex == 2
-                                ? AppColors.primary
-                                : Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerPeople,
-                            height: 24.w,
-                            width: 24.w,
+                CacheHelper.getUserType() == 'client'
+                    ? AnimatedBuilder(
+                      animation: _animation4,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation4.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 2);
+                          AppRouter.pop(context);
+                          AppRouter.navigateTo(context, const AboutUs());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
                             color:
                                 AppCubit.get(context).drawerIndex == 2
-                                    ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
-                          AppText(
-                            start: 6.w,
-                            text: LocaleKeys.aboutus.tr(),
-                            color:
-                                AppCubit.get(context).drawerIndex == 2
-                                    ? Colors.white
-                                    : Colors.black,
-                            size: 16.sp,
-                            family: FontFamily.tajawalBold,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.drawerPeople,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.aboutus.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : const SizedBox.shrink(),
 
-                AnimatedBuilder(
-                  animation: _animation5,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation5.value, 0),
-                      child: child,
-                    );
-                  },
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 3);
-                      AppRouter.pop(context);
-                      AppRouter.navigateTo(context, const ContactUs());
-                    },
-                    child: Container(
-                      width: 250.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).drawerIndex == 3
-                                ? AppColors.primary
-                                : Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerSms,
-                            height: 24.w,
-                            width: 24.w,
+                CacheHelper.getUserType() == 'client'
+                    ? AnimatedBuilder(
+                      animation: _animation5,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation5.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 3);
+                          AppRouter.pop(context);
+                          AppRouter.navigateTo(context, const ContactUs());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
                             color:
                                 AppCubit.get(context).drawerIndex == 3
-                                    ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
-                          AppText(
-                            start: 6.w,
-                            text: LocaleKeys.contactUs.tr(),
-                            color:
-                                AppCubit.get(context).drawerIndex == 3
-                                    ? Colors.white
-                                    : Colors.black,
-                            size: 16.sp,
-                            family: FontFamily.tajawalBold,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.drawerSms,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 3
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.contactUs.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 3
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : const SizedBox(),
 
-                AnimatedBuilder(
-                  animation: _animation6,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation6.value, 0),
-                      child: child,
-                    );
-                  },
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 4);
-                      AppRouter.pop(context);
-                      AppRouter.navigateTo(context, const PrivacyPolicy());
-                    },
-                    child: Container(
-                      width: 250.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).drawerIndex == 4
-                                ? AppColors.primary
-                                : Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerPrivacy,
-                            height: 24.w,
-                            width: 24.w,
+                CacheHelper.getUserType() == 'client'
+                    ? AnimatedBuilder(
+                      animation: _animation6,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation6.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 4);
+                          AppRouter.pop(context);
+                          AppRouter.navigateTo(context, const PrivacyPolicy());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
                             color:
                                 AppCubit.get(context).drawerIndex == 4
-                                    ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
-                          AppText(
-                            start: 6.w,
-                            text: LocaleKeys.privacyPolicy.tr(),
-                            color:
-                                AppCubit.get(context).drawerIndex == 4
-                                    ? Colors.white
-                                    : Colors.black,
-                            size: 16.sp,
-                            family: FontFamily.tajawalBold,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.drawerPrivacy,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 4
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.privacyPolicy.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 4
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : const SizedBox.shrink(),
 
                 AnimatedBuilder(
                   animation: _animation7,
@@ -548,8 +566,13 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 6);
-                      AppRouter.navigateTo(context, const Notifications());
+                      if (CacheHelper.getUserType() == 'client') {
+                        AppCubit.get(context).changedrawerIndex(index: 6);
+                        AppRouter.navigateTo(context, const Notifications());
+                      } else {
+                        AppCubit.get(context).changedrawerIndex(index: 6);
+                        AppRouter.navigateTo(context, const AdmNotifications());
+                      }
                     },
                     child: Container(
                       width: 250.w,
@@ -688,68 +711,70 @@ class _CustomDrawerState extends State<CustomDrawer>
                     ),
                   ),
                 ),
-                AnimatedBuilder(
-                  animation: _animation9,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation9.value, 0),
-                      child: child,
-                    );
-                  },
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      AppCubit.get(context).changedrawerIndex(index: 7);
-                      if (CacheHelper.getUserType() == "client") {
-                        CacheHelper.setUserType('saler');
-                        AppRouter.navigateTo(context, const LogIn());
-                      } else {
-                        CacheHelper.setUserType('client');
-                        AppRouter.navigateTo(context, const LogIn());
-                      }
-                    },
-                    child: Container(
-                      width: 250.w,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).drawerIndex == 7
-                                ? AppColors.primary
-                                : Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.r),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svg.drawerLogout,
-                            height: 24.w,
-                            width: 24.w,
+                CacheHelper.getUserType() == "client"
+                    ? AnimatedBuilder(
+                      animation: _animation9,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation9.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 7);
+                          if (CacheHelper.getUserType() == "client") {
+                            CacheHelper.setUserType('saler');
+                            AppRouter.navigateTo(context, const LogIn());
+                          } else {
+                            CacheHelper.setUserType('client');
+                            AppRouter.navigateTo(context, const LogIn());
+                          }
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
                             color:
                                 AppCubit.get(context).drawerIndex == 7
-                                    ? Colors.white
-                                    : AppColors.secondray,
-                            fit: BoxFit.cover,
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
-                          AppText(
-                            start: 6.w,
-                            text: 'تسجيل كسائق',
-                            color:
-                                AppCubit.get(context).drawerIndex == 7
-                                    ? Colors.white
-                                    : Colors.black,
-                            size: 16.sp,
-                            family: FontFamily.tajawalBold,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.drawerLogout,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 7
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: 'تسجيل كسائق',
+                                color:
+                                    AppCubit.get(context).drawerIndex == 7
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : SizedBox.fromSize(),
 
                 AnimatedBuilder(
                   animation: _animation8,

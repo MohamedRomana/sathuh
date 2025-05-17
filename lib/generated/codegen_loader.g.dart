@@ -550,7 +550,8 @@ class CodegenLoader extends AssetLoader{
   "car_type": "نوع السيارة",
   "manufacture_year": "سنة الصنع",
   "color": "اللون",
-  "car_plate_number": "رقم لوحة السيارة"
+  "car_plate_number": "رقم لوحة السيارة",
+  "complaints": "الشكاوى"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1088,7 +1089,8 @@ static const Map<String,dynamic> _en = {
   "car_type": "Car Type",
   "manufacture_year": "Manufacture Year",
   "color": "Color",
-  "car_plate_number": "Car Plate Number"
+  "car_plate_number": "Car Plate Number",
+  "complaints": "Complaints"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }
