@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_text.dart';
@@ -14,6 +15,7 @@ import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_router.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../user_screens/home_layout/home_layout.dart';
 import '../../data/auth_cubit.dart';
 import '../forget_pass/forget_pass.dart';
@@ -215,8 +217,12 @@ class _LogInState extends State<LogIn> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppCubit.get(context).changebottomNavIndex(1);
-                AppRouter.navigateTo(context, const HomeLayout());
+                if (CacheHelper.getUserType() == "administration") {
+                  AppRouter.navigateAndFinish(context, const AdminHomeLayout());
+                } else {
+                  AppCubit.get(context).changebottomNavIndex(1);
+                  AppRouter.navigateAndFinish(context, const HomeLayout());
+                }
               },
               child: SizedBox(
                 width: 150.w,

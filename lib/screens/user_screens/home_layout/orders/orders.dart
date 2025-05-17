@@ -59,9 +59,9 @@ class Orders extends StatelessWidget {
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
-                        tabs: const [
-                          Tab(text: 'طلبات حالية'),
-                          Tab(text: 'سجل الطلبات'),
+                        tabs:  [
+                          Tab(text: LocaleKeys.currentOrders.tr()),
+                          Tab(text: LocaleKeys.ordersHistory.tr()),
                         ],
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/gen/fonts.gen.dart';
@@ -5,6 +6,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_input.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 class CustomAnotherProblem extends StatelessWidget {
   final TextEditingController problemController;
@@ -50,7 +52,7 @@ class CustomAnotherProblem extends StatelessWidget {
                         SizedBox(
                           width: 285.w,
                           child: AppText(
-                            text: 'مشكلة اخرى',
+                            text: LocaleKeys.other_problem.tr(),
                             size: 16.sp,
                             lines: 2,
                             color: Colors.black,
@@ -70,7 +72,7 @@ class CustomAnotherProblem extends StatelessWidget {
                       end: 0,
                       filled: true,
                       controller: problemController,
-                      hint: 'اكتب مشكلتك هنا',
+                      hint: LocaleKeys.write_your_problem_here.tr(),
                       enabledBorderColor: Colors.grey,
                     ),
                   ],
@@ -99,7 +101,7 @@ class CustomAnotherProblem extends StatelessWidget {
                     SizedBox(
                       width: 285.w,
                       child: AppText(
-                        text: 'مشكله اخرى',
+                        text: LocaleKeys.other_problem.tr(),
                         lines: 2,
                         size: 16.sp,
                         color: Colors.white,

@@ -183,7 +183,7 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
               AppText(
                 start: 16.w,
                 bottom: 8.h,
-                text: 'الدوله',
+                text: LocaleKeys.country.tr(),
                 color: AppColors.secondray,
                 fontWeight: FontWeight.w400,
                 size: 14.sp,
@@ -192,19 +192,18 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
                 focusNode: countryFocus,
                 enabledBorderColor: Colors.grey,
                 prefixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.south_america_outlined,
                   size: 24.sp,
                   color:
                       countryFocus.hasFocus ? AppColors.primary : Colors.grey,
                 ),
                 bottom: 16.h,
                 filled: true,
-                hint: 'الدوله',
+                hint: LocaleKeys.country.tr(),
                 controller: widget.countryController,
-                inputType: TextInputType.emailAddress,
                 validate: (value) {
                   if (value!.isEmpty) {
-                    return 'ادخل الدوله';
+                    return LocaleKeys.countryValidate.tr();
                   } else {
                     return null;
                   }
@@ -213,7 +212,7 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
               AppText(
                 start: 16.w,
                 bottom: 8.h,
-                text: 'المدينه',
+                text: LocaleKeys.city.tr(),
                 color: AppColors.secondray,
                 fontWeight: FontWeight.w400,
                 size: 14.sp,
@@ -222,18 +221,17 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
                 focusNode: cityFocus,
                 enabledBorderColor: Colors.grey,
                 prefixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.location_city_outlined,
                   size: 24.sp,
                   color: cityFocus.hasFocus ? AppColors.primary : Colors.grey,
                 ),
                 bottom: 16.h,
                 filled: true,
-                hint: 'المدينه',
+                hint: LocaleKeys.city.tr(),
                 controller: widget.cityController,
-                inputType: TextInputType.emailAddress,
                 validate: (value) {
                   if (value!.isEmpty) {
-                    return 'ادخل المدينه';
+                    return LocaleKeys.cityValidate.tr();
                   } else {
                     return null;
                   }
@@ -242,27 +240,26 @@ class _CustomUserRegisterFieldsState extends State<CustomUserRegisterFields> {
               AppText(
                 start: 16.w,
                 bottom: 8.h,
-                text: 'المنطقه',
+                text: LocaleKeys.region.tr(),
                 color: AppColors.secondray,
                 fontWeight: FontWeight.w400,
                 size: 14.sp,
               ),
               AppInput(
-                focusNode: townFocus  ,
+                focusNode: townFocus,
                 enabledBorderColor: Colors.grey,
                 prefixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.location_on_outlined,
                   size: 24.sp,
-                  color: townFocus  .hasFocus ? AppColors.primary : Colors.grey,
+                  color: townFocus.hasFocus ? AppColors.primary : Colors.grey,
                 ),
                 bottom: 16.h,
                 filled: true,
-                hint: 'المنطقه',
+                hint: LocaleKeys.region.tr(),
                 controller: widget.townController,
-                inputType: TextInputType.emailAddress,
                 validate: (value) {
                   if (value!.isEmpty) {
-                    return 'ادخل المنطقه';
+                    return LocaleKeys.enter_region.tr();
                   } else {
                     return null;
                   }

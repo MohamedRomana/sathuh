@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/app_router.dart';
@@ -6,6 +7,7 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/fonts.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 class CustomServices extends StatelessWidget {
   const CustomServices({super.key});
@@ -16,7 +18,7 @@ class CustomServices extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
-          text: 'خدمات سطحه',
+          text: LocaleKeys.flatbed_services.tr(),
           start: 16.w,
           family: FontFamily.tajawalBold,
           size: 21.sp,
@@ -71,7 +73,7 @@ class CustomServices extends StatelessWidget {
                         ),
                         child: Center(
                           child: AppText(
-                            text: 'خدمة سطحه',
+                            text: LocaleKeys.flatbed_service.tr(),
                             family: FontFamily.tajawalBold,
                             size: 16.sp,
                             color: Colors.white,
@@ -130,7 +132,7 @@ class CustomServices extends StatelessWidget {
                         ),
                         child: Center(
                           child: AppText(
-                            text: 'خدمة سطحة هيدروليك',
+                            text: LocaleKeys.hydraulic_flatbed_service.tr(),
                             family: FontFamily.tajawalBold,
                             size: 14.sp,
                             color: Colors.white,

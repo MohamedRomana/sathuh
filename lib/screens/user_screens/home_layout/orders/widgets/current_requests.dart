@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 class CurrentRequests extends StatefulWidget {
   const CurrentRequests({super.key});
@@ -67,7 +69,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: 'رقم الطلب: #1234',
+                              text: '${LocaleKeys.orderNumber.tr()} #1234',
                               size: 16.sp,
                               family: 'DINArabic-Medium',
                             ),
@@ -88,7 +90,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                           ],
                         ),
                         AppText(
-                          text: 'اسم الخدمة: خدمة سطحه',
+                          text: '${LocaleKeys.serviceName.tr()}: خدمة سطحه',
                           size: 16.sp,
                           family: 'DINArabic-Light',
                         ),

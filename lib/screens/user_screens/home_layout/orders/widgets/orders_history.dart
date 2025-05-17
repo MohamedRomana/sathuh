@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 
@@ -59,7 +61,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AppText(
-                              text: 'رقم الطلب: #45454',
+                              text: '${LocaleKeys.order_number.tr()} #45454',
                               size: 16.sp,
                               family: 'DINArabic-Medium',
                             ),
@@ -80,7 +82,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                           ],
                         ),
                         AppText(
-                          text: 'اسم الخدمة: خدمة سطحة',
+                          text: '${LocaleKeys.serviceName.tr()}: خدمة سطحة',
                           size: 16.sp,
                           family: 'DINArabic-Light',
                         ),

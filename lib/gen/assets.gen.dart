@@ -114,6 +114,9 @@ class $AssetsImgGen {
   AssetGenImage get unitedKingdom =>
       const AssetGenImage('assets/img/united-kingdom.png');
 
+  /// File path: assets/img/winch-car.png
+  AssetGenImage get winchCar => const AssetGenImage('assets/img/winch-car.png');
+
   /// List of all assets
   List<dynamic> get values => [
     alert,
@@ -139,6 +142,7 @@ class $AssetsImgGen {
     time,
     trak,
     unitedKingdom,
+    winchCar,
   ];
 }
 

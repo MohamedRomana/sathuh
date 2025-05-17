@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../add_cars/add_cars.dart';
 import '../proplem_type/problem_type.dart';
 
@@ -49,7 +51,7 @@ class _SathaServiceState extends State<SathaService> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    const CustomAppBar(title: 'خدمة سطحه'),
+                    CustomAppBar(title: LocaleKeys.flatbed_service.tr()),
                     ListView.separated(
                       padding: EdgeInsets.only(top: 20.h),
                       shrinkWrap: true,
@@ -187,7 +189,7 @@ class _SathaServiceState extends State<SathaService> {
                         AppRouter.navigateTo(context, const AddCars());
                       },
                       child: AppText(
-                        text: 'اضافة سياره',
+                        text: LocaleKeys.add_car.tr(),
                         color: Colors.white,
                         family: FontFamily.tajawalBold,
                         size: 21.sp,

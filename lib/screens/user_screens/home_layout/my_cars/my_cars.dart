@@ -173,7 +173,7 @@ class MyCars extends StatelessWidget {
                     AppRouter.navigateTo(context, const AddCars());
                   },
                   child: AppText(
-                    text: 'اضافة سياره',
+                    text: LocaleKeys.add_car.tr(),
                     color: Colors.white,
                     family: FontFamily.tajawalBold,
                     size: 21.sp,

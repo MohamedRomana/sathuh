@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
@@ -8,6 +9,7 @@ import '../../../core/widgets/app_router.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../generated/locale_keys.g.dart';
 
 class AddCars extends StatelessWidget {
   const AddCars({super.key});
@@ -33,73 +35,60 @@ class AddCars extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomAppBar(title: 'اضافة سيارة'),
+                CustomAppBar(title: LocaleKeys.add_car.tr()),
                 AppText(
-                  text: 'نوع السيارة',
+                  text: LocaleKeys.car_type.tr(),
                   bottom: 8.h,
                   start: 16.w,
                   family: FontFamily.tajawalBold,
                   size: 16.sp,
                 ),
-                const AppInput(
+                AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'نوع السيارة',
+                  hint: LocaleKeys.car_type.tr(),
                 ),
                 AppText(
-                  text: 'موديل السيارة',
-                  bottom: 8.h,
-                  top: 8.h,
-                  start: 16.w,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                const AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: 'موديل السيارة',
-                ),
-                AppText(
-                  text: 'سنة الصنع',
-                  start: 16.w,
-                  bottom: 8.h,
-                  top: 8.h,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                const AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: 'سنة الصنع',
-                ),
-                AppText(
-                  text: 'اللون',
-                  start: 16.w,
-                  bottom: 8.h,
-                  top: 8.h,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                const AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: 'اللون',
-                ),
-                AppText(
-                  text: 'رقم الشاسيه (كما هو مكتوب في الرخصه)',
+                  text: LocaleKeys.car_model.tr(),
                   bottom: 8.h,
                   top: 8.h,
                   start: 16.w,
                   family: FontFamily.tajawalBold,
                   size: 16.sp,
                 ),
-                const AppInput(
+                AppInput(
                   filled: true,
                   enabledBorderColor: Colors.grey,
-                  hint: 'رقم الشاسيه',
+                  hint: LocaleKeys.car_model.tr(),
                 ),
                 AppText(
-                  text: 'رقم لوحة السياره',
+                  text: LocaleKeys.manufacture_year.tr(),
+                  start: 16.w,
+                  bottom: 8.h,
+                  top: 8.h,
+                  family: FontFamily.tajawalBold,
+                  size: 16.sp,
+                ),
+                AppInput(
+                  filled: true,
+                  enabledBorderColor: Colors.grey,
+                  hint: LocaleKeys.manufacture_year.tr(),
+                ),
+                AppText(
+                  text: LocaleKeys.color.tr(),
+                  start: 16.w,
+                  bottom: 8.h,
+                  top: 8.h,
+                  family: FontFamily.tajawalBold,
+                  size: 16.sp,
+                ),
+                AppInput(
+                  filled: true,
+                  enabledBorderColor: Colors.grey,
+                  hint: LocaleKeys.color.tr(),
+                ),
+                AppText(
+                  text: LocaleKeys.car_plate_number.tr(),
                   bottom: 8.h,
                   top: 8.h,
                   start: 16.w,
@@ -158,7 +147,7 @@ class AddCars extends StatelessWidget {
                       AppRouter.pop(context);
                     },
                     child: AppText(
-                      text: 'حفظ',
+                      text: LocaleKeys.save.tr(),
                       size: 21.sp,
                       color: Colors.white,
                       family: FontFamily.tajawalBold,

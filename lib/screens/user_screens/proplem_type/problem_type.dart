@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:sathuh/core/widgets/flash_message.dart';
 import '../../../core/service/cubit/app_cubit.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../generated/locale_keys.g.dart';
 import 'widgets/custom_another_problem.dart';
 import 'widgets/problems_list.dart';
 
@@ -51,20 +53,20 @@ class _ProblemTypeState extends State<ProblemType> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    const CustomAppBar(title: 'نوع المشكله'),
+                    CustomAppBar(title: LocaleKeys.problem_type.tr()),
                     const ProblemsList(),
                     CustomAnotherProblem(problemController: _problemController),
                     AppButton(
                       onPressed: () {
                         showFlashMessage(
-                          message: 'اختر المشكله',
+                          message: LocaleKeys.select_problem.tr(),
                           type: FlashMessageType.warning,
                           context: context,
                         );
                       },
                       top: 24.h,
                       child: AppText(
-                        text: 'التالي',
+                        text: LocaleKeys.next.tr(),
                         color: Colors.white,
                         size: 21.sp,
                         family: FontFamily.tajawalBold,

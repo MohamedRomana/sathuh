@@ -82,7 +82,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
           },
           child: Icon(Icons.send, color: AppColors.primary, size: 30.sp),
         ),
-        hint: 'اكتب رسالة',
+        hint: LocaleKeys.write_message.tr(),
       ),
 
       body: Stack(

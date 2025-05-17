@@ -498,6 +498,7 @@ abstract class  LocaleKeys {
   static const select_user_type = 'select_user_type';
   static const administration = 'administration';
   static const driver = 'driver';
+  static const drivers = 'drivers';
   static const client = 'client';
   static const create_new_account = 'create_new_account';
   static const login_to_use_services = 'login_to_use_services';
@@ -514,5 +515,29 @@ abstract class  LocaleKeys {
   static const car_number = 'car_number';
   static const enter_car_number = 'enter_car_number';
   static const car_color = 'car_color';
+  static const countryValidate = 'countryValidate';
+  static const cityValidate = 'cityValidate';
+  static const region = 'region';
+  static const enter_region = 'enter_region';
+  static const hydraulic_flatbed_service = 'hydraulic_flatbed_service';
+  static const flatbed_service = 'flatbed_service';
+  static const flatbed_services = 'flatbed_services';
+  static const online = 'online';
+  static const away = 'away';
+  static const nearest_drivers_to_you = 'nearest_drivers_to_you';
+  static const contact_via_whatsapp = 'contact_via_whatsapp';
+  static const show_more = 'show_more';
+  static const service_name = 'service_name';
+  static const service_24_7 = 'service_24_7';
+  static const service_provider_name = 'service_provider_name';
+  static const write_message = 'write_message';
+  static const problem_type = 'problem_type';
+  static const select_problem = 'select_problem';
+  static const other_problem = 'other_problem';
+  static const write_your_problem_here = 'write_your_problem_here';
+  static const car_type = 'car_type';
+  static const manufacture_year = 'manufacture_year';
+  static const color = 'color';
+  static const car_plate_number = 'car_plate_number';
 
 }

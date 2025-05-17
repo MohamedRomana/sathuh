@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:sathuh/screens/admin_screens/home_layout/chats/admin_chats.dart';
+import 'package:sathuh/screens/admin_screens/home_layout/complaints/complaints.dart';
+import 'package:sathuh/screens/admin_screens/home_layout/drivers/drivers.dart';
+import 'package:sathuh/screens/admin_screens/home_layout/price/price.dart';
 import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
@@ -29,6 +33,19 @@ class AppCubit extends Cubit<AppState> {
     const Orders(),
     const Chats(),
   ];
+
+  int bottomAdminNavIndex = 1;
+  List<Widget> bottomAdminNavScreens = [
+    const Drivers(),
+    const Price(),
+    const Complaints(),
+    const AdminChats(),
+  ];
+
+  void changebottomAdminNavIndex(index) async {
+    bottomAdminNavIndex = index;
+    emit(ChangeBottomNav());
+  }
 
   double? lat = 0;
   double? lng = 0;
@@ -74,6 +91,32 @@ class AppCubit extends Cubit<AppState> {
   void decreseCount() {
     if (count > 0) {
       count--;
+    }
+    emit(ChangeCount());
+  }
+
+  int count2 = 1;
+  void increseCount2() {
+    count2++;
+    emit(ChangeCount());
+  }
+
+  void decreseCount2() {
+    if (count2 > 0) {
+      count2--;
+    }
+    emit(ChangeCount());
+  }
+
+  int count3 = 1;
+  void increseCount3() {
+    count3++;
+    emit(ChangeCount());
+  }
+
+  void decreseCount3() {
+    if (count3 > 0) {
+      count3--;
     }
     emit(ChangeCount());
   }
@@ -249,7 +292,6 @@ class AppCubit extends Cubit<AppState> {
     profileCoverImage.clear();
     emit(RemoveImageSuccess());
   }
-
 
   List<File> profileImage = [];
   Future<void> getProfileImage(BuildContext context) async {

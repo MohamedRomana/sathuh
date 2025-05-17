@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/alert_dialog.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -46,29 +47,31 @@ class _ProductRatesState extends State<ProductRates> {
                   size: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(
-                  height: 40.h,
-                  child: AppButton(
-                    width: 100.w,
-                    end: 16.w,
-                    onPressed: () {
-                      customAlertDialog(
-                        alertDialogWidth: 300.w,
-                        alertDialogHeight: 360.h,
-                        context: context,
-                        child: ReviewsDialog(
-                          formKey: _formKey,
-                          commentController: _commentController,
+                CacheHelper.getUserType() == 'client'
+                    ? SizedBox(
+                      height: 40.h,
+                      child: AppButton(
+                        width: 100.w,
+                        end: 16.w,
+                        onPressed: () {
+                          customAlertDialog(
+                            alertDialogWidth: 300.w,
+                            alertDialogHeight: 360.h,
+                            context: context,
+                            child: ReviewsDialog(
+                              formKey: _formKey,
+                              commentController: _commentController,
+                            ),
+                          );
+                        },
+                        child: AppText(
+                          text: LocaleKeys.confirmRating.tr(),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                    child: AppText(
-                      text: LocaleKeys.confirmRating.tr(),
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                      ),
+                    )
+                    : const SizedBox.shrink(),
               ],
             ),
             SizedBox(height: 10.h),

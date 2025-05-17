@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
+import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/contsants.dart';
 import '../../../../../core/widgets/app_router.dart';
@@ -19,7 +21,7 @@ class CustomDriverNearYou extends StatelessWidget {
       children: [
         AppText(
           top: 24.h,
-          text: 'السائقين الاقرب اليك',
+          text: LocaleKeys.nearest_drivers_to_you.tr(),
           start: 16.w,
           family: FontFamily.tajawalBold,
           size: 21.sp,
@@ -86,7 +88,7 @@ class CustomDriverNearYou extends StatelessWidget {
                                     width: 100.w,
                                     child: AppText(
                                       start: 3.w,
-                                      text: 'متصل',
+                                      text: LocaleKeys.online.tr(),
                                       family: FontFamily.tajawalMedium,
                                       color: Colors.lightGreen,
                                       size: 14.sp,
@@ -97,7 +99,7 @@ class CustomDriverNearYou extends StatelessWidget {
                               SizedBox(
                                 width: 150.w,
                                 child: AppText(
-                                  text: 'على بعد 14 كم',
+                                  text: '${LocaleKeys.awayFromYou.tr()} 14 كم',
                                   family: FontFamily.tajawalMedium,
                                   color: AppColors.secondray,
                                   size: 14.sp,
