@@ -170,6 +170,7 @@ class AdminBottomNav extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 onTap: () {
                   AppCubit.get(context).changebottomAdminNavIndex(3);
+                  AppRouter.navigateAndFinish(context, const AdminHomeLayout());
                 },
                 child: Column(
                   children: [
