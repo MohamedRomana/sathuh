@@ -35,7 +35,10 @@ class Drivers extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                CustomAppBar(title: LocaleKeys.drivers.tr()),
+                CustomAppBar(
+                  title: LocaleKeys.drivers.tr(),
+                  isHomeLayout: true,
+                ),
                 ListView.separated(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,

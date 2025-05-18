@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/colors.dart';
+import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../generated/locale_keys.g.dart';
+import 'driver_orders_details.dart';
 
 class DriverOrders extends StatelessWidget {
   const DriverOrders({super.key});
@@ -49,11 +51,7 @@ class DriverOrders extends StatelessWidget {
             itemBuilder:
                 (BuildContext context, int index) => InkWell(
                   onTap: () {
-                    // AppRouter.navigateTo(
-                    //     context,
-                    //     OrderDetails(
-                    //       id: AppCubit.get(context).ordersList[index]['id'],
-                    //     ));
+                    AppRouter.navigateTo(context, const DriverOrdersDetails());
                   },
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -130,5 +128,3 @@ class DriverOrders extends StatelessWidget {
     );
   }
 }
-
-
