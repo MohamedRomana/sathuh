@@ -8,9 +8,11 @@ import 'package:sathuh/core/widgets/custom_app_bar.dart';
 import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
 import '../../../core/service/cubit/app_cubit.dart';
+import '../../../core/widgets/app_router.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../generated/locale_keys.g.dart';
+import '../map/map.dart';
 import 'widgets/custom_another_problem.dart';
 import 'widgets/problems_list.dart';
 
@@ -58,11 +60,20 @@ class _ProblemTypeState extends State<ProblemType> {
                     CustomAnotherProblem(problemController: _problemController),
                     AppButton(
                       onPressed: () {
-                        showFlashMessage(
-                          message: LocaleKeys.select_problem.tr(),
-                          type: FlashMessageType.warning,
-                          context: context,
-                        );
+                        if (AppCubit.get(
+                          context,
+                        ).selectedProblemIndexes.contains(-1)) {
+                          showFlashMessage(
+                            message: LocaleKeys.select_problem.tr(),
+                            type: FlashMessageType.warning,
+                            context: context,
+                          );
+                        } else {
+                          AppRouter.navigateTo(
+                            context,
+                            const OpenStreetMapView(),
+                          );
+                        }
                       },
                       top: 24.h,
                       child: AppText(

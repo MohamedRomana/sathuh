@@ -12,10 +12,12 @@ import '../../../../../generated/locale_keys.g.dart';
 class EditPrice extends StatefulWidget {
   final TextEditingController priceController;
   final TextEditingController priceController2;
+  final TextEditingController percentageController;
   const EditPrice({
     super.key,
     required this.priceController,
     required this.priceController2,
+    required this.percentageController,
   });
 
   @override
@@ -24,15 +26,10 @@ class EditPrice extends StatefulWidget {
 
 class _EditPriceState extends State<EditPrice> {
   int selectedValue = 1;
+  int selectedPercentage = 0;
   final TextEditingController priceController = TextEditingController(
     text: '1',
   );
-  @override
-  void initState() {
-    widget.priceController.text = '1';
-    widget.priceController2.text = '1';
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,7 @@ class _EditPriceState extends State<EditPrice> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      text: 'سعر المتر في سطحه',
+                      text: LocaleKeys.flatbed_meter_price.tr(),
                       size: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -91,6 +88,7 @@ class _EditPriceState extends State<EditPrice> {
                         SizedBox(
                           width: 100.w,
                           child: AppInput(
+                            hint: '1',
                             filled: true,
                             controller: priceController,
                             border: 10.r,
@@ -166,7 +164,7 @@ class _EditPriceState extends State<EditPrice> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      text: 'سعر المتر في سطحة هيدروليك',
+                      text: LocaleKeys.hydraulic_flatbed_meter_price.tr(),
                       size: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -196,6 +194,7 @@ class _EditPriceState extends State<EditPrice> {
                         SizedBox(
                           width: 100.w,
                           child: AppInput(
+                            hint: '1',
                             filled: true,
                             controller: widget.priceController2,
                             border: 10.r,
@@ -252,6 +251,117 @@ class _EditPriceState extends State<EditPrice> {
                   ],
                 ),
               ),
+              SizedBox(height: 24.h),
+              Container(
+                width: 343.w,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withAlpha(100),
+                      blurRadius: 5.r,
+                      spreadRadius: 1.r,
+                      offset: Offset(0, 5.r),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      text: LocaleKeys.admin_percentage.tr(),
+                      size: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(height: 10.h),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if (selectedPercentage > 0) {
+                              selectedPercentage--;
+                              widget.percentageController.text =
+                                  selectedPercentage.toString();
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.borderColor,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: 100.w,
+                          child: AppInput(
+                            hint: '0',
+                            filled: true,
+                            controller: widget.percentageController,
+                            border: 10.r,
+                            enabledBorderColor: Colors.grey,
+                            inputType: TextInputType.number,
+                            onChanged: (value) {
+                              final num = int.tryParse(value!);
+                              if (num != null && num >= 0 && num <= 100) {
+                                selectedPercentage = num;
+                              }
+                            },
+                          ),
+                        ),
+
+                        InkWell(
+                          onTap: () {
+                            if (selectedPercentage < 100) {
+                              selectedPercentage++;
+                              widget.percentageController.text =
+                                  selectedPercentage.toString();
+                            }
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          child: Container(
+                            padding: EdgeInsets.all(2.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(100.r),
+                            ),
+                            child: const Icon(Icons.add, color: Colors.white),
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        DropdownButton<int>(
+                          value: selectedPercentage,
+                          items: List.generate(101, (index) {
+                            return DropdownMenuItem(
+                              value: index,
+                              child: Text('$index%'),
+                            );
+                          }),
+                          onChanged: (value) {
+                            if (value != null) {
+                              selectedPercentage = value;
+                              widget.percentageController.text =
+                                  selectedPercentage.toString();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
               AppButton(
                 top: 30.h,
                 onPressed: () {},
@@ -262,6 +372,7 @@ class _EditPriceState extends State<EditPrice> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              SizedBox(height: 120.h),
             ],
           ),
         );

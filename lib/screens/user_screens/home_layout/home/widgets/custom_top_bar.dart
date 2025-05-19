@@ -8,7 +8,8 @@ import '../../../../../gen/fonts.gen.dart';
 import '../../../../../generated/locale_keys.g.dart';
 
 class CustomTopBar extends StatelessWidget {
-  const CustomTopBar({super.key});
+  final String currentAddress;
+  const CustomTopBar({super.key, required this.currentAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class CustomTopBar extends StatelessWidget {
               width: 100.w,
               child: AppText(
                 textAlign: TextAlign.end,
-                text: 'الدقهليه , المنصوره',
+                text: currentAddress,
                 size: 10.sp,
                 color: AppColors.primary,
                 family: FontFamily.tajawalBold,

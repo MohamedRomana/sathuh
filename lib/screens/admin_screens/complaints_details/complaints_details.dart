@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/contsants.dart';
@@ -6,6 +7,7 @@ import 'package:sathuh/core/widgets/app_router.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../home_layout/chats/chat_details/adm_chat_details.dart';
 
 class ComplaintsDetails extends StatelessWidget {
@@ -31,7 +33,7 @@ class ComplaintsDetails extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const CustomAppBar(title: 'تفاصيل الشكوى'),
+                CustomAppBar(title: LocaleKeys.complaint_details.tr()),
                 Container(
                   width: 343.w,
                   padding: EdgeInsets.all(16.r),
@@ -95,7 +97,7 @@ class ComplaintsDetails extends StatelessWidget {
                       Row(
                         children: [
                           AppText(
-                            text: 'اسم العميل',
+                            text: LocaleKeys.customer_name.tr(),
                             size: 18.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -123,7 +125,7 @@ class ComplaintsDetails extends StatelessWidget {
                       Row(
                         children: [
                           AppText(
-                            text: 'الهاتف',
+                            text: LocaleKeys.phone.tr(),
                             size: 18.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -158,7 +160,7 @@ class ComplaintsDetails extends StatelessWidget {
                       Row(
                         children: [
                           AppText(
-                            text: 'البريد الالكتروني',
+                            text: LocaleKeys.email.tr(),
                             size: 18.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -184,7 +186,7 @@ class ComplaintsDetails extends StatelessWidget {
                         ),
                       ),
                       AppText(
-                        text: 'الشكوى:',
+                        text: '${LocaleKeys.complaint.tr()}:',
                         size: 18.sp,
                         bottom: 8.h,
                         fontWeight: FontWeight.w400,

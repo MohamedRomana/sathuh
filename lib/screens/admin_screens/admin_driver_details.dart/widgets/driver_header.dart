@@ -8,6 +8,7 @@ import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../user_screens/map/driver_location/driver_location.dart';
 import '../../home_layout/chats/chat_details/adm_chat_details.dart';
 
 class DriverHeader extends StatelessWidget {
@@ -168,32 +169,39 @@ class DriverHeader extends StatelessWidget {
           PositionedDirectional(
             bottom: 50.h,
             end: MediaQuery.of(context).size.width / 2 + 60.w,
-            child: Container(
-              height: 60.w,
-              width: 60.w,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5.r,
-                    spreadRadius: 1.r,
-                    offset: Offset(0, 2.r),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.share_location, color: Colors.blue, size: 24.sp),
-                  AppText(
-                    text: 'Location',
-                    size: 12.sp,
-                    color: Colors.blue,
-                    family: FontFamily.tajawalBold,
-                  ),
-                ],
+            child: InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () {
+                AppRouter.navigateTo(context, const DriverLocation());
+              },
+              child: Container(
+                height: 60.w,
+                width: 60.w,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 5.r,
+                      spreadRadius: 1.r,
+                      offset: Offset(0, 2.r),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.share_location, color: Colors.blue, size: 24.sp),
+                    AppText(
+                      text: 'Location',
+                      size: 12.sp,
+                      color: Colors.blue,
+                      family: FontFamily.tajawalBold,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

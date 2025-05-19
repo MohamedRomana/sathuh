@@ -123,7 +123,7 @@ class AdminBottomNav extends StatelessWidget {
                               : AppColors.third,
                     ),
                     AppText(
-                      text: 'السائقين',
+                      text: LocaleKeys.drivers.tr(),
                       size: 10.sp,
                       color: AppColors.third,
                       family: FontFamily.tajawalBold,
@@ -153,7 +153,7 @@ class AdminBottomNav extends StatelessWidget {
                               : AppColors.third,
                     ),
                     AppText(
-                      text: 'الشكاوي',
+                      text: LocaleKeys.complaints.tr(),
                       size: CacheHelper.getLang() == 'en' ? 11.sp : 11.sp,
                       color: AppColors.third,
                       family: FontFamily.tajawalBold,

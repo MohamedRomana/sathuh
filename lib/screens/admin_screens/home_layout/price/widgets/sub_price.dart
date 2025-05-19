@@ -58,7 +58,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  text: 'سعر الاشتراك الشهري',
+                  text: LocaleKeys.monthly_subscription_price.tr(),
                   size: 16.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -162,7 +162,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  text: 'سعر الاشتراك الثانوي',
+                  text: LocaleKeys.annual_subscription_price.tr(),
                   size: 16.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -256,6 +256,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 120.h),
         ],
       ),
     );

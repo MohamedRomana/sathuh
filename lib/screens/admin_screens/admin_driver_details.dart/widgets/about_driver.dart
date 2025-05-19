@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:sathuh/core/constants/contsants.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -37,11 +37,15 @@ class AboutDriver extends StatelessWidget {
                 size: 16.sp,
               ),
               const Spacer(),
-              AppText(
-                text: 'سطحه انقاذ',
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-                color: Colors.grey,
+              SizedBox(
+                width: 180.w,
+                child: AppText(
+                  textAlign: TextAlign.end,
+                  text: 'سطحه انقاذ',
+                  family: FontFamily.tajawalMedium,
+                  size: 16.sp,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
@@ -57,11 +61,15 @@ class AboutDriver extends StatelessWidget {
                 size: 16.sp,
               ),
               const Spacer(),
-              AppText(
-                text: 'الدقهليه',
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-                color: Colors.grey,
+              SizedBox(
+                width: 180.w,
+                child: AppText(
+                  textAlign: TextAlign.end,
+                  text: 'الدقهليه',
+                  family: FontFamily.tajawalMedium,
+                  size: 16.sp,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
@@ -77,11 +85,15 @@ class AboutDriver extends StatelessWidget {
                 size: 16.sp,
               ),
               const Spacer(),
-              AppText(
-                text: 'المنصورة',
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-                color: Colors.grey,
+              SizedBox(
+                width: 180.w,
+                child: AppText(
+                  textAlign: TextAlign.end,
+                  text: 'المنصورة',
+                  family: FontFamily.tajawalMedium,
+                  size: 16.sp,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
@@ -98,11 +110,47 @@ class AboutDriver extends StatelessWidget {
                 size: 16.sp,
               ),
               const Spacer(),
+              InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  makePhoneCall('+2010123456789');
+                },
+                child: SizedBox(
+                  width: 180.w,
+                  child: AppText(
+                    textAlign: TextAlign.end,
+                    text: '+2010123456789',
+                    family: FontFamily.tajawalMedium,
+                    size: 16.sp,
+                    color: Colors.lightBlueAccent,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+
+          const Divider(color: Colors.grey),
+          SizedBox(height: 8.h),
+
+          Row(
+            children: [
               AppText(
-                text: '+2010123456789',
+                text: LocaleKeys.email.tr(),
                 family: FontFamily.tajawalMedium,
                 size: 16.sp,
-                color: Colors.lightBlueAccent,
+              ),
+              const Spacer(),
+              SizedBox(
+                width: 180.w,
+                child: AppText(
+                  textAlign: TextAlign.end,
+                  text: 'lM4kX@example.com',
+                  family: FontFamily.tajawalMedium,
+                  size: 16.sp,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
@@ -118,31 +166,15 @@ class AboutDriver extends StatelessWidget {
                 size: 16.sp,
               ),
               const Spacer(),
-              AppText(
-                text: 'نعم',
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-                color: Colors.grey,
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-
-          const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
-          Row(
-            children: [
-              AppText(
-                text: LocaleKeys.service_provider_name.tr(),
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-              ),
-              const Spacer(),
-              AppText(
-                text: 'محمد احمد علي',
-                family: FontFamily.tajawalMedium,
-                size: 16.sp,
-                color: Colors.grey,
+              SizedBox(
+                width: 180.w,
+                child: AppText(
+                  textAlign: TextAlign.end,
+                  text: 'نعم',
+                  family: FontFamily.tajawalMedium,
+                  size: 16.sp,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),

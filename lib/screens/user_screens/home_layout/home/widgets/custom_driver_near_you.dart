@@ -10,6 +10,7 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/fonts.gen.dart';
 import '../../../driver_details/driver_details.dart';
+import '../../../map/driver_location/driver_location.dart';
 
 class CustomDriverNearYou extends StatelessWidget {
   const CustomDriverNearYou({super.key});
@@ -132,7 +133,12 @@ class CustomDriverNearYou extends StatelessWidget {
                           InkWell(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
-                            onTap: () {},
+                            onTap: () {
+                              AppRouter.navigateTo(
+                                context,
+                                const DriverLocation(),
+                              );
+                            },
                             child: const Icon(
                               Icons.share_location,
                               color: Colors.blue,

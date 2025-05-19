@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sathuh/screens/admin_screens/work_orders/work_orders.dart';
 import 'package:sathuh/screens/user_screens/notifications/notifications.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/cache/cache_helper.dart';
@@ -18,6 +19,7 @@ import '../../../../generated/locale_keys.g.dart';
 import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
 import '../../../auth/views/login/login.dart';
+import '../../../start/splash/splash.dart';
 import '../../drawer/about_us/about_us.dart';
 import '../../drawer/contact_us/contact_us.dart';
 import '../../drawer/privacy_policy/privacy_policy.dart';
@@ -239,7 +241,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                             text:
                                 CacheHelper.getUserType() == "client"
                                     ? LocaleKeys.home.tr()
-                                    : 'الاسعار',
+                                    : LocaleKeys.prices.tr(),
                             color:
                                 AppCubit.get(context).drawerIndex == 0
                                     ? Colors.white
@@ -316,7 +318,62 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    : Container(),
+                    : AnimatedBuilder(
+                      animation: _animation3,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation3.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 1);
+                          AppRouter.navigateTo(context, const WorkOrders());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
+                            color:
+                                AppCubit.get(context).drawerIndex == 1
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.orderDetails,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 1
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.work_requests.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 1
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
                 CacheHelper.getUserType() == 'client'
                     ? AnimatedBuilder(
@@ -696,9 +753,11 @@ class _CustomDrawerState extends State<CustomDrawer>
                                       if (CacheHelper.getLang() == "ar") {
                                         CacheHelper.setLang('en');
                                         context.setLocale(const Locale('en'));
+                                        AppRouter.navigateAndFinish(context, const Splash());
                                       } else {
                                         CacheHelper.setLang('ar');
                                         context.setLocale(const Locale('ar'));
+                                        AppRouter.navigateAndFinish(context, const Splash());
                                       }
                                     });
                                   },

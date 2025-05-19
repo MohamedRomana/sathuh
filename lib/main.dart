@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/constants/colors.dart';
 import 'core/cache/cache_helper.dart';
+import 'core/map/location_helper.dart';
 import 'core/service/bloc_observer.dart';
 import 'core/service/cubit/app_cubit.dart';
 import 'gen/fonts.gen.dart';
@@ -25,7 +26,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // await NotificationHelper.init();
-  // LocationHelper.determinePosition();
+  LocationHelper.determinePosition();
   await EasyLocalization.ensureInitialized();
   debugPrint("userId is ${CacheHelper.getUserId()}");
 

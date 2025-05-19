@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../core/cache/cache_helper.dart';
 import '../../../core/widgets/app_router.dart';
 import '../language/language_view.dart';
+import '../types/types_view.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -74,7 +76,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     return Future.delayed(const Duration(milliseconds: 1800), () {
       _shakeController.forward();
 
-      AppRouter.navigateAndPop(context, const LanguageView());
+      CacheHelper.getLang() != ""
+          ? AppRouter.navigateAndPop(context, const TypesView())
+          : AppRouter.navigateAndPop(context, const LanguageView());
       // CacheHelper.getLang() != ""
       //     ? CacheHelper.getUserId() != ""
       //         ? CacheHelper.getUserType() == "client"

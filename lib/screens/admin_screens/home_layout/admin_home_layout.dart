@@ -194,7 +194,7 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                                       : AppColors.third,
                             ),
                             AppText(
-                              text: 'السائقين',
+                              text: LocaleKeys.drivers.tr(),
                               size: 10.sp,
                               color:
                                   AppCubit.get(context).bottomAdminNavIndex == 0
@@ -235,7 +235,7 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                                       : AppColors.third,
                             ),
                             AppText(
-                              text: 'الشكاوي',
+                              text: LocaleKeys.complaints.tr(),
                               size:
                                   CacheHelper.getLang() == 'en' ? 11.sp : 11.sp,
                               color:

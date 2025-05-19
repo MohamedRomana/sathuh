@@ -117,7 +117,7 @@ class Drivers extends StatelessWidget {
                                         width: 150.w,
                                         child: AppText(
                                           text:
-                                              '${LocaleKeys.awayFromYou.tr()} 14 كم',
+                                              '${LocaleKeys.awayFromYou.tr()} 14 ${LocaleKeys.km.tr()}',
                                           family: FontFamily.tajawalMedium,
                                           color: AppColors.secondray,
                                           size: 14.sp,

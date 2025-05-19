@@ -1,19 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/widgets/admin_bottom_nav.dart';
-import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_app_bar.dart';
-import '../../../../core/constants/contsants.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../generated/locale_keys.g.dart';
+import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
+import '../../../../../core/constants/contsants.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
-class DriverOrdersDetails extends StatelessWidget {
-  const DriverOrdersDetails({super.key});
+class OrderDetails extends StatelessWidget {
+  const OrderDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AdminBottomNav(
+    return CustomBottomNav(
       body: Stack(
         children: [
           Image.asset(

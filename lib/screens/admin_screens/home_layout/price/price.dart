@@ -15,6 +15,7 @@ final _priceController = TextEditingController();
 final _monthPriceController = TextEditingController();
 final _yearPriceController = TextEditingController();
 final _priceController2 = TextEditingController();
+final _percentageController = TextEditingController();
 
 class Price extends StatefulWidget {
   const Price({super.key});
@@ -27,7 +28,6 @@ class _PriceState extends State<Price> {
   @override
   initState() {
     super.initState();
-    
   }
 
   @override
@@ -103,7 +103,7 @@ class _PriceState extends State<Price> {
                       child: Column(
                         children: [
                           AppText(
-                            text: 'ضبط التسعير',
+                            text: LocaleKeys.pricing_settings.tr(),
                             size: 20.sp,
                             color: AppColors.primary,
                             family: FontFamily.tajawalBold,
@@ -129,9 +129,9 @@ class _PriceState extends State<Price> {
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
                               ),
-                              tabs: const [
-                                Tab(text: 'تسعير سطحة'),
-                                Tab(text: 'تسعير الاشتراك'),
+                              tabs:  [
+                                Tab(text: LocaleKeys.flatbed_pricing.tr()),
+                                Tab(text: LocaleKeys.subscription_pricing.tr()),
                               ],
                             ),
                           ),
@@ -141,6 +141,7 @@ class _PriceState extends State<Price> {
                                 EditPrice(
                                   priceController: _priceController,
                                   priceController2: _priceController2,
+                                  percentageController: _percentageController,
                                 ),
                                 SubscribePrice(
                                   monthPriceController2: _monthPriceController,

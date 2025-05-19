@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../order_details/order_details.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
@@ -37,11 +39,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           itemBuilder:
               (BuildContext context, int index) => InkWell(
                 onTap: () {
-                  // AppRouter.navigateTo(
-                  //     context,
-                  //     OrderDetails(
-                  //       id: AppCubit.get(context).ordersList[index]['id'],
-                  //     ));
+                  AppRouter.navigateTo(context, const OrderDetails());
                 },
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,

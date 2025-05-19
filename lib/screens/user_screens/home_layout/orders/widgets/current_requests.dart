@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../generated/locale_keys.g.dart';
+import '../order_details/order_details.dart';
 
 class CurrentRequests extends StatefulWidget {
   const CurrentRequests({super.key});
@@ -37,11 +39,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
           itemBuilder:
               (BuildContext context, int index) => InkWell(
                 onTap: () {
-                  // AppRouter.navigateTo(
-                  //     context,
-                  //     OrderDetails(
-
-                  //     ));
+                  AppRouter.navigateTo(context, const OrderDetails());
                 },
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
