@@ -70,6 +70,8 @@ abstract class  LocaleKeys {
   static const paymentMethods = 'paymentMethods';
   static const cashOnDelivery = 'cashOnDelivery';
   static const onlinePayment = 'onlinePayment';
+  static const bankTransfer = 'bankTransfer';
+  static const cash = 'cash';
   static const deliveryAddress = 'deliveryAddress';
   static const currentAddress = 'currentAddress';
   static const newAddress = 'newAddress';
@@ -574,5 +576,27 @@ abstract class  LocaleKeys {
   static const confirm_destination = 'confirm_destination';
   static const detect_location = 'detect_location';
   static const tap_to_select_destination = 'tap_to_select_destination';
+  static const no_saved_images = 'no_saved_images';
+  static const add_images = 'add_images';
+  static const from_account = 'from_account';
+  static const main_account = 'main_account';
+  static const savings_account = 'savings_account';
+  static const enter_beneficiary_name = 'enter_beneficiary_name';
+  static const account_number_iban = 'account_number_iban';
+  static const iban_example = 'iban_example';
+  static const amount = 'amount';
+  static const enter_amount = 'enter_amount';
+  static const note_optional = 'note_optional';
+  static const note_with_transfer = 'note_with_transfer';
+  static const please_enter_beneficiary_name = 'please_enter_beneficiary_name';
+  static const please_enter_iban = 'please_enter_iban';
+  static const please_enter_amount = 'please_enter_amount';
+  static const please_select_account = 'please_select_account';
+  static const transfer_confirmation = 'transfer_confirmation';
+  static const please_confirm_identity = 'please_confirm_identity';
+  static const transfer_successful = 'transfer_successful';
+  static const transfer_sent_successfully = 'transfer_sent_successfully';
+  static const ok = 'ok';
+  static const fingerprint_verification_failed = 'fingerprint_verification_failed';
 
 }

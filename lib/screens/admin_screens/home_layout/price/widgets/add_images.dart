@@ -1,12 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 class AddImages extends StatefulWidget {
   const AddImages({super.key});
@@ -68,7 +70,7 @@ class _AddImagesState extends State<AddImages> {
         _images.isEmpty
             ? Center(
               child: AppText(
-                text: 'لا توجد صور محفوظة',
+                text: LocaleKeys.no_saved_images.tr(),
                 size: 18.sp,
                 fontWeight: FontWeight.bold,
                 bottom: 16.h,
@@ -122,7 +124,7 @@ class _AddImagesState extends State<AddImages> {
             backgroundColor: WidgetStateProperty.all<Color>(AppColors.primary),
           ),
           child: AppText(
-            text: 'اضافة صور',
+            text: LocaleKeys.add_images.tr(),
             size: 18.sp,
             fontWeight: FontWeight.bold,
             color: Colors.white,
