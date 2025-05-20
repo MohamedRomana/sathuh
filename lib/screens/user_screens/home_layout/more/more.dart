@@ -18,6 +18,7 @@ import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
+import '../../../admin_screens/profile/adm_profile.dart';
 import '../../../auth/views/login/login.dart';
 import '../../../start/splash/splash.dart';
 import '../../drawer/about_us/about_us.dart';
@@ -255,125 +256,68 @@ class _CustomDrawerState extends State<CustomDrawer>
                   ),
                 ),
 
-                CacheHelper.getUserType() == "client"
-                    ? AnimatedBuilder(
-                      animation: _animation3,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation3.value, 0),
-                          child: child,
-                        );
-                      },
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          AppCubit.get(context).changedrawerIndex(index: 1);
-                          if (CacheHelper.getUserType() == "client") {
-                            AppRouter.pop(context);
-                            AppRouter.navigateTo(context, const Profile());
-                          } else {
-                            // AppRouter.pop(context);
-                            // AppRouter.navigateTo(context, const ProviderProfile());
-                          }
-                        },
-                        child: Container(
-                          width: 250.w,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 8.h,
-                          ),
-                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                          decoration: BoxDecoration(
-                            color:
-                                AppCubit.get(context).drawerIndex == 1
-                                    ? AppColors.primary
-                                    : Colors.transparent,
-                            borderRadius: BorderRadius.circular(100.r),
-                          ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                Assets.svg.drawerProfile,
-                                height: 24.w,
-                                width: 24.w,
-                                color:
-                                    AppCubit.get(context).drawerIndex == 1
-                                        ? Colors.white
-                                        : AppColors.secondray,
-                                fit: BoxFit.cover,
-                              ),
-                              AppText(
-                                start: 6.w,
-                                text: LocaleKeys.profile.tr(),
-                                color:
-                                    AppCubit.get(context).drawerIndex == 1
-                                        ? Colors.white
-                                        : Colors.black,
-                                size: 16.sp,
-                                family: FontFamily.tajawalBold,
-                              ),
-                            ],
-                          ),
-                        ),
+                AnimatedBuilder(
+                  animation: _animation3,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(_animation3.value, 0),
+                      child: child,
+                    );
+                  },
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      AppCubit.get(context).changedrawerIndex(index: 1);
+                      if (CacheHelper.getUserType() == "client") {
+                        AppRouter.pop(context);
+                        AppRouter.navigateTo(context, const Profile());
+                      } else if (CacheHelper.getUserType() == "administration") {
+                        AppRouter.pop(context);
+                        AppRouter.navigateTo(context, const AdmProfile());
+                      }
+                    },
+                    child: Container(
+                      width: 250.w,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
                       ),
-                    )
-                    : AnimatedBuilder(
-                      animation: _animation3,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation3.value, 0),
-                          child: child,
-                        );
-                      },
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          AppCubit.get(context).changedrawerIndex(index: 1);
-                          AppRouter.navigateTo(context, const WorkOrders());
-                        },
-                        child: Container(
-                          width: 250.w,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 8.h,
-                          ),
-                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                          decoration: BoxDecoration(
+                      margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                      decoration: BoxDecoration(
+                        color:
+                            AppCubit.get(context).drawerIndex == 1
+                                ? AppColors.primary
+                                : Colors.transparent,
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            Assets.svg.drawerProfile,
+                            height: 24.w,
+                            width: 24.w,
                             color:
                                 AppCubit.get(context).drawerIndex == 1
-                                    ? AppColors.primary
-                                    : Colors.transparent,
-                            borderRadius: BorderRadius.circular(100.r),
+                                    ? Colors.white
+                                    : AppColors.secondray,
+                            fit: BoxFit.cover,
                           ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                Assets.svg.orderDetails,
-                                height: 24.w,
-                                width: 24.w,
-                                color:
-                                    AppCubit.get(context).drawerIndex == 1
-                                        ? Colors.white
-                                        : AppColors.secondray,
-                                fit: BoxFit.cover,
-                              ),
-                              AppText(
-                                start: 6.w,
-                                text: LocaleKeys.work_requests.tr(),
-                                color:
-                                    AppCubit.get(context).drawerIndex == 1
-                                        ? Colors.white
-                                        : Colors.black,
-                                size: 16.sp,
-                                family: FontFamily.tajawalBold,
-                              ),
-                            ],
+                          AppText(
+                            start: 6.w,
+                            text: LocaleKeys.profile.tr(),
+                            color:
+                                AppCubit.get(context).drawerIndex == 1
+                                    ? Colors.white
+                                    : Colors.black,
+                            size: 16.sp,
+                            family: FontFamily.tajawalBold,
                           ),
-                        ),
+                        ],
                       ),
                     ),
+                  ),
+                ),
 
                 CacheHelper.getUserType() == 'client'
                     ? AnimatedBuilder(
@@ -433,7 +377,62 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    : const SizedBox.shrink(),
+                    : AnimatedBuilder(
+                      animation: _animation4,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation4.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 2);
+                          AppRouter.navigateTo(context, const WorkOrders());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
+                            color:
+                                AppCubit.get(context).drawerIndex == 2
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.orderDetails,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.work_requests.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
                 CacheHelper.getUserType() == 'client'
                     ? AnimatedBuilder(
@@ -753,11 +752,17 @@ class _CustomDrawerState extends State<CustomDrawer>
                                       if (CacheHelper.getLang() == "ar") {
                                         CacheHelper.setLang('en');
                                         context.setLocale(const Locale('en'));
-                                        AppRouter.navigateAndFinish(context, const Splash());
+                                        AppRouter.navigateAndFinish(
+                                          context,
+                                          const Splash(),
+                                        );
                                       } else {
                                         CacheHelper.setLang('ar');
                                         context.setLocale(const Locale('ar'));
-                                        AppRouter.navigateAndFinish(context, const Splash());
+                                        AppRouter.navigateAndFinish(
+                                          context,
+                                          const Splash(),
+                                        );
                                       }
                                     });
                                   },

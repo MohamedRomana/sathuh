@@ -167,7 +167,7 @@ class AboutDriver extends StatelessWidget {
               ),
               const Spacer(),
               SizedBox(
-                width: 180.w,
+                width: 120.w,
                 child: AppText(
                   textAlign: TextAlign.end,
                   text: 'نعم',

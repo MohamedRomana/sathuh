@@ -2,12 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/widgets/app_router.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
+import 'package:sathuh/screens/admin_screens/profile/adm_profile.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../user_screens/home_layout/home/widgets/custom_swiper.dart';
 import 'widgets/edit_price.dart';
 import 'widgets/sub_price.dart';
 
@@ -48,113 +51,136 @@ class _PriceState extends State<Price> {
                 width: double.infinity,
                 color: Colors.white.withAlpha(210),
               ),
-              Column(
-                children: [
-                  SizedBox(height: 61.h),
-                  Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start: 16.w,
-                          end: 5.w,
-                        ),
-                        height: 50.w,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.grey, width: 3.w),
-                          image: DecorationImage(
-                            image: AssetImage(Assets.img.client.path),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(height: 61.h),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        AppRouter.navigateTo(context, const AdmProfile());
+                      },
+                      child: Row(
                         children: [
-                          SizedBox(
-                            width: 150.w,
-                            child: AppText(
-                              text: LocaleKeys.welcome.tr(),
-                              size: 12.sp,
-                              color: AppColors.secondray,
-                              family: FontFamily.tajawalBold,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 150.w,
-                            child: AppText(
-                              text:
-                                  LocaleKeys.thank_you_for_your_preference.tr(),
-                              size: 10.sp,
-                              color: AppColors.secondray,
-                              family: FontFamily.tajawalBold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24.h),
-                  Expanded(
-                    child: DefaultTabController(
-                      length: 2,
-                      child: Column(
-                        children: [
-                          AppText(
-                            text: LocaleKeys.pricing_settings.tr(),
-                            size: 20.sp,
-                            color: AppColors.primary,
-                            family: FontFamily.tajawalBold,
-                            bottom: 16.h,
-                          ),
                           Container(
-                            width: 343.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              color: AppColors.secondray,
+                            margin: EdgeInsetsDirectional.only(
+                              start: 16.w,
+                              end: 5.w,
                             ),
-                            child: TabBar(
-                              dividerColor: Colors.transparent,
-                              indicatorColor: AppColors.primary,
-                              labelColor: Colors.white,
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicator: BoxDecoration(
-                                color: AppColors.primary,
-                                borderRadius: BorderRadius.circular(10.r),
+                            height: 50.w,
+                            width: 50.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 3.w,
                               ),
-                              unselectedLabelColor: Colors.grey,
-                              labelStyle: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
+                              image: DecorationImage(
+                                image: AssetImage(Assets.img.client.path),
+                                fit: BoxFit.cover,
                               ),
-                              tabs:  [
-                                Tab(text: LocaleKeys.flatbed_pricing.tr()),
-                                Tab(text: LocaleKeys.subscription_pricing.tr()),
-                              ],
                             ),
                           ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                EditPrice(
-                                  priceController: _priceController,
-                                  priceController2: _priceController2,
-                                  percentageController: _percentageController,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 150.w,
+                                child: AppText(
+                                  text: LocaleKeys.welcome.tr(),
+                                  size: 12.sp,
+                                  color: AppColors.secondray,
+                                  family: FontFamily.tajawalBold,
                                 ),
-                                SubscribePrice(
-                                  monthPriceController2: _monthPriceController,
-                                  yearspriceController: _yearPriceController,
+                              ),
+                              SizedBox(
+                                width: 150.w,
+                                child: AppText(
+                                  text:
+                                      LocaleKeys.thank_you_for_your_preference
+                                          .tr(),
+                                  size: 10.sp,
+                                  color: AppColors.secondray,
+                                  family: FontFamily.tajawalBold,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 24.h),
+                    const CustomSwiper(),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      child: DefaultTabController(
+                        length: 2,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: AppText(
+                                text: LocaleKeys.pricing_settings.tr(),
+                                size: 20.sp,
+                                start: 16.w,
+                                color: AppColors.secondray,
+                                family: FontFamily.tajawalBold,
+                                bottom: 16.h,
+                              ),
+                            ),
+                            Container(
+                              width: 343.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                color: AppColors.secondray,
+                              ),
+                              child: TabBar(
+                                dividerColor: Colors.transparent,
+                                indicatorColor: AppColors.primary,
+                                labelColor: Colors.white,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                indicator: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                                unselectedLabelColor: Colors.grey,
+                                labelStyle: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                tabs: [
+                                  Tab(text: LocaleKeys.flatbed_pricing.tr()),
+                                  Tab(
+                                    text: LocaleKeys.subscription_pricing.tr(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: TabBarView(
+                                children: [
+                                  EditPrice(
+                                    priceController: _priceController,
+                                    priceController2: _priceController2,
+                                    percentageController: _percentageController,
+                                  ),
+                                  SubscribePrice(
+                                    monthPriceController2:
+                                        _monthPriceController,
+                                    yearspriceController: _yearPriceController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

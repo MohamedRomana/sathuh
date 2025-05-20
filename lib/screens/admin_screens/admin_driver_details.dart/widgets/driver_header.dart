@@ -173,7 +173,7 @@ class DriverHeader extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppRouter.navigateTo(context, const DriverLocation());
+                AppRouter.navigateTo(context, const DriverLocation(isAdmin: true,));
               },
               child: Container(
                 height: 60.w,

@@ -1,17 +1,16 @@
-// ignore_for_file: deprecated_member_use
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../core/service/cubit/app_cubit.dart';
-import '../../../../core/widgets/app_input.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../generated/locale_keys.g.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../../../core/constants/colors.dart';
+import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_input.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
-class EditProfileFields extends StatefulWidget {
+class AdmEditeProfileFields extends StatefulWidget {
   final TextEditingController passController;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
@@ -19,20 +18,21 @@ class EditProfileFields extends StatefulWidget {
   final TextEditingController phoneController;
   final TextEditingController emailController;
 
-  const EditProfileFields({
+  const AdmEditeProfileFields({
     super.key,
     required this.passController,
-    required this.phoneController,
     required this.firstNameController,
     required this.lastNameController,
-    required this.cityController, required this.emailController,
+    required this.cityController,
+    required this.phoneController,
+    required this.emailController,
   });
 
   @override
-  State<EditProfileFields> createState() => _EditProfileFieldsState();
+  State<AdmEditeProfileFields> createState() => _AdmEditeProfileFieldsState();
 }
 
-class _EditProfileFieldsState extends State<EditProfileFields> {
+class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
   final FocusNode nameFocus = FocusNode();
   final FocusNode lastNameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();

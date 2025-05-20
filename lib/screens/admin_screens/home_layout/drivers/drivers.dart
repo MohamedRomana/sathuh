@@ -9,6 +9,7 @@ import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../user_screens/map/driver_location/driver_location.dart';
 import '../../admin_driver_details.dart/admin_driver_details.dart';
 import '../chats/chat_details/adm_chat_details.dart';
 
@@ -159,7 +160,12 @@ class Drivers extends StatelessWidget {
                                   InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
-                                    onTap: () {},
+                                    onTap: () {
+                                      AppRouter.navigateTo(
+                                        context,
+                                        const DriverLocation(isAdmin: true,),
+                                      );
+                                    },
                                     child: const Icon(
                                       Icons.share_location,
                                       color: Colors.blue,

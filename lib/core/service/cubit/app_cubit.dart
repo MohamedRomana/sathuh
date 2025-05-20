@@ -344,6 +344,108 @@ class AppCubit extends Cubit<AppState> {
     emit(RemoveImageSuccess());
   }
 
+  List<File> profileCoverImage2 = [];
+  Future<void> getProfileCoverImage2(BuildContext context) async {
+    final picker = ImagePicker();
+    final int? pickedOption = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.select_image_source.tr()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () => Navigator.pop(context, 1),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () => Navigator.pop(context, 2),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedOption == null) return;
+
+    XFile? pickedImage;
+
+    if (pickedOption == 1) {
+      pickedImage = await picker.pickImage(source: ImageSource.camera);
+    } else if (pickedOption == 2) {
+      final pickedImages = await picker.pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        pickedImage = pickedImages.first;
+      }
+    }
+
+    if (pickedImage != null) {
+      profileCoverImage2 = [File(pickedImage.path)];
+      emit(ChooseImageSuccess());
+    }
+  }
+
+  void removeProfileCoverImage2() {
+    profileCoverImage2.clear();
+    emit(RemoveImageSuccess());
+  }
+
+  List<File> profileImage2 = [];
+  Future<void> getProfileImage2(BuildContext context) async {
+    final picker = ImagePicker();
+    final int? pickedOption = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.select_image_source.tr()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () => Navigator.pop(context, 1),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () => Navigator.pop(context, 2),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedOption == null) return;
+
+    XFile? pickedImage;
+
+    if (pickedOption == 1) {
+      pickedImage = await picker.pickImage(source: ImageSource.camera);
+    } else if (pickedOption == 2) {
+      final pickedImages = await picker.pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        pickedImage = pickedImages.first;
+      }
+    }
+
+    if (pickedImage != null) {
+      profileImage2 = [File(pickedImage.path)];
+      emit(ChooseImageSuccess());
+    }
+  }
+
+  void removeProfileImage2() {
+    profileImage2.clear();
+    emit(RemoveImageSuccess());
+  }
+
   String? profileImageUrl;
   Future uploadProfileImage() async {
     emit(UploadImagesLoading());

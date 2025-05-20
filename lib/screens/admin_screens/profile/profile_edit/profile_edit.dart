@@ -1,19 +1,18 @@
-// ignore_for_file: deprecated_member_use
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/constants/colors.dart';
-import '../../../core/service/cubit/app_cubit.dart';
-import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_router.dart';
-import '../../../core/widgets/app_text.dart';
-import '../../../core/widgets/custom_app_bar.dart';
-import '../../../core/widgets/custom_bottom_nav.dart';
-import '../../../core/widgets/flash_message.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../generated/locale_keys.g.dart';
-import 'widgets/edit_profile_fields.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/service/cubit/app_cubit.dart';
+import '../../../../core/widgets/admin_bottom_nav.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_router.dart';
+import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/flash_message.dart';
+import '../../../../gen/assets.gen.dart';
+import '../../../../generated/locale_keys.g.dart';
+import 'widgets/profile_edit_fileds.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _firstNameController = TextEditingController();
@@ -23,14 +22,14 @@ final _phoneController = TextEditingController();
 final _passController = TextEditingController();
 final _cityController = TextEditingController();
 
-class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+class AdminEditProfile extends StatefulWidget {
+  const AdminEditProfile({super.key});
 
   @override
-  State<ProfileEdit> createState() => _ProfileEditState();
+  State<AdminEditProfile> createState() => _AdminEditProfileState();
 }
 
-class _ProfileEditState extends State<ProfileEdit> {
+class _AdminEditProfileState extends State<AdminEditProfile> {
   @override
   void initState() {
     _firstNameController.clear();
@@ -46,7 +45,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return CustomBottomNav(
+        return AdminBottomNav(
           body: BlocBuilder<AppCubit, AppState>(
             builder: (context, state) {
               return Stack(
@@ -78,14 +77,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   children: [
                                     AppCubit.get(
                                           context,
-                                        ).profileCoverImage.isEmpty
+                                        ).profileCoverImage2.isEmpty
                                         ? InkWell(
                                           splashColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap:
                                               () => AppCubit.get(
                                                 context,
-                                              ).getProfileCoverImage(context),
+                                              ).getProfileCoverImage2(context),
                                           child: Image.asset(
                                             Assets.img.bmw.path,
                                           ),
@@ -97,11 +96,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                                               () =>
                                                   AppCubit.get(
                                                     context,
-                                                  ).removeProfileCoverImage(),
+                                                  ).removeProfileCoverImage2(),
                                           child: Image.file(
                                             AppCubit.get(
                                               context,
-                                            ).profileCoverImage.first,
+                                            ).profileCoverImage2.first,
                                             height: 200.h,
                                             width: double.infinity,
                                             fit: BoxFit.fill,
@@ -114,12 +113,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   start: 120.w,
                                   child: Column(
                                     children: [
-                                      AppCubit.get(context).profileImage.isEmpty
+                                      AppCubit.get(
+                                            context,
+                                          ).profileImage2.isEmpty
                                           ? InkWell(
                                             onTap:
                                                 () => AppCubit.get(
                                                   context,
-                                                ).getProfileImage(context),
+                                                ).getProfileImage2(context),
                                             splashColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             child: Stack(
@@ -168,7 +169,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                                     image: FileImage(
                                                       AppCubit.get(
                                                         context,
-                                                      ).profileImage.first,
+                                                      ).profileImage2.first,
                                                     ),
                                                     fit: BoxFit.cover,
                                                   ),
@@ -180,7 +181,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                                       () =>
                                                           AppCubit.get(
                                                             context,
-                                                          ).removeProfileImage(),
+                                                          ).removeProfileImage2(),
                                                   splashColor:
                                                       Colors.transparent,
                                                   highlightColor:
@@ -200,7 +201,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                               ],
                             ),
                           ),
-                          EditProfileFields(
+                          AdmEditeProfileFields(
                             passController: _passController,
                             phoneController: _phoneController,
                             firstNameController: _firstNameController,
