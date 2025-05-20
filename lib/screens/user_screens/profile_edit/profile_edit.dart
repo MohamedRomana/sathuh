@@ -69,7 +69,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                       child: Column(
                         children: [
                           CustomAppBar(title: LocaleKeys.editprofile.tr()),
-                          SizedBox(height: 30.h),
                           SizedBox(
                             height: 300.h,
                             child: Stack(

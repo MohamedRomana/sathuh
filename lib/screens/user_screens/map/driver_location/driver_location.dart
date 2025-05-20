@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
-
 import '../../../../core/widgets/app_router.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -31,6 +30,7 @@ class DriverLocation extends StatelessWidget {
                     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: const ['a', 'b', 'c'],
                 userAgentPackageName: 'com.example.app',
+                tileProvider: NetworkTileProvider(),
               ),
               const MarkerLayer(
                 markers: [

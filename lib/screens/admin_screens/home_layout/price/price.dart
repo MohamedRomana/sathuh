@@ -2,15 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/widgets/app_router.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/screens/admin_screens/profile/adm_profile.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../user_screens/home_layout/home/widgets/custom_swiper.dart';
+import 'widgets/add_images.dart';
+import 'widgets/admin_top_bar.dart';
 import 'widgets/edit_price.dart';
 import 'widgets/sub_price.dart';
 
@@ -56,64 +55,8 @@ class _PriceState extends State<Price> {
                 child: Column(
                   children: [
                     SizedBox(height: 61.h),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        AppRouter.navigateTo(context, const AdmProfile());
-                      },
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsetsDirectional.only(
-                              start: 16.w,
-                              end: 5.w,
-                            ),
-                            height: 50.w,
-                            width: 50.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.grey,
-                                width: 3.w,
-                              ),
-                              image: DecorationImage(
-                                image: AssetImage(Assets.img.client.path),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 150.w,
-                                child: AppText(
-                                  text: LocaleKeys.welcome.tr(),
-                                  size: 12.sp,
-                                  color: AppColors.secondray,
-                                  family: FontFamily.tajawalBold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 150.w,
-                                child: AppText(
-                                  text:
-                                      LocaleKeys.thank_you_for_your_preference
-                                          .tr(),
-                                  size: 10.sp,
-                                  color: AppColors.secondray,
-                                  family: FontFamily.tajawalBold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-                    const CustomSwiper(),
+                    const AdminTopBar(),
+                    const AddImages(),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: DefaultTabController(
@@ -125,6 +68,7 @@ class _PriceState extends State<Price> {
                               child: AppText(
                                 text: LocaleKeys.pricing_settings.tr(),
                                 size: 20.sp,
+                                top: 16.h,
                                 start: 16.w,
                                 color: AppColors.secondray,
                                 family: FontFamily.tajawalBold,
@@ -189,3 +133,5 @@ class _PriceState extends State<Price> {
     );
   }
 }
+
+
