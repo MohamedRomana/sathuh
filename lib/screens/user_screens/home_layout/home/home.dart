@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
 
       if (placemarks.isNotEmpty) {
         final placemark = placemarks.first;
-        return "${placemark.administrativeArea ?? ""} , ${placemark.locality ?? ""}";
+        return placemark.locality ?? "الموقع غير معروف";
       }
     } catch (e) {
       debugPrint("Failed to get address: $e");

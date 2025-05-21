@@ -31,7 +31,7 @@ class Chats extends StatelessWidget {
             length: 2,
             child: Column(
               children: [
-                CustomAppBar(title: LocaleKeys.chats.tr()),
+                CustomAppBar(title: LocaleKeys.chats.tr(), isHomeLayout: true),
                 Container(
                   width: 343.w,
                   margin: EdgeInsetsDirectional.only(

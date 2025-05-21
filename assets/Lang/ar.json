@@ -593,5 +593,6 @@
   "transfer_successful": "تم التحويل بنجاح",
   "transfer_sent_successfully": "تم إرسال التحويل إلى المستفيد بنجاح",
   "ok": "حسناً",
-  "fingerprint_verification_failed": "فشل التحقق بالبصمة"
+  "fingerprint_verification_failed": "فشل التحقق بالبصمة",
+  "edit_car_details": "تعديل بيانات السيارة"
 }

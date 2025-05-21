@@ -9,9 +9,16 @@ import '../../../../generated/locale_keys.g.dart';
 import '../../payment/payment.dart';
 
 class PaymentDetails extends StatelessWidget {
-  const PaymentDetails({super.key, required this.totalDistance});
+  const PaymentDetails({
+    super.key,
+    required this.totalDistance,
+    this.travelTime,
+    this.arrivalTime,
+  });
 
   final double? totalDistance;
+  final int? travelTime;
+  final String? arrivalTime;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +117,7 @@ class PaymentDetails extends StatelessWidget {
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
-                        text: '40 ${LocaleKeys.minute.tr()}',
+                        text: '$travelTime ${LocaleKeys.minute.tr()}',
                         size: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -149,7 +156,7 @@ class PaymentDetails extends StatelessWidget {
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
-                        text: '12:45 PM',
+                        text: '$arrivalTime',
                         size: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -235,4 +242,3 @@ class PaymentDetails extends StatelessWidget {
     );
   }
 }
-

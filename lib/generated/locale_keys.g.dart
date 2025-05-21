@@ -598,5 +598,6 @@ abstract class  LocaleKeys {
   static const transfer_sent_successfully = 'transfer_sent_successfully';
   static const ok = 'ok';
   static const fingerprint_verification_failed = 'fingerprint_verification_failed';
+  static const edit_car_details = 'edit_car_details';
 
 }

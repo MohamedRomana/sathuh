@@ -11,6 +11,16 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../generated/locale_keys.g.dart';
 
+final _formKey = GlobalKey<FormState>();
+final _carTypeController = TextEditingController();
+final _carModelController = TextEditingController();
+final _carYearController = TextEditingController();
+final _carColorController = TextEditingController();
+final _carNumberController = TextEditingController();
+final _firstController = TextEditingController();
+final _secondController = TextEditingController();
+final _thirdController = TextEditingController();
+
 class AddCars extends StatelessWidget {
   const AddCars({super.key});
 
@@ -32,129 +42,193 @@ class AddCars extends StatelessWidget {
           ),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBar(title: LocaleKeys.add_car.tr()),
-                AppText(
-                  text: LocaleKeys.car_type.tr(),
-                  bottom: 8.h,
-                  start: 16.w,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: LocaleKeys.car_type.tr(),
-                ),
-                AppText(
-                  text: LocaleKeys.car_model.tr(),
-                  bottom: 8.h,
-                  top: 8.h,
-                  start: 16.w,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: LocaleKeys.car_model.tr(),
-                ),
-                AppText(
-                  text: LocaleKeys.manufacture_year.tr(),
-                  start: 16.w,
-                  bottom: 8.h,
-                  top: 8.h,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: LocaleKeys.manufacture_year.tr(),
-                ),
-                AppText(
-                  text: LocaleKeys.color.tr(),
-                  start: 16.w,
-                  bottom: 8.h,
-                  top: 8.h,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                AppInput(
-                  filled: true,
-                  enabledBorderColor: Colors.grey,
-                  hint: LocaleKeys.color.tr(),
-                ),
-                AppText(
-                  text: LocaleKeys.car_plate_number.tr(),
-                  bottom: 8.h,
-                  top: 8.h,
-                  start: 16.w,
-                  family: FontFamily.tajawalBold,
-                  size: 16.sp,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 90.w,
-                      child: AppInput(
-                        filled: true,
-                        border: 10.r,
-                        end: 0,
-                        enabledBorderColor: Colors.grey,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90.w,
-                      child: AppInput(
-                        filled: true,
-                        border: 10.r,
-                        end: 0,
-                        enabledBorderColor: Colors.grey,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90.w,
-                      child: AppInput(
-                        end: 0,
-                        filled: true,
-                        border: 10.r,
-                        enabledBorderColor: Colors.grey,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 90.w,
-                      child: AppInput(
-                        end: 0,
-                        filled: true,
-                        hint: '- - - - - -',
-                        textAlign: TextAlign.center,
-                        border: 10.r,
-                        enabledBorderColor: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                Center(
-                  child: AppButton(
-                    top: 24.h,
-                    onPressed: () {
-                      AppRouter.pop(context);
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomAppBar(title: LocaleKeys.add_car.tr()),
+                  AppText(
+                    text: LocaleKeys.car_type.tr(),
+                    bottom: 8.h,
+                    start: 16.w,
+                    family: FontFamily.tajawalBold,
+                    size: 16.sp,
+                  ),
+                  AppInput(
+                    filled: true,
+                    enabledBorderColor: Colors.grey,
+                    hint: LocaleKeys.car_type.tr(),
+                    controller: _carTypeController,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return LocaleKeys.car_type.tr();
+                      }
+                      return null;
                     },
-                    child: AppText(
-                      text: LocaleKeys.save.tr(),
-                      size: 21.sp,
-                      color: Colors.white,
-                      family: FontFamily.tajawalBold,
+                  ),
+                  AppText(
+                    text: LocaleKeys.car_model.tr(),
+                    bottom: 8.h,
+                    top: 8.h,
+                    start: 16.w,
+                    family: FontFamily.tajawalBold,
+                    size: 16.sp,
+                  ),
+                  AppInput(
+                    filled: true,
+                    enabledBorderColor: Colors.grey,
+                    hint: LocaleKeys.car_model.tr(),
+                    controller: _carModelController,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return LocaleKeys.car_model.tr();
+                      }
+                      return null;
+                    },
+                  ),
+                  AppText(
+                    text: LocaleKeys.manufacture_year.tr(),
+                    start: 16.w,
+                    bottom: 8.h,
+                    top: 8.h,
+                    family: FontFamily.tajawalBold,
+                    size: 16.sp,
+                  ),
+                  AppInput(
+                    filled: true,
+                    enabledBorderColor: Colors.grey,
+                    hint: LocaleKeys.manufacture_year.tr(),
+                    controller: _carYearController,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return LocaleKeys.manufacture_year.tr();
+                      }
+                      return null;
+                    },
+                  ),
+                  AppText(
+                    text: LocaleKeys.color.tr(),
+                    start: 16.w,
+                    bottom: 8.h,
+                    top: 8.h,
+                    family: FontFamily.tajawalBold,
+                    size: 16.sp,
+                  ),
+                  AppInput(
+                    filled: true,
+                    enabledBorderColor: Colors.grey,
+                    hint: LocaleKeys.color.tr(),
+                    controller: _carColorController,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return LocaleKeys.color.tr();
+                      }
+                      return null;
+                    },
+                  ),
+                  AppText(
+                    text: LocaleKeys.car_plate_number.tr(),
+                    bottom: 8.h,
+                    top: 8.h,
+                    start: 16.w,
+                    family: FontFamily.tajawalBold,
+                    size: 16.sp,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 90.w,
+                        child: AppInput(
+                          filled: true,
+                          border: 10.r,
+                          end: 0,
+                          enabledBorderColor: Colors.grey,
+                          hint: '',
+                          controller: _firstController,
+                          textAlign: TextAlign.center,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return LocaleKeys.car_plate_number.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 90.w,
+                        child: AppInput(
+                          filled: true,
+                          border: 10.r,
+                          end: 0,
+                          enabledBorderColor: Colors.grey,
+                          hint: '',
+                          controller: _secondController,
+                          textAlign: TextAlign.center,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return LocaleKeys.car_plate_number.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 90.w,
+                        child: AppInput(
+                          end: 0,
+                          filled: true,
+                          border: 10.r,
+                          enabledBorderColor: Colors.grey,
+                          hint: '',
+                          controller: _thirdController,
+                          textAlign: TextAlign.center,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return LocaleKeys.car_plate_number.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 90.w,
+                        child: AppInput(
+                          end: 0,
+                          filled: true,
+                          hint: '',
+                          controller: _carNumberController,
+                          textAlign: TextAlign.center,
+                          border: 10.r,
+                          enabledBorderColor: Colors.grey,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return LocaleKeys.car_plate_number.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: AppButton(
+                      top: 24.h,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          AppRouter.pop(context);
+                        }
+                      },
+                      child: AppText(
+                        text: 'حفظ',
+                        size: 21.sp,
+                        color: Colors.white,
+                        family: FontFamily.tajawalBold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

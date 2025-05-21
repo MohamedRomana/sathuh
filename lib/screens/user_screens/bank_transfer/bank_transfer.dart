@@ -31,8 +31,9 @@ class _BankTransferPageState extends State<BankTransferPage> {
     _accountController.clear();
     _nameController.clear();
     _ibanController.clear();
-    _amountController.clear();
+    _amountController.text = '20 ${LocaleKeys.sar.tr()}';
     _messageController.clear();
+
     super.initState();
   }
 
@@ -79,7 +80,6 @@ class _BankTransferPageState extends State<BankTransferPage> {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           filled: true,
-
                           fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
@@ -188,6 +188,7 @@ class _BankTransferPageState extends State<BankTransferPage> {
                         start: 0,
                         end: 0,
                         controller: _amountController,
+                        read: true,
                         validate: (value) {
                           if (value == null || value.isEmpty) {
                             return LocaleKeys.please_enter_amount.tr();

@@ -609,7 +609,8 @@ class CodegenLoader extends AssetLoader{
   "transfer_successful": "تم التحويل بنجاح",
   "transfer_sent_successfully": "تم إرسال التحويل إلى المستفيد بنجاح",
   "ok": "حسناً",
-  "fingerprint_verification_failed": "فشل التحقق بالبصمة"
+  "fingerprint_verification_failed": "فشل التحقق بالبصمة",
+  "edit_car_details": "تعديل بيانات السيارة"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1206,7 +1207,8 @@ static const Map<String,dynamic> _en = {
   "transfer_successful": "Transfer Successful",
   "transfer_sent_successfully": "Transfer sent to beneficiary successfully",
   "ok": "OK",
-  "fingerprint_verification_failed": "Fingerprint verification failed"
+  "fingerprint_verification_failed": "Fingerprint verification failed",
+  "edit_car_details": "Edit Car Details"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

@@ -593,5 +593,6 @@
       "transfer_successful": "Transfer Successful",
       "transfer_sent_successfully": "Transfer sent to beneficiary successfully",
       "ok": "OK",
-      "fingerprint_verification_failed": "Fingerprint verification failed"
+      "fingerprint_verification_failed": "Fingerprint verification failed",
+      "edit_car_details": "Edit Car Details"
 }

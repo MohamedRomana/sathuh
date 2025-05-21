@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/chats/admin_chats.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/complaints/complaints.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/drivers/drivers.dart';
@@ -583,4 +584,32 @@ class AppCubit extends Cubit<AppState> {
     addFiles.remove(file);
     emit(FileNotSelected());
   }
+
+  Future<List<LocationResult>> searchPlaces(String query) async {
+    final url = Uri.parse(
+      'https://nominatim.openstreetmap.org/search?q=$query&format=json&addressdetails=1',
+    );
+    final response = await http.get(
+      url,
+      headers: {'User-Agent': 'YourAppName'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List;
+      return data.map((item) {
+        return LocationResult(
+          name: item['display_name'],
+          latLng: LatLng(double.parse(item['lat']), double.parse(item['lon'])),
+        );
+      }).toList();
+    } else {
+      throw Exception("Failed to fetch places");
+    }
+  }
+}
+
+class LocationResult {
+  final String name;
+  final LatLng latLng;
+  LocationResult({required this.name, required this.latLng});
 }

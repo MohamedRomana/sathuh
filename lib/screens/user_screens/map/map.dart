@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/generated/locale_keys.g.dart';
+import '../../../core/service/cubit/app_cubit.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/flash_message.dart';
 import 'widgets/pay_details.dart';
@@ -19,6 +23,9 @@ class OpenStreetMapView extends StatefulWidget {
 }
 
 class _OpenStreetMapViewState extends State<OpenStreetMapView> {
+  TextEditingController searchController = TextEditingController();
+  List<LocationResult> searchResults = [];
+  bool isSearching = false;
   final Distance distance = const Distance();
   double? totalDistance;
   LatLng? currentLocation;
@@ -26,6 +33,28 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
   bool isSelectingDestination = false;
 
   final mapController = MapController();
+
+  Future<List<LocationResult>> searchPlaces(String query) async {
+    final url = Uri.parse(
+      'https://nominatim.openstreetmap.org/search?q=$query&format=json&addressdetails=1',
+    );
+    final response = await http.get(
+      url,
+      headers: {'User-Agent': 'flutter_map_app'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List;
+      return data.map((item) {
+        return LocationResult(
+          name: item['display_name'],
+          latLng: LatLng(double.parse(item['lat']), double.parse(item['lon'])),
+        );
+      }).toList();
+    } else {
+      throw Exception("Failed to fetch places");
+    }
+  }
 
   Future<void> _getMyLocation() async {
     LocationPermission permission = await Geolocator.requestPermission();
@@ -68,8 +97,26 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
     }
   }
 
+  int estimateTravelTimeInMinutes(
+    double distanceInMeters, {
+    double speedKmPerHour = 40,
+  }) {
+    double distanceKm = distanceInMeters / 1000;
+    double timeInHours = distanceKm / speedKmPerHour;
+    return (timeInHours * 60).round();
+  }
+
+  String getEstimatedArrivalTime(int travelMinutes) {
+    final now = DateTime.now();
+    final arrivalTime = now.add(Duration(minutes: travelMinutes));
+    return DateFormat.Hm().format(arrivalTime);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final travelTime = estimateTravelTimeInMinutes(totalDistance ?? 0);
+    final arrivalTime = getEstimatedArrivalTime(travelTime);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -128,7 +175,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
 
           // زر تحديد موقعي
           PositionedDirectional(
-            top: 60.h,
+            top: 120.h,
             start: 20.w,
             child: ElevatedButton.icon(
               style: ButtonStyle(
@@ -147,7 +194,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
           ),
 
           PositionedDirectional(
-            top: 120.h,
+            top: 180.h,
             start: 20.w,
             child: ElevatedButton.icon(
               style: ButtonStyle(
@@ -166,7 +213,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
           ),
           if (totalDistance != null)
             PositionedDirectional(
-              top: 180.h,
+              top: 240.h,
               start: 20.w,
               child: Container(
                 padding: EdgeInsets.all(10.w),
@@ -202,8 +249,11 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
                   showModalBottomSheet(
                     context: context,
                     builder:
-                        (context) =>
-                            PaymentDetails(totalDistance: totalDistance),
+                        (context) => PaymentDetails(
+                          totalDistance: totalDistance,
+                          travelTime: travelTime,
+                          arrivalTime: arrivalTime,
+                        ),
                   );
                 } else {
                   showFlashMessage(
@@ -221,9 +271,79 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
               ),
             ),
           ),
+          PositionedDirectional(
+            top: 50.h,
+            start: 16.w,
+            end: 16.w,
+            child: Column(
+              children: [
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: LocaleKeys.search.tr(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  onChanged: (query) async {
+                    if (query.length >= 3) {
+                      setState(() {
+                        isSearching = true;
+                      });
+                      final results = await searchPlaces(query);
+                      setState(() {
+                        searchResults = results;
+                        isSearching = false;
+                      });
+                    } else {
+                      setState(() {
+                        searchResults = [];
+                      });
+                    }
+                  },
+                ),
+                if (searchResults.isNotEmpty)
+                  Container(
+                    color: Colors.white,
+                    height: 200.h,
+                    child: ListView.builder(
+                      itemCount: searchResults.length,
+                      itemBuilder: (context, index) {
+                        final result = searchResults[index];
+                        return ListTile(
+                          leading: const Icon(Icons.place),
+                          title: Text(
+                            result.name,
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              destinationLocation = result.latLng;
+                              if (currentLocation != null) {
+                                totalDistance = distance.as(
+                                  LengthUnit.Meter,
+                                  currentLocation!,
+                                  destinationLocation!,
+                                );
+                              }
+                              searchResults.clear();
+                              searchController.clear();
+                            });
+                            mapController.move(result.latLng, 15);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
