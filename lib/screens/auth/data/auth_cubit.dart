@@ -53,10 +53,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> getIdentityImage() async {
     final picker = ImagePicker();
     final pickedImages = await picker.pickMultiImage();
-    identityImage = pickedImages
-        .map((pickedImage) => File(pickedImage.path))
-        .take(1)
-        .toList();
+    identityImage =
+        pickedImages
+            .map((pickedImage) => File(pickedImage.path))
+            .take(1)
+            .toList();
     emit(ChooseImageSuccess());
   }
 
@@ -69,10 +70,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> getLicenseImage() async {
     final picker = ImagePicker();
     final pickedImages = await picker.pickMultiImage();
-    licenseImage = pickedImages
-        .map((pickedImage) => File(pickedImage.path))
-        .take(1)
-        .toList();
+    licenseImage =
+        pickedImages
+            .map((pickedImage) => File(pickedImage.path))
+            .take(1)
+            .toList();
     emit(ChooseImageSuccess());
   }
 
@@ -85,10 +87,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> getCarImage() async {
     final picker = ImagePicker();
     final pickedImages = await picker.pickMultiImage();
-    carImage = pickedImages
-        .map((pickedImage) => File(pickedImage.path))
-        .take(1)
-        .toList();
+    carImage =
+        pickedImages
+            .map((pickedImage) => File(pickedImage.path))
+            .take(1)
+            .toList();
     emit(ChooseImageSuccess());
   }
 
@@ -112,30 +115,38 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoading());
 
     final response = await http.post(
-      Uri.parse("${baseUrl}api/SignUp-User"),
+      Uri.parse("${baseUrl}auth/signUp"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "fullName": fullName,
+        "userName": fullName,
         "email": email,
-        "phoneNumber": phoneNumber,
+        "phone": phoneNumber,
         "password": password,
         "confirmPassword": confirmPassword,
         "country": country,
         "city": city,
-        "town": town,
+        "area": town,
       }),
     );
 
-    try {
-      final data = jsonDecode(response.body);
-      debugPrint(data.toString());
+    debugPrint("Response status: ${response.statusCode}");
+    debugPrint("Response body: ${response.body}");
 
-      final message = data["message"] ?? "تم التسجيل بنجاح";
+    if (response.statusCode == 200) {
+      try {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
 
-      emit(RegisterSuccess(message: message));
-    } catch (e) {
-      debugPrint("Decoding error: $e");
-      emit(RegisterFailure(error: "حدث خطأ في التسجيل"));
+        final message = data["message"] ?? "تم التسجيل بنجاح";
+        emit(RegisterSuccess(message: message));
+      } catch (e) {
+        debugPrint("Decoding error: $e");
+        emit(RegisterFailure(error: "خطأ في تحليل بيانات الاستجابة"));
+      }
+    } else {
+      emit(
+        RegisterFailure(error: "فشل الاتصال بالسيرفر: ${response.statusCode}"),
+      );
     }
   }
 
@@ -173,7 +184,7 @@ class AuthCubit extends Cubit<AuthState> {
         // "device_id": CacheHelper.getDeviceToken(),
       },
     );
-   try {
+    try {
       final data = jsonDecode(response.body);
       debugPrint(data.toString());
 

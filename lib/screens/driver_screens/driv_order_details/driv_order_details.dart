@@ -289,7 +289,7 @@ class DrivOrderDetails extends StatelessWidget {
                     Row(
                       children: [
                         AppText(
-                          text: LocaleKeys.pickup_location.tr(),
+                          text: LocaleKeys.customer_location.tr(),
                           size: 16.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -298,7 +298,7 @@ class DrivOrderDetails extends StatelessWidget {
                           onTap:
                               () => showAddressBottomSheet(
                                 context,
-                                LocaleKeys.pickup_location.tr(),
+                                LocaleKeys.customer_location.tr(),
                                 LocaleKeys.full_start_location_here.tr(),
                                 const LatLng(
                                   24.7136,
@@ -336,7 +336,7 @@ class DrivOrderDetails extends StatelessWidget {
                                         snapshot.data ??
                                         LocaleKeys.no_address.tr(),
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
+                                    color: Colors.red,
                                   );
                                 }
                               },
@@ -362,7 +362,7 @@ class DrivOrderDetails extends StatelessWidget {
                           onTap:
                               () => showAddressBottomSheet(
                                 context,
-                                LocaleKeys.pickup_location.tr(),
+                                LocaleKeys.dropoff_location.tr(),
                                 LocaleKeys.full_start_location_here.tr(),
                                 const LatLng(
                                   24.7136,
@@ -399,8 +399,9 @@ class DrivOrderDetails extends StatelessWidget {
                                     text:
                                         snapshot.data ??
                                         LocaleKeys.no_address.tr(),
+
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
+                                    color: Colors.red,
                                   );
                                 }
                               },

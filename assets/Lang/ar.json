@@ -606,5 +606,6 @@
   "annual_subscription": "اشتراك سنوي",
   "full_start_location_here": "موقع الانطلاق الكامل هنا",
   "error_occurred": "حدث خطأ",
-  "no_address": "لا يوجد عنوان"
+  "no_address": "لا يوجد عنوان",
+  "customer_location": "موقع العميل"
 }

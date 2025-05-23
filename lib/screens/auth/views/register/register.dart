@@ -90,7 +90,7 @@ class Register extends StatelessWidget {
                         town: _townController.text,
                       );
                     }
-                    AppRouter.navigateTo(context, const OTPscreen());
+                    // AppRouter.navigateTo(context, const OTPscreen());
                   },
                   child:
                       state is RegisterLoading

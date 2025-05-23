@@ -611,5 +611,6 @@ abstract class  LocaleKeys {
   static const full_start_location_here = 'full_start_location_here';
   static const error_occurred = 'error_occurred';
   static const no_address = 'no_address';
+  static const customer_location = 'customer_location';
 
 }

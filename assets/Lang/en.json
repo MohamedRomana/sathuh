@@ -606,5 +606,6 @@
       "annual_subscription": "Annual Subscription",
       "full_start_location_here": "Full start location here",
       "error_occurred": "An error occurred",
-      "no_address": "No address"
+      "no_address": "No address",
+      "customer_location": "Customer Location"
 }
