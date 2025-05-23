@@ -20,6 +20,7 @@ import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
 import '../../../admin_screens/profile/adm_profile.dart';
 import '../../../auth/views/login/login.dart';
+import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../../driver_screens/notifications/driver_notifications.dart';
 import '../../../driver_screens/profile/driver_profile.dart';
 import '../../../start/splash/splash.dart';
@@ -197,6 +198,12 @@ class _CustomDrawerState extends State<CustomDrawer>
                           context,
                           const HomeLayout(),
                         );
+                      } else if (CacheHelper.getUserType() == "driver") {
+                        AppCubit.get(context).changebottomDriverNavIndex(1);
+                        AppRouter.navigateAndFinish(
+                          context,
+                          const DriverHomeLayout(),
+                        );
                       } else {
                         AppCubit.get(context).changebottomAdminNavIndex(1);
                         AppRouter.navigateTo(context, const AdminHomeLayout());
@@ -221,7 +228,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                       child: Row(
                         children: [
-                          CacheHelper.getUserType() == "client"
+                          CacheHelper.getUserType() == "client" ||
+                                  CacheHelper.getUserType() == "driver"
                               ? SvgPicture.asset(
                                 Assets.svg.drawerHome,
                                 height: 24.w,
@@ -242,7 +250,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                           AppText(
                             start: 6.w,
                             text:
-                                CacheHelper.getUserType() == "client"
+                                CacheHelper.getUserType() == "client" ||
+                                        CacheHelper.getUserType() == "driver"
                                     ? LocaleKeys.home.tr()
                                     : LocaleKeys.prices.tr(),
                             color:

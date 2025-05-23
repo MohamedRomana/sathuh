@@ -608,5 +608,8 @@ abstract class  LocaleKeys {
   static const subscription = 'subscription';
   static const monthly_subscription = 'monthly_subscription';
   static const annual_subscription = 'annual_subscription';
+  static const full_start_location_here = 'full_start_location_here';
+  static const error_occurred = 'error_occurred';
+  static const no_address = 'no_address';
 
 }

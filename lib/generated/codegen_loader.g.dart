@@ -619,7 +619,10 @@ class CodegenLoader extends AssetLoader{
   "package_info": "معلومات عن الباقة",
   "subscription": "اشتراك",
   "monthly_subscription": "اشتراك شهري",
-  "annual_subscription": "اشتراك سنوي"
+  "annual_subscription": "اشتراك سنوي",
+  "full_start_location_here": "موقع الانطلاق الكامل هنا",
+  "error_occurred": "حدث خطأ",
+  "no_address": "لا يوجد عنوان"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1226,7 +1229,10 @@ static const Map<String,dynamic> _en = {
   "package_info": "Package Information",
   "subscription": "Subscription",
   "monthly_subscription": "Monthly Subscription",
-  "annual_subscription": "Annual Subscription"
+  "annual_subscription": "Annual Subscription",
+  "full_start_location_here": "Full start location here",
+  "error_occurred": "An error occurred",
+  "no_address": "No address"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }
