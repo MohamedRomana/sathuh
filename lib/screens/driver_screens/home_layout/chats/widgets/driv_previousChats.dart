@@ -5,10 +5,10 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../../../chat_details/chat_details.dart';
+import '../chat_details/chat_details.dart';
 
-class CustomCurrentChats extends StatelessWidget {
-  const CustomCurrentChats({super.key});
+class DrivPreviouschats extends StatelessWidget {
+  const DrivPreviouschats({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class CustomCurrentChats extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppRouter.navigateTo(context, const ChatDetails());
+                AppRouter.navigateTo(context, const DrivChatDetails());
               },
               child: Row(
                 children: [
@@ -70,9 +70,9 @@ class CustomCurrentChats extends StatelessWidget {
                             width: 170.w,
                             child: AppText(
                               text: ' اسم تجريبي',
-                              size: 14.sp,
+                              size: 16.sp,
                               color: AppColors.primary,
-                              family: Assets.fonts.tajawalMedium,
+                              family: Assets.fonts.tajawalBold,
                             ),
                           ),
                           SizedBox(
@@ -81,7 +81,7 @@ class CustomCurrentChats extends StatelessWidget {
                               textAlign: TextAlign.end,
                               text: 'منذ 2 ساعة',
                               size: 12.sp,
-                              family: Assets.fonts.tajawalMedium,
+                              family: Assets.fonts.tajawalBold,
                             ),
                           ),
                         ],
@@ -92,7 +92,7 @@ class CustomCurrentChats extends StatelessWidget {
                           text: 'يريد اسم العميل التواصل معك',
                           size: 12.sp,
                           color: Colors.grey,
-                          family: Assets.fonts.tajawalMedium,
+                          family: Assets.fonts.tajawalBold,
                         ),
                       ),
                     ],

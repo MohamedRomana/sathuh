@@ -13,8 +13,12 @@ import 'package:sathuh/screens/admin_screens/home_layout/chats/admin_chats.dart'
 import 'package:sathuh/screens/admin_screens/home_layout/complaints/complaints.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/drivers/drivers.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/price/price.dart';
+import 'package:sathuh/screens/driver_screens/home_layout/chats/driver_chats.dart';
+import 'package:sathuh/screens/driver_screens/home_layout/home/driver_home.dart';
 import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
 import '../../../generated/locale_keys.g.dart';
+import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
+import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
 import '../../../screens/user_screens/home_layout/home/home.dart';
 import '../../../screens/user_screens/home_layout/orders/orders.dart';
@@ -48,6 +52,19 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeBottomNav());
   }
 
+  int bottomDriverNavIndex = 1;
+  List<Widget> bottomDriverNavScreens = [
+    const Subscribes(),
+    const DriverHome(),
+    const DriverOrders(),
+    const DriverChats(),
+  ];
+
+  void changebottomDriverNavIndex(index) async {
+    bottomDriverNavIndex = index;
+    emit(ChangeBottomNav());
+  }
+
   double? lat = 0;
   double? lng = 0;
   String? address;
@@ -62,6 +79,12 @@ class AppCubit extends Cubit<AppState> {
       drawerIndex = index;
       emit(ChangeIndex());
     }
+    emit(ChangeIndex());
+  }
+
+  int subScripeIndex = -1;
+  void changesubScripeIndex({required int index}) {
+    subScripeIndex = index;
     emit(ChangeIndex());
   }
 

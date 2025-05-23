@@ -16,6 +16,7 @@ import '../../../../core/widgets/app_router.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../admin_screens/home_layout/admin_home_layout.dart';
+import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../../user_screens/home_layout/home_layout.dart';
 import '../../data/auth_cubit.dart';
 import '../forget_pass/forget_pass.dart';
@@ -181,44 +182,54 @@ class _LogInState extends State<LogIn> {
                 fit: BoxFit.cover,
               ),
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AppText(
-                  text: LocaleKeys.dontHaveAccount.tr(),
-                  size: 14.sp,
-                  color: AppColors.secondray,
+            CacheHelper.getUserType() == "administration"
+                ? const SizedBox()
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppText(
+                      text: LocaleKeys.dontHaveAccount.tr(),
+                      size: 14.sp,
+                      color: AppColors.secondray,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        AppRouter.navigateTo(context, const Register());
+                      },
+                      child: AppText(
+                        text: LocaleKeys.newUser.tr(),
+                        size: 14.sp,
+                        color: AppColors.darkRed,
+                      ),
+                    ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    AppRouter.navigateTo(context, const Register());
-                  },
+            // SizedBox(height: 16.h),
+            CacheHelper.getUserType() == "administration"
+                ? const SizedBox()
+                : TextButton(
+                  onPressed:
+                      () => AppRouter.navigateTo(context, const ForgetPass()),
                   child: AppText(
-                    text: LocaleKeys.newUser.tr(),
+                    text: LocaleKeys.forgetPass.tr(),
                     size: 14.sp,
                     color: AppColors.darkRed,
                   ),
                 ),
-              ],
-            ),
-            // SizedBox(height: 16.h),
-            TextButton(
-              onPressed:
-                  () => AppRouter.navigateTo(context, const ForgetPass()),
-              child: AppText(
-                text: LocaleKeys.forgetPass.tr(),
-                size: 14.sp,
-                color: AppColors.darkRed,
-              ),
-            ),
             SizedBox(height: 10.h),
             InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
                 if (CacheHelper.getUserType() == "administration") {
+                  AppCubit.get(context).changebottomAdminNavIndex(1);
                   AppRouter.navigateAndFinish(context, const AdminHomeLayout());
+                } else if (CacheHelper.getUserType() == "driver") {
+                  AppCubit.get(context).changebottomDriverNavIndex(1);
+                  AppRouter.navigateAndFinish(
+                    context,
+                    const DriverHomeLayout(),
+                  );
                 } else {
                   AppCubit.get(context).changebottomNavIndex(1);
                   AppRouter.navigateAndFinish(context, const HomeLayout());

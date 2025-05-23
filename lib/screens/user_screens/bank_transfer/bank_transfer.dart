@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_input.dart';
@@ -31,7 +32,10 @@ class _BankTransferPageState extends State<BankTransferPage> {
     _accountController.clear();
     _nameController.clear();
     _ibanController.clear();
-    _amountController.text = '20 ${LocaleKeys.sar.tr()}';
+    _amountController.text =
+        CacheHelper.getUserType() == "driver"
+            ? '1000 ${LocaleKeys.sar.tr()}'
+            : '20 ${LocaleKeys.sar.tr()}';
     _messageController.clear();
 
     super.initState();

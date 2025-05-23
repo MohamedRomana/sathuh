@@ -20,6 +20,8 @@ import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
 import '../../../admin_screens/profile/adm_profile.dart';
 import '../../../auth/views/login/login.dart';
+import '../../../driver_screens/notifications/driver_notifications.dart';
+import '../../../driver_screens/profile/driver_profile.dart';
 import '../../../start/splash/splash.dart';
 import '../../drawer/about_us/about_us.dart';
 import '../../drawer/contact_us/contact_us.dart';
@@ -272,9 +274,13 @@ class _CustomDrawerState extends State<CustomDrawer>
                       if (CacheHelper.getUserType() == "client") {
                         AppRouter.pop(context);
                         AppRouter.navigateTo(context, const Profile());
-                      } else if (CacheHelper.getUserType() == "administration") {
+                      } else if (CacheHelper.getUserType() ==
+                          "administration") {
                         AppRouter.pop(context);
                         AppRouter.navigateTo(context, const AdmProfile());
+                      } else {
+                        AppRouter.pop(context);
+                        AppRouter.navigateTo(context, const DriverProfile());
                       }
                     },
                     child: Container(
@@ -319,7 +325,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                   ),
                 ),
 
-                CacheHelper.getUserType() == 'client'
+                CacheHelper.getUserType() == 'client' ||
+                        CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation4,
                       builder: (context, child) {
@@ -434,7 +441,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                     ),
 
-                CacheHelper.getUserType() == 'client'
+                CacheHelper.getUserType() == 'client' ||
+                        CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation5,
                       builder: (context, child) {
@@ -494,7 +502,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                     )
                     : const SizedBox(),
 
-                CacheHelper.getUserType() == 'client'
+                CacheHelper.getUserType() == 'client' ||
+                        CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation6,
                       builder: (context, child) {
@@ -625,6 +634,12 @@ class _CustomDrawerState extends State<CustomDrawer>
                       if (CacheHelper.getUserType() == 'client') {
                         AppCubit.get(context).changedrawerIndex(index: 6);
                         AppRouter.navigateTo(context, const Notifications());
+                      } else if (CacheHelper.getUserType() == 'driver') {
+                        AppCubit.get(context).changedrawerIndex(index: 6);
+                        AppRouter.navigateTo(
+                          context,
+                          const DriverNotifications(),
+                        );
                       } else {
                         AppCubit.get(context).changedrawerIndex(index: 6);
                         AppRouter.navigateTo(context, const AdmNotifications());
@@ -775,7 +790,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                     ),
                   ),
                 ),
-                CacheHelper.getUserType() == "client"
+                CacheHelper.getUserType() == "client" ||
+                        CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation9,
                       builder: (context, child) {
@@ -790,7 +806,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         onTap: () {
                           AppCubit.get(context).changedrawerIndex(index: 7);
                           if (CacheHelper.getUserType() == "client") {
-                            CacheHelper.setUserType('saler');
+                            CacheHelper.setUserType('driver');
                             AppRouter.navigateTo(context, const LogIn());
                           } else {
                             CacheHelper.setUserType('client');
@@ -825,7 +841,10 @@ class _CustomDrawerState extends State<CustomDrawer>
                               ),
                               AppText(
                                 start: 6.w,
-                                text: 'تسجيل كسائق',
+                                text:
+                                    CacheHelper.getUserType() == 'driver'
+                                        ? LocaleKeys.register_as_user.tr()
+                                        : LocaleKeys.register_as_driver.tr(),
                                 color:
                                     AppCubit.get(context).drawerIndex == 7
                                         ? Colors.white

@@ -5,10 +5,10 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../../../chat_details/chat_details.dart';
+import '../chat_details/chat_details.dart';
 
-class CustomCurrentChats extends StatelessWidget {
-  const CustomCurrentChats({super.key});
+class DrivCurrentChats extends StatelessWidget {
+  const DrivCurrentChats({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class CustomCurrentChats extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppRouter.navigateTo(context, const ChatDetails());
+                AppRouter.navigateTo(context, const DrivChatDetails());
               },
               child: Row(
                 children: [

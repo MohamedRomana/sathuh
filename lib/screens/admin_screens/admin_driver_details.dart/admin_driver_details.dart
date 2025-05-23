@@ -40,7 +40,7 @@ class AdminDriverDetails extends StatelessWidget {
                 CustomAppBar(title: LocaleKeys.driver.tr()),
                 const DriverHeader(),
                 const AboutDriver(),
-                const DriverOrders(),
+                const CustomDriverOrders(),
                 const ProductRates(),
                 AppButton(
                   onPressed: () {

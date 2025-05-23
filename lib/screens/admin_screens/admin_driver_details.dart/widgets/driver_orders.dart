@@ -8,8 +8,8 @@ import '../../../../core/widgets/app_text.dart';
 import '../../../../generated/locale_keys.g.dart';
 import 'driver_orders_details.dart';
 
-class DriverOrders extends StatelessWidget {
-  const DriverOrders({super.key});
+class CustomDriverOrders extends StatelessWidget {
+  const CustomDriverOrders({super.key});
 
   @override
   Widget build(BuildContext context) {

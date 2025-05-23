@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../../../core/cache/cache_helper.dart';
 import '../../../core/constants/contsants.dart';
 part 'auth_state.dart';
@@ -46,6 +47,54 @@ class AuthCubit extends Cubit<AuthState> {
   agreeTermsFun() {
     agreeTerms = !agreeTerms;
     emit(AgreeTermsSuccess());
+  }
+
+  List<File> identityImage = [];
+  Future<void> getIdentityImage() async {
+    final picker = ImagePicker();
+    final pickedImages = await picker.pickMultiImage();
+    identityImage = pickedImages
+        .map((pickedImage) => File(pickedImage.path))
+        .take(1)
+        .toList();
+    emit(ChooseImageSuccess());
+  }
+
+  void removeIdentityImage() {
+    identityImage.clear();
+    emit(RemoveImageSuccess());
+  }
+
+  List<File> licenseImage = [];
+  Future<void> getLicenseImage() async {
+    final picker = ImagePicker();
+    final pickedImages = await picker.pickMultiImage();
+    licenseImage = pickedImages
+        .map((pickedImage) => File(pickedImage.path))
+        .take(1)
+        .toList();
+    emit(ChooseImageSuccess());
+  }
+
+  void removeLicenseImage() {
+    licenseImage.clear();
+    emit(RemoveImageSuccess());
+  }
+
+  List<File> carImage = [];
+  Future<void> getCarImage() async {
+    final picker = ImagePicker();
+    final pickedImages = await picker.pickMultiImage();
+    carImage = pickedImages
+        .map((pickedImage) => File(pickedImage.path))
+        .take(1)
+        .toList();
+    emit(ChooseImageSuccess());
+  }
+
+  void removeCarImage() {
+    carImage.clear();
+    emit(RemoveImageSuccess());
   }
 
   String cityId = "";

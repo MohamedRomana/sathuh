@@ -75,10 +75,7 @@ class _ConfirmTransferPageState extends State<ConfirmTransferPage> {
                           LocaleKeys.account_number_iban.tr(),
                           widget.accountNumber,
                         ),
-                        _buildDetailRow(
-                          LocaleKeys.amount.tr(),
-                          "${widget.amount} ${LocaleKeys.sar.tr()}",
-                        ),
+                        _buildDetailRow(LocaleKeys.amount.tr(), widget.amount),
                         if (widget.note.isNotEmpty)
                           _buildDetailRow(
                             LocaleKeys.note_with_transfer.tr(),
@@ -170,7 +167,11 @@ class _ConfirmTransferPageState extends State<ConfirmTransferPage> {
           Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(
             width: 120.w,
-            child: Text(value, style: const TextStyle(color: Colors.grey), textAlign: TextAlign.end),
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.grey),
+              textAlign: TextAlign.end,
+            ),
           ),
         ],
       ),

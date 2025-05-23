@@ -9,6 +9,10 @@ final class IsSecureIcon extends AuthState {}
 
 final class AgreeTermsSuccess extends AuthState {}
 
+final class ChooseImageSuccess extends AuthState {}
+
+final class RemoveImageSuccess extends AuthState {}
+
 final class RegisterLoading extends AuthState {}
 
 final class RegisterSuccess extends AuthState {

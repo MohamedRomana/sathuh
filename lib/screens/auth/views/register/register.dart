@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_router.dart';
@@ -13,6 +14,7 @@ import '../../data/auth_cubit.dart';
 import '../otp/otp.dart';
 import '../widgets/auth_header.dart';
 import 'widgets/fields.dart';
+import 'widgets/image_row.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _fullNameController = TextEditingController();
@@ -46,6 +48,9 @@ class Register extends StatelessWidget {
               cityController: _cityController,
               townController: _townController,
             ),
+            CacheHelper.getUserType() == "driver"
+                ? const ImageRow()
+                : const SizedBox(),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is RegisterSuccess) {

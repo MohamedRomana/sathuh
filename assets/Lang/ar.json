@@ -594,5 +594,14 @@
   "transfer_sent_successfully": "تم إرسال التحويل إلى المستفيد بنجاح",
   "ok": "حسناً",
   "fingerprint_verification_failed": "فشل التحقق بالبصمة",
-  "edit_car_details": "تعديل بيانات السيارة"
+  "edit_car_details": "تعديل بيانات السيارة",
+  "packages": "الباقات",
+  "register_as_user": "تسجيل كمستخدم",
+  "register_as_driver": "تسجيل كسائق",
+  "subscriptions": "الاشتراكات",
+  "my_packages": "باقاتي",
+  "package_info": "معلومات عن الباقة",
+  "subscription": "اشتراك",
+  "monthly_subscription": "اشتراك شهري",
+  "annual_subscription": "اشتراك سنوي"
 }

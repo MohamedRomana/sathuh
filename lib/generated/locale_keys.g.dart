@@ -599,5 +599,14 @@ abstract class  LocaleKeys {
   static const ok = 'ok';
   static const fingerprint_verification_failed = 'fingerprint_verification_failed';
   static const edit_car_details = 'edit_car_details';
+  static const packages = 'packages';
+  static const register_as_user = 'register_as_user';
+  static const register_as_driver = 'register_as_driver';
+  static const subscriptions = 'subscriptions';
+  static const my_packages = 'my_packages';
+  static const package_info = 'package_info';
+  static const subscription = 'subscription';
+  static const monthly_subscription = 'monthly_subscription';
+  static const annual_subscription = 'annual_subscription';
 
 }

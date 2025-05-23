@@ -610,7 +610,16 @@ class CodegenLoader extends AssetLoader{
   "transfer_sent_successfully": "تم إرسال التحويل إلى المستفيد بنجاح",
   "ok": "حسناً",
   "fingerprint_verification_failed": "فشل التحقق بالبصمة",
-  "edit_car_details": "تعديل بيانات السيارة"
+  "edit_car_details": "تعديل بيانات السيارة",
+  "packages": "الباقات",
+  "register_as_user": "تسجيل كمستخدم",
+  "register_as_driver": "تسجيل كسائق",
+  "subscriptions": "الاشتراكات",
+  "my_packages": "باقاتي",
+  "package_info": "معلومات عن الباقة",
+  "subscription": "اشتراك",
+  "monthly_subscription": "اشتراك شهري",
+  "annual_subscription": "اشتراك سنوي"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1208,7 +1217,16 @@ static const Map<String,dynamic> _en = {
   "transfer_sent_successfully": "Transfer sent to beneficiary successfully",
   "ok": "OK",
   "fingerprint_verification_failed": "Fingerprint verification failed",
-  "edit_car_details": "Edit Car Details"
+  "edit_car_details": "Edit Car Details",
+  "packages": "Packages",
+  "register_as_user": "Register as User",
+  "register_as_driver": "Register as Driver",
+  "subscriptions": "Subscriptions",
+  "my_packages": "My Packages",
+  "package_info": "Package Information",
+  "subscription": "Subscription",
+  "monthly_subscription": "Monthly Subscription",
+  "annual_subscription": "Annual Subscription"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

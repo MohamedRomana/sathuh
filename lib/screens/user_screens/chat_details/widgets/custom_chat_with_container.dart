@@ -3,11 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../driver_details/driver_details.dart';
 
 class CustomChatWithContainer extends StatelessWidget {
   const CustomChatWithContainer({super.key});
@@ -18,7 +16,7 @@ class CustomChatWithContainer extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-        AppRouter.navigateTo(context, const DriverDetails());
+        // AppRouter.navigateTo(context, const DriverDetails());
       },
       child: Container(
         width: 343.w,

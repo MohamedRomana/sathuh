@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -11,7 +10,6 @@ import '../../../../core/widgets/app_input.dart';
 import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_bottom_nav.dart';
 import '../../../../core/widgets/flash_message.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
@@ -54,7 +52,7 @@ class _ContactUsState extends State<ContactUs> {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return CustomBottomNav(
+        return Scaffold(
           body: Stack(
             children: [
               Image.asset(
