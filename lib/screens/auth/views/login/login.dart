@@ -98,8 +98,22 @@ class _LogInState extends State<LogIn> {
                   saveData(key: 'email', value: _phoneController.text);
                   saveData(key: 'password', value: _passController.text);
 
-                  AppCubit.get(context).changebottomNavIndex(1);
-                  AppRouter.navigateAndFinish(context, const HomeLayout());
+                  if (CacheHelper.getUserType() == "administration") {
+                    AppCubit.get(context).changebottomAdminNavIndex(1);
+                    AppRouter.navigateAndFinish(
+                      context,
+                      const AdminHomeLayout(),
+                    );
+                  } else if (CacheHelper.getUserType() == "driver") {
+                    AppCubit.get(context).changebottomDriverNavIndex(1);
+                    AppRouter.navigateAndFinish(
+                      context,
+                      const DriverHomeLayout(),
+                    );
+                  } else {
+                    AppCubit.get(context).changebottomNavIndex(1);
+                    AppRouter.navigateAndFinish(context, const HomeLayout());
+                  }
 
                   _phoneController.clear();
                   _passController.clear();
@@ -123,7 +137,7 @@ class _LogInState extends State<LogIn> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await AuthCubit.get(context).logIn(
-                        email: _phoneController.text,
+                        phone: _phoneController.text,
                         password: _passController.text,
                       );
                     }
@@ -154,7 +168,7 @@ class _LogInState extends State<LogIn> {
 
                     await AuthCubit.get(
                       context,
-                    ).logIn(email: cachedPhone, password: cachedPass);
+                    ).logIn(phone: cachedPhone, password: cachedPass);
                   } else {
                     showFlashMessage(
                       context: context,

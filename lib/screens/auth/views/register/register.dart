@@ -58,6 +58,9 @@ class Register extends StatelessWidget {
                   _fullNameController.clear();
                   _phoneController.clear();
                   _emailController.clear();
+                  _countryController.clear();
+                  _cityController.clear();
+                  _townController.clear();
                   _passController.clear();
                   _confirmPassController.clear();
                   showFlashMessage(

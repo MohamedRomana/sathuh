@@ -122,17 +122,15 @@ class AuthCubit extends Cubit<AuthState> {
         "email": email,
         "phone": phoneNumber,
         "password": password,
-        "confirmPassword": confirmPassword,
-        "country": country,
-        "city": city,
-        "area": town,
+        "confirmationPassword": confirmPassword,
+        "address": {"country": country, "city": city, "area": town},
       }),
     );
 
     debugPrint("Response status: ${response.statusCode}");
     debugPrint("Response body: ${response.body}");
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       try {
         final data = jsonDecode(response.body);
         debugPrint(data.toString());
@@ -144,56 +142,75 @@ class AuthCubit extends Cubit<AuthState> {
         emit(RegisterFailure(error: "خطأ في تحليل بيانات الاستجابة"));
       }
     } else {
-      emit(
-        RegisterFailure(error: "فشل الاتصال بالسيرفر: ${response.statusCode}"),
-      );
+      try {
+        final errorData = jsonDecode(response.body);
+
+        if (errorData['validationResult'] != null) {
+          final List validationErrors = errorData['validationResult'];
+          final List<String> errorMessages = [];
+
+          for (var error in validationErrors) {
+            final path = error['path']?.join('.') ?? '';
+            final message = error['message'] ?? 'خطأ غير معروف في $path';
+            errorMessages.add('$path: $message');
+          }
+
+          final fullErrorMessage = errorMessages.join('\n');
+          emit(RegisterFailure(error: fullErrorMessage));
+        } else {
+          emit(
+            RegisterFailure(error: errorData['message'] ?? 'حدث خطأ غير متوقع'),
+          );
+        }
+      } catch (e) {
+        emit(RegisterFailure(error: 'فشل تحليل رسالة الخطأ'));
+      }
     }
   }
 
-  Future otp({required String code}) async {
+  Future otp({required String email, required String code}) async {
     emit(OTPLoading());
-    http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/active-account"),
-      body: {
-        "lang": CacheHelper.getLang(),
-        "user_id": CacheHelper.getUserId(),
-        "code": code,
-        "device_id": CacheHelper.getDeviceToken(),
-      },
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}auth/confirmEmail"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": email, "code": code}),
     );
-    Map<String, dynamic> data = jsonDecode(response.body);
+    final data = jsonDecode(response.body);
     debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      await CacheHelper.setUserId(data["data"]["id"].toString());
+    if (response.statusCode == 200) {
+      // await CacheHelper.setUserId(data["data"]["id"].toString());
       emit(OTPSuccess());
     } else {
-      emit(OTPFailure(error: data["msg"]));
+      emit(OTPFailure(error: data["message"]));
     }
   }
 
-  Future logIn({required String email, required String password}) async {
+  Future logIn({required String phone, required String password}) async {
     emit(LogInLoading());
-    http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/SignIn-User"),
-      headers: {"Content-Type": "application/json"},
-      body: {
-        // "lang": CacheHelper.getLang(),
-        "email": email,
-        "password": password,
-        // "device_id": CacheHelper.getDeviceToken(),
-      },
-    );
+
     try {
+      final response = await http.post(
+        Uri.parse("${baseUrl}auth/login"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"phone": phone, "password": password}),
+      );
+
+      debugPrint("Response status: ${response.statusCode}");
+      debugPrint("Response body: ${response.body}");
+
       final data = jsonDecode(response.body);
-      debugPrint(data.toString());
 
-      final message = data["message"] ?? "تم التسجيل بنجاح";
-
-      emit(LogInSuccess(message: message));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final message = data["message"] ?? "تم تسجيل الدخول بنجاح";
+        emit(LogInSuccess(message: message));
+      } else {
+        final errorMessage = data["message"] ?? "فشل تسجيل الدخول";
+        emit(LogInFailure(error: errorMessage));
+      }
     } catch (e) {
       debugPrint("Decoding error: $e");
-      emit(LogInFailure(error: "حدث خطأ في التسجيل"));
+      emit(LogInFailure(error: "حدث خطأ غير متوقع أثناء تسجيل الدخول"));
     }
   }
 
