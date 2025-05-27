@@ -54,7 +54,10 @@ class Register extends StatelessWidget {
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is RegisterSuccess) {
-                  AppRouter.navigateAndPop(context, const OTPscreen());
+                  AppRouter.navigateAndPop(
+                    context,
+                    OTPscreen(emailController: _emailController),
+                  );
                   _fullNameController.clear();
                   _phoneController.clear();
                   _emailController.clear();

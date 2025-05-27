@@ -30,6 +30,7 @@ class _ForgetPassState extends State<ForgetPass> {
   void initState() {
     super.initState();
     emailFocusNode.addListener(() => setState(() {}));
+    _emailController.clear();
   }
 
   @override
@@ -101,10 +102,12 @@ class _ForgetPassState extends State<ForgetPass> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ResetPass(),
+                        builder:
+                            (context) =>
+                                ResetPass(email: _emailController.text),
                       ),
                     );
-                    _emailController.clear();
+                    // _emailController.clear();
                     showFlashMessage(
                       context: context,
                       type: FlashMessageType.success,
@@ -119,14 +122,8 @@ class _ForgetPassState extends State<ForgetPass> {
                         if (_formKey.currentState!.validate()) {
                           AuthCubit.get(
                             context,
-                          ).forgetPass(phone: _emailController.text);
+                          ).forgetPass(email: _emailController.text);
                         }
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResetPass(),
-                          ),
-                        );
                       },
                       child:
                           state is ForgetPassLoading

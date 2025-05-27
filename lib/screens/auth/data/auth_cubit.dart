@@ -203,6 +203,9 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final message = data["message"] ?? "تم تسجيل الدخول بنجاح";
+        final token = data["data"]["token"];
+        await CacheHelper.setUserToken(token);
+        debugPrint("Saved Token: $token");
         emit(LogInSuccess(message: message));
       } else {
         final errorMessage = data["message"] ?? "فشل تسجيل الدخول";
@@ -237,23 +240,28 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   String resetPassId = "";
-  Future forgetPass({required String phone}) async {
+  Future forgetPass({required String email}) async {
     emit(ForgetPassLoading());
-    http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/forget-password"),
-      body: {"lang": CacheHelper.getLang(), "phone": phone},
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}auth/forgetPassword"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": email}),
     );
-    Map<String, dynamic> data = jsonDecode(response.body);
+    debugPrint("Response status: ${response.statusCode}");
+    debugPrint("Response body: ${response.body}");
+
+    final data = jsonDecode(response.body);
+
     if (data["data"] != null) {
-      resetPassId = data["data"]["id"].toString();
+      // resetPassId = data["data"]["id"].toString();
       debugPrint(resetPassId);
     }
 
-    if (data["key"] == 1) {
-      emit(ForgetPassSuccess(message: data["msg"]));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ForgetPassSuccess(message: data["message"]));
     } else {
       debugPrint(data["msg"]);
-      emit(ForgetPassFailure(error: data["msg"]));
+      emit(ForgetPassFailure(error: data["message"]));
     }
   }
 
@@ -274,24 +282,36 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future resetPass({required String code, required String password}) async {
+  Future resetPass({
+    required String code,
+    required String password,
+    required String email,
+    required String confirmPassword,
+  }) async {
     emit(ResetPassLoading());
-    http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/reset-password"),
-      body: {
-        "lang": CacheHelper.getLang(),
-        "user_id": resetPassId,
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}auth/resetPassword"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "email": email,
         "code": code,
         "password": password,
-      },
+        "confirmationPassword": confirmPassword,
+      }),
     );
-    Map<String, dynamic> data = jsonDecode(response.body);
+    debugPrint("Response status: ${response.statusCode}");
+    debugPrint("Response body: ${response.body}");
+    debugPrint(
+      "email: $email, code: $code, password: $password, confirmPassword: $confirmPassword",
+    );
+
+    final data = jsonDecode(response.body);
     debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      emit(ResetPassSuccess(message: data["msg"]));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ResetPassSuccess(message: data["message"]));
     } else {
-      emit(ResetPassFailure(error: data["msg"]));
+      emit(ResetPassFailure(error: data["message"]));
     }
   }
 

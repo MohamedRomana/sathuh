@@ -73,6 +73,27 @@ final class UpdateProfileFailure extends AppState {
   UpdateProfileFailure({required this.error});
 }
 
+final class UploadProfileImageLoading extends AppState{}
+
+final class UploadProfileImageSuccess extends AppState {
+  final String message;
+  UploadProfileImageSuccess({required this.message});
+}
+
+final class UploadProfileImageFailure extends AppState {
+  final String error;
+  UploadProfileImageFailure({required this.error});
+}
+
+final class GetProfileLoading extends AppState {}
+
+final class GetProfileSuccess extends AppState {}
+
+final class GetProfileFailure extends AppState {
+  final String error;
+  GetProfileFailure({required this.error});
+}
+
 final class UploadImagesLoading extends AppState {}
 
 final class UploadImagesSuccess extends AppState {}

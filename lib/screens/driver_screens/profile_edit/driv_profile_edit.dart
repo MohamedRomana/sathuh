@@ -200,8 +200,7 @@ class _DrivProfileEditState extends State<DrivProfileEdit> {
                           EditProfileFields(
                             passController: _passController,
                             phoneController: _phoneController,
-                            firstNameController: _firstNameController,
-                            lastNameController: _lastNameController,
+                            fullNameController: _lastNameController,
                             cityController: _cityController,
                             emailController: _emailController,
                           ),

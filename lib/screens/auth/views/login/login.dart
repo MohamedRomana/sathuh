@@ -95,7 +95,7 @@ class _LogInState extends State<LogIn> {
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is LogInSuccess) {
-                  saveData(key: 'email', value: _phoneController.text);
+                  saveData(key: 'phone', value: _phoneController.text);
                   saveData(key: 'password', value: _passController.text);
 
                   if (CacheHelper.getUserType() == "administration") {

@@ -114,6 +114,9 @@ class $AssetsImgGen {
   AssetGenImage get unitedKingdom =>
       const AssetGenImage('assets/img/united-kingdom.png');
 
+  /// File path: assets/img/unphoto.jpg
+  AssetGenImage get unphoto => const AssetGenImage('assets/img/unphoto.jpg');
+
   /// File path: assets/img/winch-car.png
   AssetGenImage get winchCar => const AssetGenImage('assets/img/winch-car.png');
 
@@ -142,6 +145,7 @@ class $AssetsImgGen {
     time,
     trak,
     unitedKingdom,
+    unphoto,
     winchCar,
   ];
 }

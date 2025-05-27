@@ -13,8 +13,7 @@ import '../../../../generated/locale_keys.g.dart';
 
 class EditProfileFields extends StatefulWidget {
   final TextEditingController passController;
-  final TextEditingController firstNameController;
-  final TextEditingController lastNameController;
+  final TextEditingController fullNameController;
   final TextEditingController cityController;
   final TextEditingController phoneController;
   final TextEditingController emailController;
@@ -23,9 +22,9 @@ class EditProfileFields extends StatefulWidget {
     super.key,
     required this.passController,
     required this.phoneController,
-    required this.firstNameController,
-    required this.lastNameController,
-    required this.cityController, required this.emailController,
+    required this.fullNameController,
+    required this.cityController,
+    required this.emailController,
   });
 
   @override
@@ -94,35 +93,14 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
               child: Column(
                 children: [
                   AppInput(
-                    focusNode: nameFocus,
-                    filled: true,
-                    enabledBorderColor: Colors.grey,
-                    hint: 'Ahmed',
-                    controller: widget.firstNameController,
-                    prefixIcon: SizedBox(
-                      height: 28.w,
-                      width: 28.w,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          Assets.svg.drawerProfile,
-                          height: 28.w,
-                          width: 28.w,
-                          color:
-                              nameFocus.hasFocus
-                                  ? AppColors.primary
-                                  : Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                  AppInput(
                     focusNode: lastNameFocus,
                     top: 16.h,
                     bottom: 16.h,
                     filled: true,
                     enabledBorderColor: Colors.grey,
-                    hint: 'Ali',
-                    controller: widget.lastNameController,
+                    hint:
+                        AppCubit.get(context).showProfileMap["userName"] ?? "",
+                    controller: widget.fullNameController,
                     prefixIcon: SizedBox(
                       height: 28.w,
                       width: 28.w,
@@ -144,7 +122,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                     bottom: 16.h,
                     filled: true,
                     enabledBorderColor: Colors.grey,
-                    hint: '+20112312554',
+                    hint: AppCubit.get(context).showProfileMap["phone"] ?? "",
                     controller: widget.phoneController,
                     inputType: TextInputType.phone,
                     prefixIcon: SizedBox(
@@ -168,7 +146,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                     bottom: 16.h,
                     filled: true,
                     enabledBorderColor: Colors.grey,
-                    hint: 'Ahmed@gmail.com',
+                    hint: AppCubit.get(context).showProfileMap["email"] ?? "",
                     controller: widget.emailController,
                     prefixIcon: SizedBox(
                       height: 28.w,
@@ -185,69 +163,6 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                         ),
                       ),
                     ),
-                  ),
-                  AppInput(
-                    focusNode: cityFocus,
-                    enabledBorderColor: Colors.grey,
-                    bottom: 16.h,
-                    filled: true,
-                    hint: 'المنصورة',
-                    controller: widget.cityController,
-                    prefixIcon: SizedBox(
-                      height: 25.w,
-                      width: 25.w,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          Assets.svg.location,
-                          height: 25.w,
-                          width: 25.w,
-                          color:
-                              cityFocus.hasFocus
-                                  ? AppColors.primary
-                                  : Colors.grey,
-                        ),
-                      ),
-                    ),
-                    suffixIcon: Icon(
-                      Icons.arrow_drop_down,
-                      color:
-                          cityFocus.hasFocus ? AppColors.primary : Colors.grey,
-                      size: 25.sp,
-                    ),
-                    read: true,
-                    onTap: () async {
-                      // String? value = await showDialog<String>(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return SimpleDialog(
-                      //       backgroundColor: AppColors.borderColor,
-                      //       title: AppText(
-                      //         text: LocaleKeys.chooseCity.tr(),
-                      //         size: 21.sp,
-                      //       ),
-                      //       children: AppCubit.get(context).citiesList.map(
-                      //         (value) {
-                      //           return SimpleDialogOption(
-                      //             onPressed: () {
-                      //               AppCubit.get(context).cityId =
-                      //                   value['id'].toString();
-                      //               Navigator.pop(context, value['title']);
-                      //             },
-                      //             child: AppText(
-                      //               text: value['title'] ?? "",
-                      //               size: 18.sp,
-                      //               color: AppColors.primary,
-                      //             ),
-                      //           );
-                      //         },
-                      //       ).toList(),
-                      //     );
-                      //   },
-                      // );
-                      // if (value != null) {
-                      //   widget.cityController.text = value;
-                      // }
-                    },
                   ),
                   BlocBuilder<AppCubit, AppState>(
                     builder: (context, state) {

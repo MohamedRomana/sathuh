@@ -18,13 +18,15 @@ final _passController = TextEditingController();
 final _confirmPassController = TextEditingController();
 
 class ResetPass extends StatefulWidget {
-  const ResetPass({super.key});
+  final String email;
+  const ResetPass({super.key, required this.email});
 
   @override
   State<ResetPass> createState() => _ResetPassState();
 }
 
 class _ResetPassState extends State<ResetPass> {
+  String otpCode = "";
   final FocusNode passFocus = FocusNode();
   final FocusNode confirmPassFocus = FocusNode();
 
@@ -44,7 +46,6 @@ class _ResetPassState extends State<ResetPass> {
 
   @override
   Widget build(BuildContext context) {
-    String otpCode = "";
     return Scaffold(
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
@@ -89,7 +90,9 @@ class _ResetPassState extends State<ResetPass> {
                   animationDuration: const Duration(milliseconds: 300),
                   enableActiveFill: true,
                   onCompleted: (code) {
-                    otpCode = code;
+                    setState(() {
+                      otpCode = code;
+                    });
                     debugPrint("Completed");
                   },
                   onChanged: (value) {
@@ -275,10 +278,28 @@ class _ResetPassState extends State<ResetPass> {
                     top: 32.h,
                     bottom: 29.h,
                     onPressed: () async {
+                      debugPrint('otpCode before submit: $otpCode');
+                      debugPrint('email before submit: ${widget.email}');
+                      debugPrint(
+                        'password before submit: ${_passController.text}',
+                      );
+                      debugPrint(
+                        'confirmPassword before submit: ${_confirmPassController.text}',
+                      );
                       if (_formKey.currentState!.validate()) {
+                        if (otpCode.isEmpty) {
+                          showFlashMessage(
+                            context: context,
+                            type: FlashMessageType.error,
+                            message: "الرجاء إدخال رمز التفعيل",
+                          );
+                          return; 
+                        }
                         AuthCubit.get(context).resetPass(
                           code: otpCode,
                           password: _passController.text,
+                          email: widget.email,
+                          confirmPassword: _confirmPassController.text,
                         );
                       }
                     },

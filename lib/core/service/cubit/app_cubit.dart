@@ -470,40 +470,6 @@ class AppCubit extends Cubit<AppState> {
     emit(RemoveImageSuccess());
   }
 
-  String? profileImageUrl;
-  Future uploadProfileImage() async {
-    emit(UploadImagesLoading());
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse("${baseUrl}api/upload-image"),
-    );
-    request.fields['lang'] = CacheHelper.getLang();
-
-    for (var image in profileImage) {
-      var stream = http.ByteStream(image.openRead());
-      var length = await image.length();
-      var multipartFile = http.MultipartFile(
-        'image',
-        stream,
-        length,
-        filename: image.path.split('/').last,
-      );
-      request.files.add(multipartFile);
-    }
-    final response = await request.send();
-    final responseBody = await response.stream.bytesToString();
-
-    Map<String, dynamic> data = jsonDecode(responseBody);
-    profileImageUrl = data["app_url"];
-    debugPrint("imageUrl is $profileImageUrl");
-
-    if (data["key"] == 1) {
-      emit(UploadImagesSuccess());
-    } else {
-      emit(UploadImagesFailure());
-    }
-  }
-
   String aboutUsTitle = '';
   Future aboutUs() async {
     emit(AboutUsLoading());
@@ -627,6 +593,95 @@ class AppCubit extends Cubit<AppState> {
       }).toList();
     } else {
       throw Exception("Failed to fetch places");
+    }
+  }
+
+  // Services
+
+  Map showProfileMap = {};
+  Future showProfile() async {
+    emit(GetProfileLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}user/profile"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+    );
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    debugPrint(data.toString());
+    debugPrint("Profile API response: $data");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      showProfileMap = data["data"]['user'];
+      emit(GetProfileSuccess());
+    } else {
+      emit(GetProfileFailure(error: data["message"] ?? "حدث خطاء"));
+    }
+  }
+
+  Future updateProfile({
+    required String userName,
+    required String phone,
+  }) async {
+    emit(UpdateProfileLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}user/profile/updateProfile"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode({"userName": userName, "phone": phone}),
+    );
+    final data = jsonDecode(response.body);
+    debugPrint(data.toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdateProfileSuccess(message: data["message"]));
+      showProfile();
+    } else {
+      emit(UpdateProfileFailure(error: data["message"] ?? "حدث خطاء"));
+    }
+  }
+
+  String? profileImageUrl;
+
+  Future<void> uploadProfileImage(File imageFile) async {
+    emit(UploadProfileImageLoading());
+
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    var uri = Uri.parse("${baseUrl}user/profile/image");
+
+    var request = http.MultipartRequest('PATCH', uri);
+    request.headers['Authorization'] = token;
+    // لا تضف Content-Type يدوياً مع MultipartRequest عادة
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'attachment',
+        imageFile.path,
+      ), // جرب 'image' أو اسأل السيرفر
+    );
+
+    debugPrint('Headers: ${request.headers}');
+    debugPrint('Files: ${request.files.map((f) => f.field).toList()}');
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    debugPrint('Status code: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      emit(
+        UploadProfileImageSuccess(message: data["message"] ?? "تم الرفع بنجاح"),
+      );
+      showProfile();
+    } else {
+      emit(UploadProfileImageFailure(error: "حدث خطأ أثناء رفع الصورة"));
     }
   }
 }
