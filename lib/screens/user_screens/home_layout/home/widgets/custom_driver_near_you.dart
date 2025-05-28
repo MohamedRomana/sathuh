@@ -32,7 +32,7 @@ class CustomDriverNearYou extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 15,
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          separatorBuilder: (context, index) => Container(height: 16.h),
           itemBuilder:
               (context, index) => InkWell(
                 splashColor: Colors.transparent,
@@ -65,11 +65,11 @@ class CustomDriverNearYou extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(width: 8.w),
+                          Container(width: 8.w),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              Container(
                                 width: 150.w,
                                 child: AppText(
                                   text: 'محمد احمد',
@@ -85,7 +85,7 @@ class CustomDriverNearYou extends StatelessWidget {
                                     color: Colors.lightGreen,
                                     size: 8.sp,
                                   ),
-                                  SizedBox(
+                                  Container(
                                     width: 100.w,
                                     child: AppText(
                                       start: 3.w,
@@ -97,7 +97,7 @@ class CustomDriverNearYou extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              Container(
                                 width: 150.w,
                                 child: AppText(
                                   text: '${LocaleKeys.awayFromYou.tr()} 14 كم',
@@ -120,7 +120,7 @@ class CustomDriverNearYou extends StatelessWidget {
                             },
                             child: const Icon(Icons.phone, color: Colors.red),
                           ),
-                          SizedBox(width: 8.w),
+                          Container(width: 8.w),
                           InkWell(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
@@ -129,7 +129,7 @@ class CustomDriverNearYou extends StatelessWidget {
                             },
                             child: const Icon(Icons.chat, color: Colors.green),
                           ),
-                          SizedBox(width: 8.w),
+                          Container(width: 8.w),
                           InkWell(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,

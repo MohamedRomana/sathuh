@@ -41,8 +41,8 @@ class CustomMyPackages extends StatelessWidget {
                     size: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 5.h),
-                  SizedBox(
+                  Container(height: 5.h),
+                  Container(
                     width: 200.w,
                     child: AppText(
                       text: '1000 ${LocaleKeys.sar.tr()}',
@@ -101,8 +101,8 @@ class CustomMyPackages extends StatelessWidget {
                     size: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 5.h),
-                  SizedBox(
+                  Container(height: 5.h),
+                  Container(
                     width: 200.w,
                     child: AppText(
                       text: '1000 ${LocaleKeys.sar.tr()}',

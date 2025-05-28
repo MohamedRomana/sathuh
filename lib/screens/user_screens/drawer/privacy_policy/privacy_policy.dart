@@ -70,7 +70,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                       lines: 100,
                       size: 16.sp,
                     ),
-                    SizedBox(height: 120.h),
+                    Container(height: 120.h),
                   ],
                 ),
               ),

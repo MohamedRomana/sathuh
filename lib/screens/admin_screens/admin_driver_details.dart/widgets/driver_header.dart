@@ -16,7 +16,7 @@ class DriverHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 350.h,
       child: Stack(
         clipBehavior: Clip.none,
@@ -173,7 +173,10 @@ class DriverHeader extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppRouter.navigateTo(context, const DriverLocation(isAdmin: true,));
+                AppRouter.navigateTo(
+                  context,
+                  const DriverLocation(isAdmin: true),
+                );
               },
               child: Container(
                 height: 60.w,

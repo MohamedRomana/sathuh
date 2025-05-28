@@ -22,10 +22,10 @@ class MonthsDetails extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(height: 20.h),
+            Container(height: 20.h),
             Row(
               children: [
-                SizedBox(width: 16.w),
+                Container(width: 16.w),
                 Icon(Icons.error, color: Colors.black, size: 30.sp),
                 AppText(
                   start: 5.w,
@@ -40,7 +40,7 @@ class MonthsDetails extends StatelessWidget {
                   onTap: () => Navigator.pop(context),
                   child: Icon(Icons.close, size: 30.sp, color: Colors.black),
                 ),
-                SizedBox(width: 16.w),
+                Container(width: 16.w),
               ],
             ),
             ListView.separated(
@@ -48,14 +48,14 @@ class MonthsDetails extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.all(16.r),
               itemCount: 20,
-              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+              separatorBuilder: (context, index) => Container(height: 16.h),
               itemBuilder:
                   (context, index) => Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.circle, color: Colors.black, size: 20.sp),
-                      SizedBox(
+                      Container(
                         width: 250.w,
                         child: AppText(
                           start: 5.w,

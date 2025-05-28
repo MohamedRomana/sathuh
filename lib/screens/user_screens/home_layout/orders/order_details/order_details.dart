@@ -53,9 +53,9 @@ class OrderDetails extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.h),
+                Container(height: 8.h),
                 Text(address, style: TextStyle(fontSize: 16.sp)),
-                SizedBox(height: 12.h),
+                Container(height: 12.h),
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),

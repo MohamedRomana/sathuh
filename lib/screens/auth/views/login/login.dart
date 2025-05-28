@@ -197,7 +197,7 @@ class _LogInState extends State<LogIn> {
               ),
             ),
             CacheHelper.getUserType() == "administration"
-                ? const SizedBox()
+                ? Container()
                 : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -218,9 +218,9 @@ class _LogInState extends State<LogIn> {
                     ),
                   ],
                 ),
-            // SizedBox(height: 16.h),
+            // Container(height: 16.h),
             CacheHelper.getUserType() == "administration"
-                ? const SizedBox()
+                ? Container()
                 : TextButton(
                   onPressed:
                       () => AppRouter.navigateTo(context, const ForgetPass()),
@@ -230,7 +230,7 @@ class _LogInState extends State<LogIn> {
                     color: AppColors.darkRed,
                   ),
                 ),
-            SizedBox(height: 10.h),
+            Container(height: 10.h),
             InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -249,7 +249,7 @@ class _LogInState extends State<LogIn> {
                   AppRouter.navigateAndFinish(context, const HomeLayout());
                 }
               },
-              child: SizedBox(
+              child: Container(
                 width: 150.w,
                 child: AppText(
                   textAlign: TextAlign.center,
@@ -262,7 +262,7 @@ class _LogInState extends State<LogIn> {
               ),
             ),
 
-            SizedBox(height: 60.h),
+            Container(height: 60.h),
           ],
         ),
       ),

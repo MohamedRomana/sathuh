@@ -86,7 +86,7 @@ class CustomBottomNav extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
               width: 48.w,
               child: Builder(
                 builder:
@@ -116,7 +116,7 @@ class CustomBottomNav extends StatelessWidget {
                     ),
               ),
             ),
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -161,9 +161,9 @@ class CustomBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(),
-            const SizedBox(),
-            SizedBox(
+            Container(),
+            Container(),
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -208,7 +208,7 @@ class CustomBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,

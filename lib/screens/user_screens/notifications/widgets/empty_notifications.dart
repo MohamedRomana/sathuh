@@ -15,9 +15,7 @@ class EmptyNotification extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CustomLottieWidget(
-          lottieName: Assets.img.notiEmpty,
-        ),
+        CustomLottieWidget(lottieName: Assets.img.notiEmpty),
         AppText(
           top: 16.h,
           text: LocaleKeys.noNotifications.tr(),
@@ -25,7 +23,7 @@ class EmptyNotification extends StatelessWidget {
           color: AppColors.primary,
           fontStyle: FontStyle.italic,
         ),
-        SizedBox(height: 140.h),
+        Container(height: 140.h),
       ],
     );
   }

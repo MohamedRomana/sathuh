@@ -138,7 +138,7 @@ class _DriverHomeLayoutState extends State<DriverHomeLayout>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -174,7 +174,7 @@ class _DriverHomeLayoutState extends State<DriverHomeLayout>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -215,9 +215,9 @@ class _DriverHomeLayoutState extends State<DriverHomeLayout>
                       ),
                     ),
                   ),
-                  const SizedBox(),
-                  const SizedBox(),
-                  SizedBox(
+                  Container(),
+                  Container(),
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -262,7 +262,7 @@ class _DriverHomeLayoutState extends State<DriverHomeLayout>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,

@@ -45,9 +45,9 @@ class CustomAboutProvider extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
           const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           Row(
             children: [
@@ -65,9 +65,9 @@ class CustomAboutProvider extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
           const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           Row(
             children: [
@@ -85,10 +85,10 @@ class CustomAboutProvider extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           Row(
             children: [
@@ -106,9 +106,9 @@ class CustomAboutProvider extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
           const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           Row(
             children: [
@@ -126,10 +126,10 @@ class CustomAboutProvider extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
 
           const Divider(color: Colors.grey),
-          SizedBox(height: 8.h),
+          Container(height: 8.h),
           Row(
             children: [
               AppText(

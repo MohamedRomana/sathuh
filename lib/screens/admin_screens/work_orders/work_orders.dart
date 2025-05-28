@@ -39,7 +39,7 @@ class WorkOrders extends StatelessWidget {
                   itemCount: 15,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                  separatorBuilder: (context, index) => Container(height: 16.h),
                   itemBuilder:
                       (context, index) => InkWell(
                         splashColor: Colors.transparent,
@@ -83,7 +83,7 @@ class WorkOrders extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
+                                  Container(
                                     width: 180.w,
                                     child: AppText(
                                       text: 'محمد احمد السيد',
@@ -91,7 +91,7 @@ class WorkOrders extends StatelessWidget {
                                       start: 10.w,
                                     ),
                                   ),
-                                  SizedBox(
+                                  Container(
                                     width: 180.w,
                                     child: AppText(
                                       text: 'سائق',
@@ -115,7 +115,7 @@ class WorkOrders extends StatelessWidget {
                                       color: Colors.red,
                                     ),
                                   ),
-                                  SizedBox(width: 16.w),
+                                  Container(width: 16.w),
                                   InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -137,7 +137,7 @@ class WorkOrders extends StatelessWidget {
                         ),
                       ),
                 ),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),

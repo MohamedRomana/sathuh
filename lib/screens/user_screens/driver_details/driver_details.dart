@@ -55,7 +55,7 @@ class DriverDetails extends StatelessWidget {
                         width: 30.w,
                         fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 8.w),
+                      Container(width: 8.w),
                       AppText(
                         text: LocaleKeys.contact_via_whatsapp.tr(),
                         fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class DriverDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),
@@ -74,4 +74,3 @@ class DriverDetails extends StatelessWidget {
     );
   }
 }
-

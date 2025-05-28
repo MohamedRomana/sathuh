@@ -42,8 +42,8 @@ class UsersReviewsState extends State<UsersReviews> {
                     blurRadius: 5.r,
                     spreadRadius: 1.r,
                     offset: Offset(0, 5.r),
-                  )
-                ]
+                  ),
+                ],
               ),
               child: ListView.separated(
                 padding: EdgeInsetsDirectional.only(
@@ -59,7 +59,7 @@ class UsersReviewsState extends State<UsersReviews> {
                 itemBuilder:
                     (context, index) => Column(
                       children: [
-                        SizedBox(height: 10.h),
+                        Container(height: 10.h),
                         Row(
                           children: [
                             ClipRRect(
@@ -71,7 +71,7 @@ class UsersReviewsState extends State<UsersReviews> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            SizedBox(width: 5.w),
+                            Container(width: 5.w),
                             RatingBar.readOnly(
                               filledIcon: Icons.star,
                               emptyIcon: Icons.star_border,
@@ -93,12 +93,12 @@ class UsersReviewsState extends State<UsersReviews> {
                             color: Colors.grey,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        Container(height: 10.h),
                       ],
                     ),
               ),
             ),
-            SizedBox(height: 16.h),
+            Container(height: 16.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

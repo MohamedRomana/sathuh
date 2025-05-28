@@ -9,7 +9,6 @@ import '../../../../../gen/assets.gen.dart';
 import '../../../../../generated/locale_keys.g.dart';
 import '../../../../user_screens/chat_details/widgets/custom_chat_with_container.dart';
 
-
 final _messageSendController = TextEditingController();
 
 class AdmChatDetails extends StatefulWidget {
@@ -19,7 +18,8 @@ class AdmChatDetails extends StatefulWidget {
   State<AdmChatDetails> createState() => _AdmChatDetailsState();
 }
 
-class _AdmChatDetailsState extends State<AdmChatDetails> with WidgetsBindingObserver {
+class _AdmChatDetailsState extends State<AdmChatDetails>
+    with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
@@ -110,7 +110,7 @@ class _AdmChatDetailsState extends State<AdmChatDetails> with WidgetsBindingObse
                   padding: EdgeInsets.only(bottom: 120.h),
                   itemCount: 5,
                   physics: const BouncingScrollPhysics(),
-                  separatorBuilder: (context, index) => SizedBox(height: 18.h),
+                  separatorBuilder: (context, index) => Container(height: 18.h),
                   itemBuilder:
                       (context, index) => Padding(
                         padding: EdgeInsets.symmetric(
@@ -133,7 +133,7 @@ class _AdmChatDetailsState extends State<AdmChatDetails> with WidgetsBindingObse
                                     width: 40.w,
                                   ),
                                 )
-                                : const SizedBox.shrink(),
+                                : Container(),
                             Container(
                               padding: EdgeInsets.all(12.r),
                               margin: EdgeInsetsDirectional.only(
@@ -158,7 +158,7 @@ class _AdmChatDetailsState extends State<AdmChatDetails> with WidgetsBindingObse
                                   bottomStart: Radius.circular(8.r),
                                 ),
                               ),
-                              child: SizedBox(
+                              child: Container(
                                 width: 250.w,
                                 child: AppText(
                                   text:
@@ -182,7 +182,7 @@ class _AdmChatDetailsState extends State<AdmChatDetails> with WidgetsBindingObse
                                     width: 40.w,
                                   ),
                                 )
-                                : const SizedBox.shrink(),
+                                : Container(),
                           ],
                         ),
                       ),

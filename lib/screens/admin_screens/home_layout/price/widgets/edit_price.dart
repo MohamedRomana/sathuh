@@ -37,7 +37,7 @@ class _EditPriceState extends State<EditPrice> {
       builder: (context, state) {
         return Column(
           children: [
-            SizedBox(height: 24.h),
+            Container(height: 24.h),
             Container(
               width: 343.w,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -62,7 +62,7 @@ class _EditPriceState extends State<EditPrice> {
                     size: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 10.h),
+                  Container(height: 10.h),
                   Row(
                     children: [
                       InkWell(
@@ -78,13 +78,10 @@ class _EditPriceState extends State<EditPrice> {
                             color: AppColors.borderColor,
                             borderRadius: BorderRadius.circular(100.r),
                           ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                          ),
+                          child: const Icon(Icons.remove, color: Colors.white),
                         ),
                       ),
-                      SizedBox(
+                      Container(
                         width: 100.w,
                         child: AppInput(
                           hint: '1',
@@ -120,7 +117,7 @@ class _EditPriceState extends State<EditPrice> {
                         ),
                       ),
                       const Spacer(),
-        
+
                       DropdownButton<int>(
                         value: selectedValue,
                         items: List.generate(100, (index) {
@@ -142,7 +139,7 @@ class _EditPriceState extends State<EditPrice> {
                 ],
               ),
             ),
-            SizedBox(height: 24.h),
+            Container(height: 24.h),
             Container(
               width: 343.w,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -167,7 +164,7 @@ class _EditPriceState extends State<EditPrice> {
                     size: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 10.h),
+                  Container(height: 10.h),
                   Row(
                     children: [
                       InkWell(
@@ -184,13 +181,10 @@ class _EditPriceState extends State<EditPrice> {
                             color: AppColors.borderColor,
                             borderRadius: BorderRadius.circular(100.r),
                           ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                          ),
+                          child: const Icon(Icons.remove, color: Colors.white),
                         ),
                       ),
-                      SizedBox(
+                      Container(
                         width: 100.w,
                         child: AppInput(
                           hint: '1',
@@ -227,7 +221,7 @@ class _EditPriceState extends State<EditPrice> {
                         ),
                       ),
                       const Spacer(),
-        
+
                       DropdownButton<int>(
                         value: selectedValue,
                         items: List.generate(100, (index) {
@@ -250,7 +244,7 @@ class _EditPriceState extends State<EditPrice> {
                 ],
               ),
             ),
-            SizedBox(height: 24.h),
+            Container(height: 24.h),
             Container(
               width: 343.w,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -275,7 +269,7 @@ class _EditPriceState extends State<EditPrice> {
                     size: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 10.h),
+                  Container(height: 10.h),
                   Row(
                     children: [
                       InkWell(
@@ -292,14 +286,11 @@ class _EditPriceState extends State<EditPrice> {
                             color: AppColors.borderColor,
                             borderRadius: BorderRadius.circular(100.r),
                           ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: Colors.white,
-                          ),
+                          child: const Icon(Icons.remove, color: Colors.white),
                         ),
                       ),
-        
-                      SizedBox(
+
+                      Container(
                         width: 100.w,
                         child: AppInput(
                           hint: '0',
@@ -316,7 +307,7 @@ class _EditPriceState extends State<EditPrice> {
                           },
                         ),
                       ),
-        
+
                       InkWell(
                         onTap: () {
                           if (selectedPercentage < 100) {
@@ -336,9 +327,9 @@ class _EditPriceState extends State<EditPrice> {
                           child: const Icon(Icons.add, color: Colors.white),
                         ),
                       ),
-        
+
                       const Spacer(),
-        
+
                       DropdownButton<int>(
                         value: selectedPercentage,
                         items: List.generate(101, (index) {
@@ -360,7 +351,7 @@ class _EditPriceState extends State<EditPrice> {
                 ],
               ),
             ),
-        
+
             AppButton(
               top: 30.h,
               onPressed: () {},
@@ -371,7 +362,7 @@ class _EditPriceState extends State<EditPrice> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 120.h),
+            Container(height: 120.h),
           ],
         );
       },

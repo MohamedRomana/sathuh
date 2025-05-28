@@ -11,19 +11,14 @@ class CustomSoonDialog extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: 60.h),
+          Container(height: 60.h),
           Image.asset(
             Assets.img.logo.path,
             height: 115.h,
             width: 163.w,
             fit: BoxFit.fill,
           ),
-          AppText(
-            top: 10.h,
-            text: 'Soon',
-            color: Colors.white,
-            size: 30.sp,
-          ),
+          AppText(top: 10.h, text: 'Soon', color: Colors.white, size: 30.sp),
         ],
       ),
     );

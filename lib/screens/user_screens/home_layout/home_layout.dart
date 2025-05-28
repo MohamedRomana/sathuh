@@ -216,8 +216,8 @@ class _HomeLayoutState extends State<HomeLayout>
                       ),
                     ),
                   ),
-                  const SizedBox(),
-                  const SizedBox(),
+                  Container(),
+                  Container(),
                   SizedBox(
                     width: 48.w,
                     child: InkWell(

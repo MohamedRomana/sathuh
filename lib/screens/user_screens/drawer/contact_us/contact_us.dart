@@ -82,7 +82,7 @@ class _ContactUsState extends State<ContactUs> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      SizedBox(height: 24.h),
+                      Container(height: 24.h),
 
                       AppInput(
                         filled: true,
@@ -220,7 +220,7 @@ class _ContactUsState extends State<ContactUs> {
                           size: 20.sp,
                         ),
                       ),
-                      SizedBox(height: 120.h),
+                      Container(height: 120.h),
                     ],
                   ),
                 ),

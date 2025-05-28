@@ -17,7 +17,7 @@ class ProviderHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 350.h,
       child: Stack(
         clipBehavior: Clip.none,

@@ -37,7 +37,7 @@ class _ProductRatesState extends State<ProductRates> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 24.h),
+            Container(height: 24.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,10 +71,10 @@ class _ProductRatesState extends State<ProductRates> {
                         ),
                       ),
                     )
-                    : const SizedBox.shrink(),
+                    : Container(),
               ],
             ),
-            SizedBox(height: 10.h),
+            Container(height: 10.h),
             const UsersReviews(),
           ],
         );

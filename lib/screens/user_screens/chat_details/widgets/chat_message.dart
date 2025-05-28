@@ -40,7 +40,7 @@ class ChatMessage extends StatelessWidget {
                   ),
                 ),
               )
-              : const SizedBox.shrink(),
+              : Container(),
           Container(
             padding: EdgeInsets.all(12.r),
             margin: EdgeInsetsDirectional.only(start: 6.w, end: 6.w),
@@ -53,7 +53,7 @@ class ChatMessage extends StatelessWidget {
                 bottomStart: Radius.circular(8.r),
               ),
             ),
-            child: SizedBox(
+            child: Container(
               width: 190.w,
               child: AppText(
                 text:
@@ -83,7 +83,7 @@ class ChatMessage extends StatelessWidget {
                   ),
                 ),
               )
-              : const SizedBox.shrink(),
+              : Container(),
         ],
       ),
     );

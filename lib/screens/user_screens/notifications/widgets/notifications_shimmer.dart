@@ -14,7 +14,7 @@ class CustomNotificationShimmer extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
         physics: const BouncingScrollPhysics(),
         itemCount: 7,
-        separatorBuilder: (context, index) => SizedBox(height: 16.h),
+        separatorBuilder: (context, index) => Container(height: 16.h),
         itemBuilder: (context, index) {
           return Container(
             height: 90.h,

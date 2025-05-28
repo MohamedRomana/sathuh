@@ -49,7 +49,7 @@ class CustomAnotherProblem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
+                        Container(
                           width: 285.w,
                           child: AppText(
                             text: LocaleKeys.other_problem.tr(),
@@ -98,7 +98,7 @@ class CustomAnotherProblem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    Container(
                       width: 285.w,
                       child: AppText(
                         text: LocaleKeys.other_problem.tr(),

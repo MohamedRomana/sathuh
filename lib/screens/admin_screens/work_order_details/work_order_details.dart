@@ -37,11 +37,11 @@ class WorkOrderDetails extends StatelessWidget {
                 CustomAppBar(title: LocaleKeys.orderDetails.tr()),
                 const DriverContainer(),
                 const DriverAttachments(),
-                SizedBox(height: 35.h),
+                Container(height: 35.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    Container(
                       height: 40.h,
                       child: AppButton(
                         width: 150.w,
@@ -55,7 +55,7 @@ class WorkOrderDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    Container(
                       height: 40.h,
                       child: AppButton(
                         width: 150.w,
@@ -71,7 +71,7 @@ class WorkOrderDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),
@@ -80,5 +80,3 @@ class WorkOrderDetails extends StatelessWidget {
     );
   }
 }
-
-

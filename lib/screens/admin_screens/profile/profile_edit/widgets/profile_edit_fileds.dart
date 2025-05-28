@@ -99,7 +99,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                     enabledBorderColor: Colors.grey,
                     hint: 'Ahmed',
                     controller: widget.firstNameController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -123,7 +123,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                     enabledBorderColor: Colors.grey,
                     hint: 'Ali',
                     controller: widget.lastNameController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -147,7 +147,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                     hint: '+20112312554',
                     controller: widget.phoneController,
                     inputType: TextInputType.phone,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -170,7 +170,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                     enabledBorderColor: Colors.grey,
                     hint: 'Ahmed@gmail.com',
                     controller: widget.emailController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -193,7 +193,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                     filled: true,
                     hint: 'المنصورة',
                     controller: widget.cityController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 25.w,
                       width: 25.w,
                       child: Center(
@@ -264,7 +264,7 @@ class _AdmEditeProfileFieldsState extends State<AdmEditeProfileFields> {
                             return null;
                           }
                         },
-                        prefixIcon: SizedBox(
+                        prefixIcon: Container(
                           height: 28.w,
                           width: 28.w,
                           child: Center(

@@ -34,6 +34,7 @@
     "enterMobileNumberToSendActivationCode" : "ادخل رقم الجوال الخص بك لارسال كود التفعيل",
     "enteremailToSendActivationCode" : "ادخل البريد الالكتروني الخص بك لارسال كود التفعيل",
     "enterActivationCode" : "ادخل كود التفعيل المرسل على رقم الجوال",
+    "enterActivationCodeEmail" : "ادخل كود التفعيل المرسل على البريد الالكتروني",
     "changePassword" : "تغيير كلمة المرور",
     "registerNewRepresentative" : "تسجيل مندوب جديد",
     "carType" : "حجم السيارة",
@@ -607,5 +608,13 @@
   "full_start_location_here": "موقع الانطلاق الكامل هنا",
   "error_occurred": "حدث خطأ",
   "no_address": "لا يوجد عنوان",
-  "customer_location": "موقع العميل"
+  "customer_location": "موقع العميل",
+  "edit_name_and_phone": "تعديل الاسم ورقم الجوال",
+  "edit_profile_picture": "تعديل الصورة",
+  "change_email": "تغيير البريد الإلكتروني",
+  "update_password": "تحديث كلمة المرور",
+  "new_password": "كلمة المرور الجديدة",
+  "old_password": "كلمة المرور القديمة",
+  "chassis_number": "رقم الشاسيه"
+
 }

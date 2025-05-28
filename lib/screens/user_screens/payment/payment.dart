@@ -25,6 +25,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
     AppCubit.get(context).changePaymentIndex(index: -1);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
@@ -49,11 +50,11 @@ class _PaymentSheetState extends State<PaymentSheet> {
                 fontWeight: FontWeight.w500,
                 top: 16.h,
               ),
-              SizedBox(height: 8.w),
+              Container(height: 8.w),
               const Divider(thickness: 1, color: Colors.grey),
               Column(
                 children: [
-                  SizedBox(height: 18.h),
+                  Container(height: 18.h),
                   InkWell(
                     onTap: () {
                       if (AppCubit.get(context).paymentIndex == 0) {
@@ -85,7 +86,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                             size: 25.sp,
                             color: AppColors.primary,
                           ),
-                          SizedBox(width: 8.w),
+                          Container(width: 8.w),
                           AppText(
                             text: LocaleKeys.cash.tr(),
                             size: 15.sp,
@@ -120,7 +121,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
               ),
               Column(
                 children: [
-                  SizedBox(height: 21.h),
+                  Container(height: 21.h),
                   InkWell(
                     onTap: () {
                       if (AppCubit.get(context).paymentIndex == 1) {
@@ -152,7 +153,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                             size: 25.sp,
                             color: AppColors.primary,
                           ),
-                          SizedBox(width: 8.w),
+                          Container(width: 8.w),
                           AppText(
                             text: LocaleKeys.onlinePayment.tr(),
                             size: 15.sp,

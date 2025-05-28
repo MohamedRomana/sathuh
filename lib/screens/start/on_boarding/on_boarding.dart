@@ -107,7 +107,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     children: [
                       Column(
                         children: [
-                          SizedBox(height: 60.h),
+                          Container(height: 60.h),
                           CustomLottieWidget(
                             lottieName: pagesList[index]['image1'],
                           ),

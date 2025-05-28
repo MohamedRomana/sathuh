@@ -55,7 +55,7 @@ class _ResetPassState extends State<ResetPass> {
             children: [
               const CustomAuthHeader(),
               AppText(
-                text: LocaleKeys.enterActivationCode.tr(),
+                text: LocaleKeys.enterActivationCodeEmail.tr(),
                 top: 26.h,
                 color: AppColors.secondray,
                 family: FontFamily.tajawalBold,

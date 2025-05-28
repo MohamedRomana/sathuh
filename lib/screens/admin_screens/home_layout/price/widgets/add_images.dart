@@ -66,7 +66,7 @@ class _AddImagesState extends State<AddImages> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 24.h),
+        Container(height: 24.h),
         _images.isEmpty
             ? Center(
               child: AppText(
@@ -76,13 +76,13 @@ class _AddImagesState extends State<AddImages> {
                 bottom: 16.h,
               ),
             )
-            : SizedBox(
+            : Container(
               height: 200,
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 scrollDirection: Axis.horizontal,
                 itemCount: _images.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 16),
+                separatorBuilder: (context, index) => Container(width: 16),
                 itemBuilder: (context, index) {
                   return Stack(
                     children: [
@@ -117,7 +117,7 @@ class _AddImagesState extends State<AddImages> {
                 },
               ),
             ),
-        SizedBox(height: 10.h),
+        Container(height: 10.h),
         ElevatedButton(
           onPressed: _pickImages,
           style: ButtonStyle(

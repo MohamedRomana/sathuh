@@ -27,7 +27,7 @@ class DriverOrdersDetails extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (_) {
-        return SizedBox(
+        return Container(
           height: 400.h,
           child: Padding(
             padding: EdgeInsets.all(16.r),
@@ -52,9 +52,9 @@ class DriverOrdersDetails extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.h),
+                Container(height: 8.h),
                 Text(address, style: TextStyle(fontSize: 16.sp)),
-                SizedBox(height: 12.h),
+                Container(height: 12.h),
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),
@@ -160,7 +160,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        SizedBox(
+                        Container(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -183,7 +183,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        SizedBox(
+                        Container(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -206,7 +206,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        SizedBox(
+                        Container(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -235,7 +235,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           onTap: () {
                             makePhoneCall('0100000000');
                           },
-                          child: SizedBox(
+                          child: Container(
                             width: 150.w,
                             child: const AppText(
                               textAlign: TextAlign.end,
@@ -265,7 +265,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           onTap: () {
                             makePhoneCall('0100000000');
                           },
-                          child: SizedBox(
+                          child: Container(
                             width: 150.w,
                             child: const AppText(
                               textAlign: TextAlign.end,
@@ -301,7 +301,7 @@ class DriverOrdersDetails extends StatelessWidget {
                                 ), // إحداثيات الرياض كمثال
                               ),
 
-                          child: SizedBox(
+                          child: Container(
                             width: 150.w,
                             child: FutureBuilder<String>(
                               future: getAddressFromLatLng(
@@ -365,7 +365,7 @@ class DriverOrdersDetails extends StatelessWidget {
                                 ), // إحداثيات الرياض كمثال
                               ),
 
-                          child: SizedBox(
+                          child: Container(
                             width: 150.w,
                             child: FutureBuilder<String>(
                               future: getAddressFromLatLng(
@@ -416,7 +416,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        SizedBox(
+                        Container(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -439,7 +439,7 @@ class DriverOrdersDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        SizedBox(
+                        Container(
                           width: 150.w,
                           child: AppText(
                             textAlign: TextAlign.end,

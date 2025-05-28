@@ -64,7 +64,7 @@ class _OTPscreenState extends State<OTPscreen> {
             // ),
             AppText(
               top: 23.h,
-              text: LocaleKeys.enterActivationCode.tr(),
+              text: LocaleKeys.enterActivationCodeEmail.tr(),
               color: AppColors.secondray,
               bottom: 32.h,
               family: FontFamily.tajawalBold,

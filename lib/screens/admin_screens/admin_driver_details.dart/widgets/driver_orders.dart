@@ -46,7 +46,7 @@ class CustomDriverOrders extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder:
-                (BuildContext context, int index) => SizedBox(height: 16.h),
+                (BuildContext context, int index) => Container(height: 16.h),
             itemCount: 10,
             itemBuilder:
                 (BuildContext context, int index) => InkWell(

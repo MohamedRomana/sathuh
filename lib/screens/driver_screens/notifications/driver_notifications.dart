@@ -48,7 +48,7 @@ class DriverNotifications extends StatelessWidget {
                       ),
                       itemCount: 10,
                       separatorBuilder:
-                          (context, index) => SizedBox(height: 16.h),
+                          (context, index) => Container(height: 16.h),
                       itemBuilder:
                           (context, index) => Container(
                             clipBehavior: Clip.antiAlias,
@@ -129,7 +129,7 @@ class DriverNotifications extends StatelessWidget {
                                             size: 25.sp,
                                           ),
                                         ),
-                                        SizedBox(width: 10.w),
+                                        Container(width: 10.w),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -140,7 +140,7 @@ class DriverNotifications extends StatelessWidget {
                                               color: const Color(0xff3FAD46),
                                               size: 14.sp,
                                             ),
-                                            SizedBox(
+                                            Container(
                                               height: 35.h,
                                               width: 180.w,
                                               child: AppText(
@@ -155,7 +155,7 @@ class DriverNotifications extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    Container(
                                       width: 70.w,
                                       child: AppText(
                                         text: 'منذ 10 دقيقه',

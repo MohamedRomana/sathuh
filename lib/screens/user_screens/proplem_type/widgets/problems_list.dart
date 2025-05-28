@@ -19,7 +19,7 @@ class ProblemsList extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 5,
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          separatorBuilder: (context, index) => Container(height: 16.h),
           itemBuilder:
               (context, index) => InkWell(
                 splashColor: Colors.transparent,

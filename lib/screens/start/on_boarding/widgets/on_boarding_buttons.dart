@@ -33,7 +33,7 @@ class CustomOnBoardingButtons extends StatelessWidget {
             visible: currPage <= pagesList.length - 1.5,
             child: Column(
               children: [
-                SizedBox(height: 12.h),
+                Container(height: 12.h),
                 TextButton(
                   onPressed: () {
                     pageController.animateToPage(
@@ -52,7 +52,7 @@ class CustomOnBoardingButtons extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 170.w),
+          Container(width: 170.w),
           InkWell(
             onTap: () {
               if (!isLastPage) {

@@ -42,7 +42,7 @@ class Complaints extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 15,
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                  separatorBuilder: (context, index) => Container(height: 16.h),
                   itemBuilder:
                       (context, index) => InkWell(
                         splashColor: Colors.transparent,
@@ -125,7 +125,7 @@ class Complaints extends StatelessWidget {
                                       color: Colors.red,
                                     ),
                                   ),
-                                  SizedBox(width: 20.w),
+                                  Container(width: 20.w),
                                   InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,

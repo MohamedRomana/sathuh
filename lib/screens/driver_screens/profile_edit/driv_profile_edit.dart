@@ -13,7 +13,7 @@ import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/widgets/flash_message.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
-import '../../user_screens/profile_edit/widgets/edit_profile_fields.dart';
+import 'profile_driv_edit.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _firstNameController = TextEditingController();
@@ -45,223 +45,218 @@ class _DrivProfileEditState extends State<DrivProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return DriverBottomNav(
-          body: BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) {
-              return Stack(
-                children: [
-                  Image.asset(
-                    Assets.img.background.path,
-                    height: double.infinity,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
-                  Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    color: Colors.white.withAlpha(210),
-                  ),
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CustomAppBar(title: LocaleKeys.editprofile.tr()),
-                          SizedBox(
-                            height: 300.h,
-                            child: Stack(
+      body: BlocBuilder<AppCubit, AppState>(
+        builder: (context, state) {
+          return Stack(
+            children: [
+              Image.asset(
+                Assets.img.background.path,
+                height: double.infinity,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                color: Colors.white.withAlpha(210),
+              ),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomAppBar(title: LocaleKeys.editprofile.tr()),
+                      Container(
+                        height: 300.h,
+                        child: Stack(
+                          children: [
+                            Column(
                               children: [
-                                Column(
-                                  children: [
-                                    AppCubit.get(
-                                          context,
-                                        ).profileCoverImage.isEmpty
-                                        ? InkWell(
-                                          splashColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap:
-                                              () => AppCubit.get(
+                                AppCubit.get(context).profileCoverImage.isEmpty
+                                    ? InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap:
+                                          () => AppCubit.get(
+                                            context,
+                                          ).getProfileCoverImage(context),
+                                      child: Image.asset(Assets.img.bmw.path),
+                                    )
+                                    : InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap:
+                                          () =>
+                                              AppCubit.get(
                                                 context,
-                                              ).getProfileCoverImage(context),
-                                          child: Image.asset(
-                                            Assets.img.bmw.path,
-                                          ),
-                                        )
-                                        : InkWell(
-                                          splashColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap:
-                                              () =>
-                                                  AppCubit.get(
-                                                    context,
-                                                  ).removeProfileCoverImage(),
-                                          child: Image.file(
-                                            AppCubit.get(
-                                              context,
-                                            ).profileCoverImage.first,
-                                            height: 200.h,
-                                            width: double.infinity,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                  ],
-                                ),
-                                PositionedDirectional(
-                                  bottom: 40.h,
-                                  start: 120.w,
-                                  child: Column(
-                                    children: [
-                                      AppCubit.get(context).profileImage.isEmpty
-                                          ? InkWell(
-                                            onTap:
-                                                () => AppCubit.get(
-                                                  context,
-                                                ).getProfileImage(context),
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: Colors.grey,
-                                                      width: 3.w,
-                                                    ),
-                                                    color: Colors.white,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          100.r,
-                                                        ),
-                                                    child: Image.asset(
-                                                      Assets.img.client.path,
-                                                      height: 120.h,
-                                                      width: 120.w,
-                                                    ),
-                                                  ),
-                                                ),
-                                                PositionedDirectional(
-                                                  end: 0,
-                                                  child: Icon(
-                                                    Icons.edit_square,
-                                                    color: AppColors.primary,
-                                                    size: 25.sp,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                          : Stack(
-                                            children: [
-                                              Container(
-                                                height: 120.h,
-                                                width: 120.w,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.transparent,
-                                                  shape: BoxShape.circle,
-                                                  image: DecorationImage(
-                                                    image: FileImage(
-                                                      AppCubit.get(
-                                                        context,
-                                                      ).profileImage.first,
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              PositionedDirectional(
-                                                child: InkWell(
-                                                  onTap:
-                                                      () =>
-                                                          AppCubit.get(
-                                                            context,
-                                                          ).removeProfileImage(),
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  child: Icon(
-                                                    Icons.cancel,
-                                                    color: Colors.red,
-                                                    size: 25.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                    ],
-                                  ),
-                                ),
+                                              ).removeProfileCoverImage(),
+                                      child: Image.file(
+                                        AppCubit.get(
+                                          context,
+                                        ).profileCoverImage.first,
+                                        height: 200.h,
+                                        width: double.infinity,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                               ],
                             ),
-                          ),
-                          EditProfileFields(
-                            passController: _passController,
-                            phoneController: _phoneController,
-                            fullNameController: _lastNameController,
-                            cityController: _cityController,
-                            emailController: _emailController,
-                          ),
-                          BlocConsumer<AppCubit, AppState>(
-                            listener: (context, state) {
-                              if (state is UpdateUserSuccess) {
-                                AppRouter.pop(context);
-                                showFlashMessage(
-                                  message: state.message,
-                                  type: FlashMessageType.success,
-                                  context: context,
-                                );
-                                _firstNameController.clear();
-                                _lastNameController.clear();
-                                _phoneController.clear();
-                                _emailController.clear();
-                                _cityController.clear();
-                                _passController.clear();
-                              } else if (state is UpdateUserFailure) {
-                                showFlashMessage(
-                                  message: state.error,
-                                  type: FlashMessageType.error,
-                                  context: context,
-                                );
-                              }
-                            },
-                            builder: (context, state) {
-                              return AppButton(
-                                top: 10.h,
-                                onPressed: () {
-                                  // AppCubit.get(context).updateUser(
-                                  //   password: _passController.text,
-                                  //   firstName: _firstNameController.text.isEmpty
-                                  //       ? AppCubit.get(context)
-                                  //           .showUserMap["first_name"]
-                                  //       : _firstNameController.text,
-                                  //   lastName: _lastNameController.text.isEmpty
-                                  //       ? AppCubit.get(context)
-                                  //           .showUserMap["last_name"]
-                                  //       : _lastNameController.text,
-                                  //   phone: _phoneController.text.isEmpty
-                                  //       ? AppCubit.get(context).showUserMap["phone"]
-                                  //       : _phoneController.text,
-                                  // );
-                                },
-                                child: AppText(
-                                  text: LocaleKeys.save.tr(),
-                                  color: Colors.white,
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 150.h),
-                        ],
+                            PositionedDirectional(
+                              bottom: 40.h,
+                              start: 120.w,
+                              child: Column(
+                                children: [
+                                  AppCubit.get(context).profileImage.isEmpty
+                                      ? InkWell(
+                                        onTap:
+                                            () => AppCubit.get(
+                                              context,
+                                            ).getProfileImage(context),
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.grey,
+                                                  width: 3.w,
+                                                ),
+                                                color: Colors.white,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                      100.r,
+                                                    ),
+                                                child: Image.asset(
+                                                  Assets.img.client.path,
+                                                  height: 120.h,
+                                                  width: 120.w,
+                                                ),
+                                              ),
+                                            ),
+                                            PositionedDirectional(
+                                              end: 0,
+                                              child: Icon(
+                                                Icons.edit_square,
+                                                color: AppColors.primary,
+                                                size: 25.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      : Stack(
+                                        children: [
+                                          Container(
+                                            height: 120.h,
+                                            width: 120.w,
+                                            decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                image: FileImage(
+                                                  AppCubit.get(
+                                                    context,
+                                                  ).profileImage.first,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          PositionedDirectional(
+                                            child: InkWell(
+                                              onTap:
+                                                  () =>
+                                                      AppCubit.get(
+                                                        context,
+                                                      ).removeProfileImage(),
+                                              splashColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              child: Icon(
+                                                Icons.cancel,
+                                                color: Colors.red,
+                                                size: 25.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                      ProfileDrivEditFields(
+                        passController: _passController,
+                        phoneController: _phoneController,
+                        fullNameController: _lastNameController,
+                        cityController: _cityController,
+                        emailController: _emailController,
+                      ),
+                      BlocConsumer<AppCubit, AppState>(
+                        listener: (context, state) {
+                          if (state is UpdateUserSuccess) {
+                            AppRouter.pop(context);
+                            showFlashMessage(
+                              message: state.message,
+                              type: FlashMessageType.success,
+                              context: context,
+                            );
+                            _firstNameController.clear();
+                            _lastNameController.clear();
+                            _phoneController.clear();
+                            _emailController.clear();
+                            _cityController.clear();
+                            _passController.clear();
+                          } else if (state is UpdateUserFailure) {
+                            showFlashMessage(
+                              message: state.error,
+                              type: FlashMessageType.error,
+                              context: context,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return AppButton(
+                            top: 10.h,
+                            onPressed: () {
+                              // AppCubit.get(context).updateUser(
+                              //   password: _passController.text,
+                              //   firstName: _firstNameController.text.isEmpty
+                              //       ? AppCubit.get(context)
+                              //           .showUserMap["first_name"]
+                              //       : _firstNameController.text,
+                              //   lastName: _lastNameController.text.isEmpty
+                              //       ? AppCubit.get(context)
+                              //           .showUserMap["last_name"]
+                              //       : _lastNameController.text,
+                              //   phone: _phoneController.text.isEmpty
+                              //       ? AppCubit.get(context).showUserMap["phone"]
+                              //       : _phoneController.text,
+                              // );
+                            },
+                            child: AppText(
+                              text: LocaleKeys.save.tr(),
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                      ),
+                      Container(height: 150.h),
+                    ],
                   ),
-                ],
-              );
-            },
-          ),
-        );
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

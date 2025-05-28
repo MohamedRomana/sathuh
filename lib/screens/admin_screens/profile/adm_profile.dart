@@ -35,7 +35,7 @@ class AdmProfile extends StatelessWidget {
             child: Column(
               children: [
                 CustomAppBar(title: LocaleKeys.profile.tr()),
-                SizedBox(
+                Container(
                   height: 300.h,
                   child: Stack(
                     children: [
@@ -94,9 +94,9 @@ class AdmProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -113,9 +113,9 @@ class AdmProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
 
                       Row(
                         children: [
@@ -133,9 +133,9 @@ class AdmProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -152,9 +152,9 @@ class AdmProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -171,9 +171,9 @@ class AdmProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -205,7 +205,7 @@ class AdmProfile extends StatelessWidget {
                     size: 21.sp,
                   ),
                 ),
-                SizedBox(height: 124.h),
+                Container(height: 124.h),
               ],
             ),
           ),
@@ -214,5 +214,3 @@ class AdmProfile extends StatelessWidget {
     );
   }
 }
-
-

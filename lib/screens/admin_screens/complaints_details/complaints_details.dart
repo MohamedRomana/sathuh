@@ -68,7 +68,7 @@ class ComplaintsDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.h),
+                      Container(height: 16.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -80,7 +80,7 @@ class ComplaintsDetails extends StatelessWidget {
                             },
                             child: const Icon(Icons.phone, color: Colors.red),
                           ),
-                          SizedBox(width: 20.w),
+                          Container(width: 20.w),
                           InkWell(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
@@ -103,7 +103,7 @@ class ComplaintsDetails extends StatelessWidget {
                             color: Colors.black,
                           ),
                           const Spacer(),
-                          SizedBox(
+                          Container(
                             width: 170.w,
                             child: AppText(
                               textAlign: TextAlign.end,
@@ -137,7 +137,7 @@ class ComplaintsDetails extends StatelessWidget {
                             onTap: () {
                               makePhoneCall('010000000');
                             },
-                            child: SizedBox(
+                            child: Container(
                               width: 170.w,
                               child: AppText(
                                 textAlign: TextAlign.end,
@@ -166,7 +166,7 @@ class ComplaintsDetails extends StatelessWidget {
                             color: Colors.black,
                           ),
                           const Spacer(),
-                          SizedBox(
+                          Container(
                             width: 170.w,
                             child: AppText(
                               textAlign: TextAlign.end,
@@ -191,7 +191,7 @@ class ComplaintsDetails extends StatelessWidget {
                         bottom: 8.h,
                         fontWeight: FontWeight.w400,
                       ),
-                      SizedBox(
+                      Container(
                         width: 343.w,
                         child: AppText(
                           text:
@@ -205,7 +205,7 @@ class ComplaintsDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),

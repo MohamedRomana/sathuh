@@ -73,7 +73,7 @@ class TypesView extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 16.w),
+                              Container(width: 16.w),
                               Image.asset(
                                 Assets.img.client.path,
                                 height: 100.w,
@@ -119,7 +119,7 @@ class TypesView extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 16.w),
+                              Container(width: 16.w),
                               Image.asset(
                                 Assets.img.driver.path,
                                 height: 100.w,
@@ -165,7 +165,7 @@ class TypesView extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 16.w),
+                              Container(width: 16.w),
                               Image.asset(
                                 Assets.img.manager.path,
                                 height: 100.w,
@@ -186,7 +186,7 @@ class TypesView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 70.h),
+                Container(height: 70.h),
               ],
             ),
           ),

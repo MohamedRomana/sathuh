@@ -109,7 +109,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
                   padding: EdgeInsets.only(bottom: 120.h),
                   itemCount: 5,
                   physics: const BouncingScrollPhysics(),
-                  separatorBuilder: (context, index) => SizedBox(height: 18.h),
+                  separatorBuilder: (context, index) => Container(height: 18.h),
                   itemBuilder:
                       (context, index) => Padding(
                         padding: EdgeInsets.symmetric(
@@ -132,7 +132,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
                                     width: 40.w,
                                   ),
                                 )
-                                : const SizedBox.shrink(),
+                                :  Container(),
                             Container(
                               padding: EdgeInsets.all(12.r),
                               margin: EdgeInsetsDirectional.only(
@@ -157,7 +157,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
                                   bottomStart: Radius.circular(8.r),
                                 ),
                               ),
-                              child: SizedBox(
+                              child: Container(
                                 width: 250.w,
                                 child: AppText(
                                   text:
@@ -181,7 +181,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
                                     width: 40.w,
                                   ),
                                 )
-                                : const SizedBox.shrink(),
+                                :  Container(),
                           ],
                         ),
                       ),

@@ -81,14 +81,14 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 61.h),
+                Container(height: 61.h),
                 CustomTopBar(
                   currentAddress: currentAddress ?? "جارٍ تحديد الموقع...",
                 ),
                 const CustomSwiper(),
                 const CustomServices(),
                 const CustomDriverNearYou(),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),

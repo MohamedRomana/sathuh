@@ -16,7 +16,7 @@ class CustomOrdersShimmer extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
         physics: const BouncingScrollPhysics(),
         itemCount: 5,
-        separatorBuilder: (context, index) => SizedBox(height: 16.h),
+        separatorBuilder: (context, index) => Container(height: 16.h),
         itemBuilder: (context, index) {
           return Container(
             width: 343.w,
@@ -49,10 +49,10 @@ class CustomOrdersShimmer extends StatelessWidget {
                           color: Colors.grey.withOpacity(.2),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
-                SizedBox(height: 12.h),
+                Container(height: 12.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -62,12 +62,12 @@ class CustomOrdersShimmer extends StatelessWidget {
                       color: Colors.grey.withOpacity(.2),
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 3.h,
+                      ),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey.withOpacity(.2),
-                        ),
+                        border: Border.all(color: Colors.grey.withOpacity(.2)),
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: AppText(

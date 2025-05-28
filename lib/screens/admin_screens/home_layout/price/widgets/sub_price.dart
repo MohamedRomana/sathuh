@@ -36,7 +36,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 24.h),
+        Container(height: 24.h),
         Container(
           width: 343.w,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -61,7 +61,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                 size: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 10.h),
+              Container(height: 10.h),
               Row(
                 children: [
                   InkWell(
@@ -81,7 +81,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                       child: const Icon(Icons.remove, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 100.w,
                     child: AppInput(
                       filled: true,
@@ -117,7 +117,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                     ),
                   ),
                   const Spacer(),
-    
+
                   DropdownButton<int>(
                     value: selectedValue,
                     items: List.generate(100, (index) {
@@ -140,7 +140,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
             ],
           ),
         ),
-        SizedBox(height: 24.h),
+        Container(height: 24.h),
         Container(
           width: 343.w,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -165,7 +165,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                 size: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 10.h),
+              Container(height: 10.h),
               Row(
                 children: [
                   InkWell(
@@ -185,7 +185,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                       child: const Icon(Icons.remove, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 100.w,
                     child: AppInput(
                       filled: true,
@@ -221,7 +221,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
                     ),
                   ),
                   const Spacer(),
-    
+
                   DropdownButton<int>(
                     value: selectedValue,
                     items: List.generate(100, (index) {
@@ -244,7 +244,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
             ],
           ),
         ),
-    
+
         AppButton(
           top: 30.h,
           onPressed: () {},
@@ -255,7 +255,7 @@ class _SubscribePriceState extends State<SubscribePrice> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 120.h),
+        Container(height: 120.h),
       ],
     );
   }

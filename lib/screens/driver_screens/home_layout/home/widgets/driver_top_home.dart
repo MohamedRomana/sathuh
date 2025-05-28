@@ -44,7 +44,7 @@ class DriverTopHome extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  Container(
                     width: 150.w,
                     child: AppText(
                       text: LocaleKeys.welcome_dear_customer.tr(),
@@ -53,7 +53,7 @@ class DriverTopHome extends StatelessWidget {
                       family: FontFamily.tajawalBold,
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 150.w,
                     child: AppText(
                       text: LocaleKeys.thank_you_for_your_preference.tr(),
@@ -69,7 +69,7 @@ class DriverTopHome extends StatelessWidget {
         ),
         Row(
           children: [
-            SizedBox(
+            Container(
               width: 100.w,
               child: AppText(
                 textAlign: TextAlign.end,
@@ -82,7 +82,7 @@ class DriverTopHome extends StatelessWidget {
             Icon(Icons.location_on, color: AppColors.primary, size: 25.r),
           ],
         ),
-        SizedBox(width: 16.w),
+        Container(width: 16.w),
       ],
     );
   }

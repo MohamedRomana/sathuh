@@ -79,11 +79,11 @@ class _DriverHomeState extends State<DriverHome> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 61.h),
+                Container(height: 61.h),
                 DriverTopHome(currentAddress: currentAddress),
                 const DriverSwiper(),
                 const CustomCurrentOrders(),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),

@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/colors.dart';
+import 'package:sathuh/screens/user_screens/home_layout/home_layout.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../core/cache/cache_helper.dart';
 import '../../../core/widgets/app_router.dart';
+import '../../admin_screens/home_layout/admin_home_layout.dart';
+import '../../driver_screens/home_layout/home_layout.dart';
 import '../language/language_view.dart';
 import '../types/types_view.dart';
 
@@ -77,7 +80,13 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       _shakeController.forward();
 
       CacheHelper.getLang() != ""
-          ? AppRouter.navigateAndPop(context, const TypesView())
+          ? CacheHelper.getUserToken() != ""
+              ? CacheHelper.getUserType() == "client"
+                  ? AppRouter.navigateAndPop(context, const HomeLayout())
+                  : AppRouter.navigateAndPop(context, const DriverHomeLayout())
+              : CacheHelper.getUserType() == "administration"
+              ? AppRouter.navigateAndPop(context, const AdminHomeLayout())
+              : AppRouter.navigateAndPop(context, const TypesView())
           : AppRouter.navigateAndPop(context, const LanguageView());
       // CacheHelper.getLang() != ""
       //     ? CacheHelper.getUserId() != ""

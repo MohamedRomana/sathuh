@@ -58,7 +58,7 @@ class CustomChatWithContainer extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 6.w),
+            Container(width: 6.w),
             AppText(
               text: "${LocaleKeys.chat_with.tr()} محمد احمد",
               size: 14.sp,

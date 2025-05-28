@@ -54,10 +54,10 @@ class _PriceState extends State<Price> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    SizedBox(height: 61.h),
+                    Container(height: 61.h),
                     const AdminTopBar(),
                     const AddImages(),
-                    SizedBox(
+                    Container(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: DefaultTabController(
                         length: 2,
@@ -133,5 +133,3 @@ class _PriceState extends State<Price> {
     );
   }
 }
-
-

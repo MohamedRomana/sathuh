@@ -39,7 +39,7 @@ class AdminTopBar extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              Container(
                 width: 150.w,
                 child: AppText(
                   text: LocaleKeys.welcome.tr(),
@@ -48,7 +48,7 @@ class AdminTopBar extends StatelessWidget {
                   family: FontFamily.tajawalBold,
                 ),
               ),
-              SizedBox(
+              Container(
                 width: 150.w,
                 child: AppText(
                   text: LocaleKeys.thank_you_for_your_preference.tr(),

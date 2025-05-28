@@ -132,7 +132,7 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -168,7 +168,7 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -207,9 +207,9 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                       ),
                     ),
                   ),
-                  const SizedBox(),
-                  const SizedBox(),
-                  SizedBox(
+                  Container(),
+                  Container(),
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,
@@ -249,7 +249,7 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: 48.w,
                     child: InkWell(
                       splashColor: Colors.transparent,

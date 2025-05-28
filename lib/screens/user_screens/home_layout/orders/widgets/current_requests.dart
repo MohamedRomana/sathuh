@@ -34,7 +34,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
             bottom: 120.h,
           ),
           separatorBuilder:
-              (BuildContext context, int index) => SizedBox(height: 16.h),
+              (BuildContext context, int index) => Container(height: 16.h),
           itemCount: 10,
           itemBuilder:
               (BuildContext context, int index) => InkWell(

@@ -61,7 +61,7 @@ class CustomPrevoiusChats extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(width: 6.w),
+                  Container(width: 6.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

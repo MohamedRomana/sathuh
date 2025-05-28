@@ -79,7 +79,7 @@ class _CustomSubscriptionsState extends State<CustomSubscriptions> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 18.w),
+                    Container(width: 18.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -88,8 +88,8 @@ class _CustomSubscriptionsState extends State<CustomSubscriptions> {
                           size: 16.sp,
                           fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 5.h),
-                        SizedBox(
+                        Container(height: 5.h),
+                        Container(
                           width: 200.w,
                           child: AppText(
                             text: '1000 ${LocaleKeys.sar.tr()}',
@@ -170,7 +170,7 @@ class _CustomSubscriptionsState extends State<CustomSubscriptions> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 18.w),
+                    Container(width: 18.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -179,8 +179,8 @@ class _CustomSubscriptionsState extends State<CustomSubscriptions> {
                           size: 16.sp,
                           fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 5.h),
-                        SizedBox(
+                        Container(height: 5.h),
+                        Container(
                           width: 200.w,
                           child: AppText(
                             text: '1000 ${LocaleKeys.sar.tr()}',

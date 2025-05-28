@@ -11,14 +11,14 @@ import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 
-class EditProfileFields extends StatefulWidget {
+class ProfileDrivEditFields extends StatefulWidget {
   final TextEditingController passController;
   final TextEditingController fullNameController;
   final TextEditingController cityController;
   final TextEditingController phoneController;
   final TextEditingController emailController;
 
-  const EditProfileFields({
+  const ProfileDrivEditFields({
     super.key,
     required this.passController,
     required this.phoneController,
@@ -28,10 +28,10 @@ class EditProfileFields extends StatefulWidget {
   });
 
   @override
-  State<EditProfileFields> createState() => _EditProfileFieldsState();
+  State<ProfileDrivEditFields> createState() => _ProfileDrivEditFieldsState();
 }
 
-class _EditProfileFieldsState extends State<EditProfileFields> {
+class _ProfileDrivEditFieldsState extends State<ProfileDrivEditFields> {
   final FocusNode nameFocus = FocusNode();
   final FocusNode lastNameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();
@@ -101,7 +101,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                     hint:
                         AppCubit.get(context).showProfileMap["userName"] ?? "",
                     controller: widget.fullNameController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -125,7 +125,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                     hint: AppCubit.get(context).showProfileMap["phone"] ?? "",
                     controller: widget.phoneController,
                     inputType: TextInputType.phone,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -148,7 +148,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                     enabledBorderColor: Colors.grey,
                     hint: AppCubit.get(context).showProfileMap["email"] ?? "",
                     controller: widget.emailController,
-                    prefixIcon: SizedBox(
+                    prefixIcon: Container(
                       height: 28.w,
                       width: 28.w,
                       child: Center(
@@ -179,7 +179,7 @@ class _EditProfileFieldsState extends State<EditProfileFields> {
                             return null;
                           }
                         },
-                        prefixIcon: SizedBox(
+                        prefixIcon: Container(
                           height: 28.w,
                           width: 28.w,
                           child: Center(

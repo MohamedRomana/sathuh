@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sathuh/screens/admin_screens/home_layout/chats/admin_chats.dart';
@@ -71,6 +72,30 @@ class AppCubit extends Cubit<AppState> {
   void changeAddress({required String newAddress}) {
     address = newAddress;
     emit(ChangeIndex());
+  }
+
+  bool isSecureLogIn = true;
+  isSecureLogInIcon(isSecuree) {
+    isSecureLogIn = isSecuree;
+    emit(IsSecureIcon());
+  }
+
+  bool isSecureDelete = true;
+  isSecureDeleteIcon(isSecuree) {
+    isSecureDelete = isSecuree;
+    emit(IsSecureIcon());
+  }
+
+  bool isSecureRegister1 = true;
+  isSecureRegisterIcon1(isSecuree) {
+    isSecureRegister1 = isSecuree;
+    emit(IsSecureIcon());
+  }
+
+  bool isSecureRegister2 = true;
+  isSecureRegisterIcon2(isSecuree) {
+    isSecureRegister2 = isSecuree;
+    emit(IsSecureIcon());
   }
 
   int drawerIndex = -1;
@@ -149,12 +174,6 @@ class AppCubit extends Cubit<AppState> {
   void changeCertificate() {
     hasCertificate = !hasCertificate;
     emit(ChangeIndex());
-  }
-
-  bool isSecureLogIn = true;
-  isSecureLogInIcon(isSecuree) {
-    isSecureLogIn = isSecuree;
-    emit(IsSecureIcon());
   }
 
   // int isTab = -1;
@@ -651,29 +670,26 @@ class AppCubit extends Cubit<AppState> {
 
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse("${baseUrl}user/profile/image"),
+    );
 
-    var uri = Uri.parse("${baseUrl}user/profile/image");
-
-    var request = http.MultipartRequest('PATCH', uri);
     request.headers['Authorization'] = token;
-    // لا تضف Content-Type يدوياً مع MultipartRequest عادة
 
     request.files.add(
       await http.MultipartFile.fromPath(
         'attachment',
         imageFile.path,
-      ), // جرب 'image' أو اسأل السيرفر
+        contentType: MediaType('image', 'jpeg'),
+      ),
     );
-
-    debugPrint('Headers: ${request.headers}');
-    debugPrint('Files: ${request.files.map((f) => f.field).toList()}');
-
+    debugPrint('Sending file: ${imageFile.path}');
+    debugPrint('Token: Bearer $token');
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-
     debugPrint('Status code: ${response.statusCode}');
     debugPrint('Response body: ${response.body}');
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       final data = jsonDecode(response.body);
       emit(
@@ -682,6 +698,279 @@ class AppCubit extends Cubit<AppState> {
       showProfile();
     } else {
       emit(UploadProfileImageFailure(error: "حدث خطأ أثناء رفع الصورة"));
+    }
+  }
+
+  Future updateProfileEmail({required String email}) async {
+    emit(UpdateProfileLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}user/profile/updateEmail"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode({"email": email}),
+    );
+    final data = jsonDecode(response.body);
+    debugPrint(data.toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdateProfileSuccess(message: data["message"]));
+      showProfile();
+    } else {
+      emit(UpdateProfileFailure(error: data["message"] ?? "حدث خطاء"));
+    }
+  }
+
+  Future otpEmail({required String code}) async {
+    emit(OTPEmailLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}user/profile/resetEmail"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode({"code": code}),
+    );
+    final data = jsonDecode(response.body);
+    debugPrint(data.toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(OTPEmailSuccess(message: data["message"]));
+      showProfile();
+    } else {
+      emit(OTPEmailFailure(error: data["message"] ?? "حدث خطاء"));
+    }
+  }
+
+  Future updatePassword({
+    required String oldPassword,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    emit(UpdatePasswordLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}user/profile/updatePassword"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode({
+        "password": oldPassword,
+        "newPassword": password,
+        "confirmationPassword": confirmPassword,
+      }),
+    );
+    final data = jsonDecode(response.body);
+    debugPrint(data.toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdatePasswordSuccess(message: data["message"]));
+      showProfile();
+    } else {
+      emit(UpdatePasswordFailure(error: data["message"] ?? "حدث خطاء"));
+    }
+  }
+
+  Future deleteProfile({
+    required String phone,
+    required String password,
+  }) async {
+    emit(DeleteProfileLoading());
+
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    try {
+      http.Response response = await http.delete(
+        Uri.parse("${baseUrl}user/profile/deleteAccount"),
+        headers: {"Content-Type": "application/json", "Authorization": token},
+        body: jsonEncode({"phone": phone, "password": password}),
+      );
+
+      final data = jsonDecode(response.body);
+      debugPrint(data.toString());
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        emit(DeleteProfileSuccess(message: data["message"]));
+        CacheHelper.setUserToken("");
+      } else {
+        emit(
+          DeleteProfileFailure(
+            error: data["message"] ?? "حدث خطأ أثناء حذف الحساب",
+          ),
+        );
+      }
+    } catch (e) {
+      emit(DeleteProfileFailure(error: "فشل الاتصال بالخادم: $e"));
+    }
+  }
+
+  List<File> carImage = [];
+  Future<void> getCarImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final int? pickedOption = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.select_image_source.tr()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () => Navigator.pop(context, 1),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () => Navigator.pop(context, 2),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedOption == null) return;
+
+    XFile? pickedImage;
+
+    if (pickedOption == 1) {
+      pickedImage = await picker.pickImage(source: ImageSource.camera);
+    } else if (pickedOption == 2) {
+      final pickedImages = await picker.pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        pickedImage = pickedImages.first;
+      }
+    }
+
+    if (pickedImage != null) {
+      carImage = [File(pickedImage.path)];
+      emit(ChooseImageSuccess());
+    }
+  }
+
+  void removeCarImage() {
+    carImage.clear();
+    emit(RemoveImageSuccess());
+  }
+
+  Future addCars({
+    required String type,
+    required String manufactureYear,
+    required String color,
+    required String chassisNumber,
+    required String model,
+    required String carPlateNumber,
+  }) async {
+    emit(AddCarsLoading());
+
+    try {
+      if (carImage.isEmpty) {
+        emit(AddCarsFailure(error: "يرجى اختيار صورة للسيارة"));
+        return;
+      }
+
+      final token = CacheHelper.getUserToken();
+      if (token.isEmpty) {
+        emit(AddCarsFailure(error: "لم يتم العثور على رمز التفويض (التوكن)"));
+        return;
+      }
+
+      debugPrint("Token: $token");
+
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse("${baseUrl}car/addCar"),
+      );
+
+      request.headers.addAll({
+        "Authorization": token,
+        "Content-Type": "multipart/form-data", // ← تحديد نوع المحتوى يدويًا
+      });
+
+      request.fields['type'] = type;
+      request.fields['manufactureYear'] = manufactureYear;
+      request.fields['color'] = color;
+      request.fields['chassisNumber'] = chassisNumber;
+      request.fields['model'] = model;
+      request.fields['carPlateNumber'] = carPlateNumber;
+
+      debugPrint("Request Fields: ${request.fields}");
+
+      final stream = http.ByteStream(carImage.first.openRead());
+      final length = await carImage.first.length();
+      debugPrint("Image Size: $length");
+
+      final multipartFile = http.MultipartFile(
+        'attachment', // ← الاسم مؤكد من API
+        stream,
+        length,
+        filename: carImage.first.path.split('/').last,
+        contentType: MediaType('image', 'jpeg'), // ← تأكيد نوع الصورة
+      );
+
+      request.files.add(multipartFile);
+      debugPrint(
+        "Request Files: ${request.files.map((f) => f.filename).toList()}",
+      );
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Response Headers: ${response.headers}");
+      debugPrint("Response Body: $responseBody");
+
+      Map<String, dynamic> data = {};
+      try {
+        data = jsonDecode(responseBody);
+      } catch (e) {
+        debugPrint("خطأ في فك الـ JSON: $e");
+      }
+
+      final message = (data["message"] as String?) ?? "حدث خطأ غير معروف";
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        emit(AddCarsSuccess(message: message));
+      } else if (response.statusCode == 500) {
+        emit(ServerError());
+      } else {
+        emit(AddCarsFailure(error: message));
+      }
+    } catch (error) {
+      if (error is TimeoutException) {
+        debugPrint("Request timed out");
+        emit(Timeoutt());
+      } else {
+        debugPrint("Error: $error");
+        emit(AddCarsFailure(error: error.toString()));
+      }
+    }
+  }
+
+  List carsList = [];
+  Future getCars() async {
+    emit(GetCarsLoading());
+
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    debugPrint("Token from CacheHelper: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}car/getUserCar"),
+      headers: {"Authorization": token},
+    );
+
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Headers: ${response.headers}");
+    debugPrint("Response Body: ${response.body}");
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      carsList = data["data"]['cars'];
+      emit(GetCarsSuccess());
+    } else {
+      emit(GetCarsFailure(error: data["message"]));
     }
   }
 }

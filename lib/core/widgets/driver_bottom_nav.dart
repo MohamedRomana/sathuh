@@ -80,7 +80,7 @@ class DriverBottomNav extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
               width: 48.w,
               child: Builder(
                 builder:
@@ -110,7 +110,7 @@ class DriverBottomNav extends StatelessWidget {
                     ),
               ),
             ),
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -135,9 +135,9 @@ class DriverBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(),
-            const SizedBox(),
-            SizedBox(
+            Container(),
+            Container(),
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -170,7 +170,7 @@ class DriverBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,

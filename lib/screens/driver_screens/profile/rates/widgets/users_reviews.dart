@@ -42,8 +42,8 @@ class DriverUsersReviewsState extends State<DriverUsersReviews> {
                     blurRadius: 5.r,
                     spreadRadius: 1.r,
                     offset: Offset(0, 5.r),
-                  )
-                ]
+                  ),
+                ],
               ),
               child: ListView.separated(
                 padding: EdgeInsetsDirectional.only(
@@ -59,7 +59,7 @@ class DriverUsersReviewsState extends State<DriverUsersReviews> {
                 itemBuilder:
                     (context, index) => Column(
                       children: [
-                        SizedBox(height: 10.h),
+                        Container(height: 10.h),
                         Row(
                           children: [
                             ClipRRect(
@@ -71,7 +71,7 @@ class DriverUsersReviewsState extends State<DriverUsersReviews> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            SizedBox(width: 5.w),
+                            Container(width: 5.w),
                             RatingBar.readOnly(
                               filledIcon: Icons.star,
                               emptyIcon: Icons.star_border,
@@ -83,7 +83,7 @@ class DriverUsersReviewsState extends State<DriverUsersReviews> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        Container(
                           width: 300.w,
                           child: AppText(
                             top: 6.h,
@@ -93,17 +93,17 @@ class DriverUsersReviewsState extends State<DriverUsersReviews> {
                             color: Colors.grey,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        Container(height: 10.h),
                       ],
                     ),
               ),
             ),
-            SizedBox(height: 16.h),
+            Container(height: 16.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (visibleCount < 10)
-                  SizedBox(
+                  Container(
                     height: 35.h,
                     child: AppButton(
                       onPressed: () {

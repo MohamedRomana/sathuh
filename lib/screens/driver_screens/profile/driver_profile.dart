@@ -36,7 +36,7 @@ class DriverProfile extends StatelessWidget {
             child: Column(
               children: [
                 CustomAppBar(title: LocaleKeys.profile.tr()),
-                SizedBox(
+                Container(
                   height: 300.h,
                   child: Stack(
                     children: [
@@ -95,9 +95,9 @@ class DriverProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -114,9 +114,9 @@ class DriverProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
 
                       Row(
                         children: [
@@ -134,9 +134,9 @@ class DriverProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -153,9 +153,9 @@ class DriverProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -172,9 +172,9 @@ class DriverProfile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       const Divider(color: Colors.grey),
-                      SizedBox(height: 8.h),
+                      Container(height: 8.h),
                       Row(
                         children: [
                           AppText(
@@ -207,7 +207,7 @@ class DriverProfile extends StatelessWidget {
                   ),
                 ),
                 const DriverRates(),
-                SizedBox(height: 124.h),
+                Container(height: 124.h),
               ],
             ),
           ),

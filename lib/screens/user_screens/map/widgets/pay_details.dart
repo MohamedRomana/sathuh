@@ -63,7 +63,7 @@ class PaymentDetails extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
@@ -73,7 +73,7 @@ class PaymentDetails extends StatelessWidget {
                         bottom: 5.h,
                       ),
                     ),
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
@@ -103,7 +103,7 @@ class PaymentDetails extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
@@ -113,7 +113,7 @@ class PaymentDetails extends StatelessWidget {
                         bottom: 5.h,
                       ),
                     ),
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
@@ -142,7 +142,7 @@ class PaymentDetails extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,
@@ -152,7 +152,7 @@ class PaymentDetails extends StatelessWidget {
                         bottom: 5.h,
                       ),
                     ),
-                    SizedBox(
+                    Container(
                       width: 100.w,
                       child: AppText(
                         textAlign: TextAlign.center,

@@ -73,7 +73,7 @@ class _BankTransferPageState extends State<BankTransferPage> {
                         text: LocaleKeys.from_account.tr(),
                         fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(height: 8),
+                       Container(height: 8),
                       DropdownButtonFormField<String>(
                         dropdownColor: Colors.white,
                         decoration: InputDecoration(
@@ -131,13 +131,13 @@ class _BankTransferPageState extends State<BankTransferPage> {
                         },
                       ),
 
-                      const SizedBox(height: 16),
+                       Container(height: 16),
 
                       Text(
                         LocaleKeys.beneficiary_name.tr(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
+                       Container(height: 8),
                       AppInput(
                         hint: LocaleKeys.enter_beneficiary_name.tr(),
                         filled: true,
@@ -154,13 +154,13 @@ class _BankTransferPageState extends State<BankTransferPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                       Container(height: 16),
 
                       Text(
                         LocaleKeys.account_number_iban.tr(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
+                       Container(height: 8),
                       AppInput(
                         hint: LocaleKeys.iban_example.tr(),
                         filled: true,
@@ -176,13 +176,13 @@ class _BankTransferPageState extends State<BankTransferPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                       Container(height: 16),
 
                       Text(
                         LocaleKeys.amount.tr(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
+                       Container(height: 8),
                       AppInput(
                         inputType: TextInputType.number,
                         hint: LocaleKeys.enter_amount.tr(),
@@ -200,13 +200,13 @@ class _BankTransferPageState extends State<BankTransferPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                       Container(height: 16),
 
                       Text(
                         LocaleKeys.note_optional.tr(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
+                       Container(height: 8),
                       AppInput(
                         maxLines: 2,
                         hint: LocaleKeys.note_with_transfer.tr(),
@@ -217,7 +217,7 @@ class _BankTransferPageState extends State<BankTransferPage> {
                         end: 0,
                         controller: _messageController,
                       ),
-                      const SizedBox(height: 24),
+                       Container(height: 24),
 
                       Center(
                         child: AppButton(
@@ -243,7 +243,7 @@ class _BankTransferPageState extends State<BankTransferPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 100.h),
+                      Container(height: 100.h),
                     ],
                   ),
                 ),

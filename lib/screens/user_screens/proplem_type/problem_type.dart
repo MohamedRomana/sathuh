@@ -83,7 +83,7 @@ class _ProblemTypeState extends State<ProblemType> {
                         family: FontFamily.tajawalBold,
                       ),
                     ),
-                    SizedBox(height: 120.h),
+                    Container(height: 120.h),
                   ],
                 ),
               ),

@@ -61,7 +61,7 @@ class DriverAttachments extends StatelessWidget {
                             builder:
                                 (context) => Dialog(
                                   backgroundColor: Colors.transparent,
-                                  child: SizedBox(
+                                  child: Container(
                                     height: 300.w,
                                     width: 300.w,
                                     child: PhotoView(
@@ -112,7 +112,7 @@ class DriverAttachments extends StatelessWidget {
                             builder:
                                 (context) => Dialog(
                                   backgroundColor: Colors.transparent,
-                                  child: SizedBox(
+                                  child: Container(
                                     height: 300.w,
                                     width: 300.w,
                                     child: PhotoView(
@@ -163,7 +163,7 @@ class DriverAttachments extends StatelessWidget {
                             builder:
                                 (context) => Dialog(
                                   backgroundColor: Colors.transparent,
-                                  child: SizedBox(
+                                  child: Container(
                                     height: 300.w,
                                     width: 300.w,
                                     child: PhotoView(
@@ -220,7 +220,7 @@ class DriverAttachments extends StatelessWidget {
                         builder:
                             (context) => Dialog(
                               backgroundColor: Colors.transparent,
-                              child: SizedBox(
+                              child: Container(
                                 height: 300.w,
                                 width: 300.w,
                                 child: PhotoView(

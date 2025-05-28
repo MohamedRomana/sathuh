@@ -28,42 +28,39 @@ class AppCachedImage extends StatelessWidget {
       height: height ?? 100.h,
       fit: fit ?? BoxFit.cover,
       imageUrl: image,
-      placeholder: (context, url) => CustomShimmer(
-        child: Container(
-          height: height ?? 100.h,
-          width: width ?? 100.w,
-          decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
-            image: DecorationImage(
-              image: AssetImage(
-                Assets.img.logo.path,
+      placeholder:
+          (context, url) => CustomShimmer(
+            child: Container(
+              height: height ?? 100.h,
+              width: width ?? 100.w,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                image: DecorationImage(
+                  image: AssetImage(Assets.img.background.path),
+                  fit: BoxFit.cover,
+                ),
               ),
-              fit: BoxFit.fill,
             ),
           ),
-        ),
-      ),
-      errorWidget: (context, url, error) => Container(
-        height: height ?? 100.h,
-        width: width ?? 100.w,
-        decoration: BoxDecoration(
-          color: AppColors.secondray,
-          borderRadius: BorderRadius.circular(5.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 5.r,
-              spreadRadius: 1.r,
-              offset: const Offset(0, 0),
+
+      errorWidget:
+          (context, url, error) => Container(
+            height: height ?? 100.h,
+            width: width ?? 100.w,
+            decoration: BoxDecoration(
+              color: AppColors.secondray,
+              borderRadius: BorderRadius.circular(5.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
+                  blurRadius: 5.r,
+                  spreadRadius: 1.r,
+                  offset: const Offset(0, 0),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Icon(
-          Icons.error,
-          color: AppColors.primary,
-          size: 20.r,
-        ),
-      ),
+            child: Icon(Icons.error, color: AppColors.primary, size: 20.r),
+          ),
     );
   }
 }

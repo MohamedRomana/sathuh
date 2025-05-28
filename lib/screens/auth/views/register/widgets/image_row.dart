@@ -26,7 +26,7 @@ class ImageRow extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                SizedBox(height: 10.h),
+                Container(height: 10.h),
                 AuthCubit.get(context).identityImage.isNotEmpty
                     ? Stack(
                       children: [
@@ -70,7 +70,7 @@ class ImageRow extends StatelessWidget {
                         color: Colors.grey,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
-                          child: SizedBox(
+                          child: Container(
                             height: 90.h,
                             width: 90.w,
                             child: Column(
@@ -103,7 +103,7 @@ class ImageRow extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                SizedBox(height: 10.h),
+                Container(height: 10.h),
                 AuthCubit.get(context).licenseImage.isNotEmpty
                     ? Stack(
                       children: [
@@ -147,7 +147,7 @@ class ImageRow extends StatelessWidget {
                         color: Colors.grey,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
-                          child: SizedBox(
+                          child: Container(
                             height: 90.h,
                             width: 90.w,
                             child: Column(
@@ -180,7 +180,7 @@ class ImageRow extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                SizedBox(height: 10.h),
+                Container(height: 10.h),
                 AuthCubit.get(context).carImage.isNotEmpty
                     ? Stack(
                       children: [
@@ -221,7 +221,7 @@ class ImageRow extends StatelessWidget {
                         borderType: BorderType.RRect,
                         radius: Radius.circular(10.r),
                         color: Colors.grey,
-                        child: SizedBox(
+                        child: Container(
                           height: 90.h,
                           width: 90.w,
                           child: ClipRRect(

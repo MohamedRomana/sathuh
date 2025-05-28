@@ -58,7 +58,7 @@ class _SathaServiceState extends State<SathaService> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: 2,
                       separatorBuilder:
-                          (context, index) => SizedBox(height: 16.h),
+                          (context, index) => Container(height: 16.h),
                       itemBuilder:
                           (context, index) => InkWell(
                             splashColor: Colors.transparent,
@@ -125,7 +125,7 @@ class _SathaServiceState extends State<SathaService> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
+                                      Container(
                                         width: 150.w,
                                         child: AppText(
                                           text: 'سيارة BMW 2022',
@@ -134,7 +134,7 @@ class _SathaServiceState extends State<SathaService> {
                                           family: FontFamily.tajawalBold,
                                         ),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 150.w,
                                         child: AppText(
                                           text: 'سيدان',
@@ -143,7 +143,7 @@ class _SathaServiceState extends State<SathaService> {
                                           family: FontFamily.tajawalBold,
                                         ),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 150.w,
                                         child: AppText(
                                           text: 'زرقاء',
@@ -195,7 +195,7 @@ class _SathaServiceState extends State<SathaService> {
                         size: 21.sp,
                       ),
                     ),
-                    SizedBox(height: 120.h),
+                    Container(height: 120.h),
                   ],
                 ),
               ),

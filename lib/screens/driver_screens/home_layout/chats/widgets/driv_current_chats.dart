@@ -60,13 +60,13 @@ class DrivCurrentChats extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(width: 6.w),
+                  Container(width: 6.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          SizedBox(
+                          Container(
                             width: 170.w,
                             child: AppText(
                               text: ' اسم تجريبي',
@@ -75,7 +75,7 @@ class DrivCurrentChats extends StatelessWidget {
                               family: Assets.fonts.tajawalMedium,
                             ),
                           ),
-                          SizedBox(
+                          Container(
                             width: 70.w,
                             child: AppText(
                               textAlign: TextAlign.end,
@@ -86,7 +86,7 @@ class DrivCurrentChats extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      Container(
                         width: 200.w,
                         child: AppText(
                           text: 'يريد اسم العميل التواصل معك',

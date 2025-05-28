@@ -38,6 +38,7 @@ abstract class  LocaleKeys {
   static const enterMobileNumberToSendActivationCode = 'enterMobileNumberToSendActivationCode';
   static const enteremailToSendActivationCode = 'enteremailToSendActivationCode';
   static const enterActivationCode = 'enterActivationCode';
+  static const enterActivationCodeEmail = 'enterActivationCodeEmail';
   static const changePassword = 'changePassword';
   static const registerNewRepresentative = 'registerNewRepresentative';
   static const carType = 'carType';
@@ -612,5 +613,12 @@ abstract class  LocaleKeys {
   static const error_occurred = 'error_occurred';
   static const no_address = 'no_address';
   static const customer_location = 'customer_location';
+  static const edit_name_and_phone = 'edit_name_and_phone';
+  static const edit_profile_picture = 'edit_profile_picture';
+  static const change_email = 'change_email';
+  static const update_password = 'update_password';
+  static const new_password = 'new_password';
+  static const old_password = 'old_password';
+  static const chassis_number = 'chassis_number';
 
 }

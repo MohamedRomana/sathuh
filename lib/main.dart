@@ -28,7 +28,7 @@ void main() async {
   // await NotificationHelper.init();
   LocationHelper.determinePosition();
   await EasyLocalization.ensureInitialized();
-  debugPrint("userId is ${CacheHelper.getUserId()}");
+  debugPrint("token is ${CacheHelper.getUserToken()}");
 
   runApp(
     EasyLocalization(

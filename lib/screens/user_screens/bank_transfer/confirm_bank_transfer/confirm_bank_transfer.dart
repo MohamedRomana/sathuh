@@ -165,7 +165,7 @@ class _ConfirmTransferPageState extends State<ConfirmTransferPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(
+          Container(
             width: 120.w,
             child: Text(
               value,

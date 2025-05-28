@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_cached.dart';
@@ -13,6 +14,7 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../generated/locale_keys.g.dart';
 import '../profile_edit/profile_edit.dart';
+import 'widgets/delete_account.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -61,15 +63,25 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.r),
-                        child: AppCachedImage(
-                          image:
-                              AppCubit.get(context).showProfileMap['image'] ??
-                              '',
-                          fit: BoxFit.cover,
-                        ),
+                        child:
+                            (AppCubit.get(
+                                      context,
+                                    ).showProfileMap['image']?.isNotEmpty ??
+                                    false)
+                                ? AppCachedImage(
+                                  image:
+                                      AppCubit.get(
+                                        context,
+                                      ).showProfileMap['image'],
+                                  fit: BoxFit.cover,
+                                )
+                                : Image.asset(
+                                  Assets.img.unphoto.path,
+                                  fit: BoxFit.cover,
+                                ),
                       ),
                     ),
-                    SizedBox(height: 30.h),
+                    Container(height: 30.h),
                     Container(
                       width: 343.w,
                       padding: EdgeInsets.all(16.r),
@@ -112,9 +124,9 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           const Divider(color: Colors.grey),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           Row(
                             children: [
                               AppText(
@@ -139,9 +151,9 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           const Divider(color: Colors.grey),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
 
                           Row(
                             children: [
@@ -152,7 +164,7 @@ class _ProfileState extends State<Profile> {
                               ),
                               const Spacer(),
                               SizedBox(
-                                width: 180.w,
+                                width: 190.w,
                                 child: AppText(
                                   textAlign: TextAlign.end,
                                   text:
@@ -160,16 +172,16 @@ class _ProfileState extends State<Profile> {
                                         context,
                                       ).showProfileMap['email'] ??
                                       "",
-                                  size: 16.sp,
+                                  size: 12.sp,
                                   family: FontFamily.tajawalBold,
                                   color: Colors.grey,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           const Divider(color: Colors.grey),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           Row(
                             children: [
                               AppText(
@@ -202,13 +214,13 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           const Divider(color: Colors.grey),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           Row(
                             children: [
                               AppText(
-                                text: 'المحافظه',
+                                text: LocaleKeys.city.tr(),
                                 size: 16.sp,
                                 family: FontFamily.tajawalBold,
                               ),
@@ -237,13 +249,13 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           const Divider(color: Colors.grey),
-                          SizedBox(height: 8.h),
+                          Container(height: 8.h),
                           Row(
                             children: [
                               AppText(
-                                text: 'مدينة',
+                                text: LocaleKeys.area.tr(),
                                 size: 16.sp,
                                 family: FontFamily.tajawalBold,
                               ),
@@ -287,7 +299,20 @@ class _ProfileState extends State<Profile> {
                         size: 21.sp,
                       ),
                     ),
-                    SizedBox(height: 124.h),
+                    AppButton(
+                      top: 24.h,
+                      onPressed: () {
+                        AppRouter.navigateTo(context, const DeleteAccount());
+                      },
+                      color: AppColors.secondray,
+                      child: AppText(
+                        text: LocaleKeys.deleteAccount.tr(),
+                        color: Colors.white,
+                        family: FontFamily.tajawalBold,
+                        size: 21.sp,
+                      ),
+                    ),
+                    Container(height: 124.h),
                   ],
                 ),
               ),

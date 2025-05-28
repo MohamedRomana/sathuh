@@ -77,7 +77,7 @@ class AdminBottomNav extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -104,7 +104,7 @@ class AdminBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -132,9 +132,9 @@ class AdminBottomNav extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(),
-            const SizedBox(),
-            SizedBox(
+            Container(),
+            Container(),
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -163,7 +163,7 @@ class AdminBottomNav extends StatelessWidget {
               ),
             ),
 
-            SizedBox(
+            Container(
               width: 48.w,
               child: InkWell(
                 splashColor: Colors.transparent,

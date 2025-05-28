@@ -50,6 +50,7 @@ class CodegenLoader extends AssetLoader{
   "enterMobileNumberToSendActivationCode": "ادخل رقم الجوال الخص بك لارسال كود التفعيل",
   "enteremailToSendActivationCode": "ادخل البريد الالكتروني الخص بك لارسال كود التفعيل",
   "enterActivationCode": "ادخل كود التفعيل المرسل على رقم الجوال",
+  "enterActivationCodeEmail": "ادخل كود التفعيل المرسل على البريد الالكتروني",
   "changePassword": "تغيير كلمة المرور",
   "registerNewRepresentative": "تسجيل مندوب جديد",
   "carType": "حجم السيارة",
@@ -623,7 +624,14 @@ class CodegenLoader extends AssetLoader{
   "full_start_location_here": "موقع الانطلاق الكامل هنا",
   "error_occurred": "حدث خطأ",
   "no_address": "لا يوجد عنوان",
-  "customer_location": "موقع العميل"
+  "customer_location": "موقع العميل",
+  "edit_name_and_phone": "تعديل الاسم ورقم الجوال",
+  "edit_profile_picture": "تعديل الصورة",
+  "change_email": "تغيير البريد الإلكتروني",
+  "update_password": "تحديث كلمة المرور",
+  "new_password": "كلمة المرور الجديدة",
+  "old_password": "كلمة المرور القديمة",
+  "chassis_number": "رقم الشاسيه"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -661,6 +669,7 @@ static const Map<String,dynamic> _en = {
   "enterMobileNumberToSendActivationCode": "Enter your mobile number to send the activation code",
   "enteremailToSendActivationCode": "Enter your email to send the activation code",
   "enterActivationCode": "Enter the activation code sent to your phone",
+  "enterActivationCodeEmail": "Enter the activation code sent to your email",
   "changePassword": "Change password",
   "registerNewRepresentative": "Register a new representative",
   "carType": "Car size",
@@ -1234,7 +1243,14 @@ static const Map<String,dynamic> _en = {
   "full_start_location_here": "Full start location here",
   "error_occurred": "An error occurred",
   "no_address": "No address",
-  "customer_location": "Customer Location"
+  "customer_location": "Customer Location",
+  "edit_name_and_phone": "Edit Name and Phone Number",
+  "edit_profile_picture": "Edit Profile Picture",
+  "change_email": "Change Email",
+  "update_password": "Update Password",
+  "new_password": "New Password",
+  "old_password": "Old Password",
+  "chassis_number": "Chassis Number"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

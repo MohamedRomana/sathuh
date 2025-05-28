@@ -34,6 +34,7 @@
     "enterMobileNumberToSendActivationCode" : "Enter your mobile number to send the activation code",
     "enteremailToSendActivationCode" : "Enter your email to send the activation code",
     "enterActivationCode" : "Enter the activation code sent to your phone",
+    "enterActivationCodeEmail" : "Enter the activation code sent to your email",
     "changePassword" : "Change password",
     "registerNewRepresentative" : "Register a new representative",
     "carType" : "Car size",
@@ -607,5 +608,12 @@
       "full_start_location_here": "Full start location here",
       "error_occurred": "An error occurred",
       "no_address": "No address",
-      "customer_location": "Customer Location"
+      "customer_location": "Customer Location",
+      "edit_name_and_phone": "Edit Name and Phone Number",
+      "edit_profile_picture": "Edit Profile Picture",
+      "change_email": "Change Email",
+      "update_password": "Update Password",
+      "new_password": "New Password",
+      "old_password": "Old Password",
+      "chassis_number": "Chassis Number"
 }

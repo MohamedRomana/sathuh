@@ -29,7 +29,7 @@ class ReviewsDialog extends StatelessWidget {
           key: formKey,
           child: Column(
             children: [
-              SizedBox(height: 20.h),
+              Container(height: 20.h),
               RatingBar.builder(
                 initialRating: 1,
                 allowHalfRating: false,
@@ -53,7 +53,7 @@ class ReviewsDialog extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               const Divider(color: Colors.grey),
-              SizedBox(height: 20.h),
+              Container(height: 20.h),
               AppInput(
                 controller: commentController,
                 enabledBorderColor: Colors.grey,
@@ -69,7 +69,7 @@ class ReviewsDialog extends StatelessWidget {
                   }
                 },
               ),
-              SizedBox(height: 30.h),
+              Container(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

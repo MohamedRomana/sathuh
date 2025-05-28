@@ -50,7 +50,7 @@ class Register extends StatelessWidget {
             ),
             CacheHelper.getUserType() == "driver"
                 ? const ImageRow()
-                : const SizedBox(),
+                : Container(),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is RegisterSuccess) {
@@ -127,7 +127,7 @@ class Register extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30.h),
+            Container(height: 30.h),
           ],
         ),
       ),

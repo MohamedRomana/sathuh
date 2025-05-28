@@ -509,7 +509,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    : const SizedBox(),
+                    : Container(),
 
                 CacheHelper.getUserType() == 'client' ||
                         CacheHelper.getUserType() == 'driver'
@@ -570,7 +570,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    : const SizedBox.shrink(),
+                    : Container(),
 
                 AnimatedBuilder(
                   animation: _animation7,
@@ -733,7 +733,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                                 size: 24.sp,
                                 color: AppColors.secondray,
                               ),
-                              SizedBox(width: 6.w),
+                              Container(width: 6.w),
                               AppText(
                                 text:
                                     CacheHelper.getLang() != "en"
@@ -750,7 +750,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                           ),
                           Row(
                             children: [
-                              SizedBox(width: 6.w),
+                              Container(width: 6.w),
                               Transform.scale(
                                 scale: 0.8.r,
                                 child: Switch(
@@ -866,7 +866,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    : SizedBox.fromSize(),
+                    : Container(),
 
                 AnimatedBuilder(
                   animation: _animation8,

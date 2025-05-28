@@ -68,7 +68,7 @@ class _AdminEditProfileState extends State<AdminEditProfile> {
                       child: Column(
                         children: [
                           CustomAppBar(title: LocaleKeys.editprofile.tr()),
-                          SizedBox(
+                          Container(
                             height: 300.h,
                             child: Stack(
                               children: [
@@ -257,7 +257,7 @@ class _AdminEditProfileState extends State<AdminEditProfile> {
                               );
                             },
                           ),
-                          SizedBox(height: 150.h),
+                          Container(height: 150.h),
                         ],
                       ),
                     ),

@@ -45,7 +45,7 @@ class Drivers extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 15,
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                  separatorBuilder: (context, index) => Container(height: 16.h),
                   itemBuilder:
                       (context, index) => InkWell(
                         splashColor: Colors.transparent,
@@ -81,12 +81,12 @@ class Drivers extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 8.w),
+                                  Container(width: 8.w),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
+                                      Container(
                                         width: 150.w,
                                         child: AppText(
                                           text: 'محمد احمد',
@@ -102,7 +102,7 @@ class Drivers extends StatelessWidget {
                                             color: Colors.lightGreen,
                                             size: 8.sp,
                                           ),
-                                          SizedBox(
+                                          Container(
                                             width: 100.w,
                                             child: AppText(
                                               start: 3.w,
@@ -114,7 +114,7 @@ class Drivers extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 150.w,
                                         child: AppText(
                                           text:
@@ -141,7 +141,7 @@ class Drivers extends StatelessWidget {
                                       color: Colors.red,
                                     ),
                                   ),
-                                  SizedBox(width: 8.w),
+                                  Container(width: 8.w),
                                   InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -156,14 +156,14 @@ class Drivers extends StatelessWidget {
                                       color: Colors.green,
                                     ),
                                   ),
-                                  SizedBox(width: 8.w),
+                                  Container(width: 8.w),
                                   InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () {
                                       AppRouter.navigateTo(
                                         context,
-                                        const DriverLocation(isAdmin: true,),
+                                        const DriverLocation(isAdmin: true),
                                       );
                                     },
                                     child: const Icon(
@@ -178,7 +178,7 @@ class Drivers extends StatelessWidget {
                         ),
                       ),
                 ),
-                SizedBox(height: 120.h),
+                Container(height: 120.h),
               ],
             ),
           ),

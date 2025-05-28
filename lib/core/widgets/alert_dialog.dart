@@ -34,57 +34,59 @@ customAlertDialog({
   bool? barrierDismissible,
 }) {
   showGeneralDialog(
-      barrierColor: barrierColor ?? Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, widget) {
-        return Transform.scale(
-          scale: a1.value,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: blurSigmaX ?? 5.0,
-              sigmaY: blurSigmaY ?? 5.0,
-            ),
-            child: AlertDialog(
-              alignment: dialogAlignment ?? Alignment.center,
-              backgroundColor: dialogBackGroundColor ?? Colors.white,
-              surfaceTintColor: dialogSurfaceTintColor ?? Colors.transparent,
-              shadowColor: dialogShadowColor ?? Colors.transparent,
+    barrierColor: barrierColor ?? Colors.black.withOpacity(0.5),
+    transitionBuilder: (context, a1, a2, widget) {
+      return Transform.scale(
+        scale: a1.value,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: blurSigmaX ?? 5.0,
+            sigmaY: blurSigmaY ?? 5.0,
+          ),
+          child: AlertDialog(
+            alignment: dialogAlignment ?? Alignment.center,
+            backgroundColor: dialogBackGroundColor ?? Colors.white,
+            surfaceTintColor: dialogSurfaceTintColor ?? Colors.transparent,
+            shadowColor: dialogShadowColor ?? Colors.transparent,
+            elevation: dialogElevation ?? 0,
+            insetPadding:
+                dialogInsetsPadding ??
+                const EdgeInsets.symmetric(horizontal: 0),
+            contentPadding:
+                dialogContentPadding ?? EdgeInsets.symmetric(horizontal: 16.w),
+            shape:
+                dialogShape ??
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+            buttonPadding: EdgeInsets.zero,
+            content: Material(
               elevation: dialogElevation ?? 0,
-              insetPadding: dialogInsetsPadding ??
-                  const EdgeInsets.symmetric(horizontal: 0),
-              contentPadding: dialogContentPadding ??
-                  EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                  ),
-              shape: dialogShape ??
+              shape:
+                  dialogShape ??
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.r),
                   ),
-              buttonPadding: EdgeInsets.zero,
-              content: Material(
-                elevation: dialogElevation ?? 0,
-                shape: dialogShape ??
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                color: dialogBackGroundColor ?? Colors.white,
-                surfaceTintColor: dialogSurfaceTintColor ?? Colors.transparent,
-                child: SizedBox(
-                  height: alertDialogHeight ?? 265.h,
-                  width: alertDialogWidth ?? double.infinity,
-                  child: child,
-                ),
+              color: dialogBackGroundColor ?? Colors.white,
+              surfaceTintColor: dialogSurfaceTintColor ?? Colors.transparent,
+              child: Container(
+                height: alertDialogHeight ?? 265.h,
+                width: alertDialogWidth ?? double.infinity,
+                child: child,
               ),
             ),
           ),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 400),
-      barrierDismissible: barrierDismissible ?? true,
-      barrierLabel: '',
-      context: context,
-      pageBuilder: (context, animation1, animation2) {
-        return const SizedBox();
-      });
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 400),
+    barrierDismissible: barrierDismissible ?? true,
+    barrierLabel: '',
+    context: context,
+    pageBuilder: (context, animation1, animation2) {
+      return Container();
+    },
+  );
 }
 
 showLoadingDialog({
@@ -100,27 +102,28 @@ showLoadingDialog({
       return AlertDialog(
         titlePadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
         backgroundColor: isLottie ? Colors.transparent : Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
         title: Column(
           children: [
             isLottie
                 ? const CustomLottieWidget()
                 : Column(
-                    children: [
-                      const CircularProgressIndicator(
-                        strokeWidth: 3,
-                        color: AppColors.primary,
-                      ),
-                      SizedBox(height: 16.h),
-                      AppText(
-                        text: loadingText ?? "Loading...",
-                        color: AppColors.primary,
-                        family: FontFamily.tajawalBold,
-                      ),
-                      SizedBox(height: 12.h),
-                    ],
-                  ),
+                  children: [
+                    const CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: AppColors.primary,
+                    ),
+                    Container(height: 16.h),
+                    AppText(
+                      text: loadingText ?? "Loading...",
+                      color: AppColors.primary,
+                      family: FontFamily.tajawalBold,
+                    ),
+                    Container(height: 12.h),
+                  ],
+                ),
           ],
         ),
       );

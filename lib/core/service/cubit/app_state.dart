@@ -73,7 +73,7 @@ final class UpdateProfileFailure extends AppState {
   UpdateProfileFailure({required this.error});
 }
 
-final class UploadProfileImageLoading extends AppState{}
+final class UploadProfileImageLoading extends AppState {}
 
 final class UploadProfileImageSuccess extends AppState {
   final String message;
@@ -214,3 +214,60 @@ final class DeleteNotificationFailure extends AppState {
 final class FileSelected extends AppState {}
 
 final class FileNotSelected extends AppState {}
+
+final class OTPEmailLoading extends AppState {}
+
+final class OTPEmailSuccess extends AppState {
+  final String message;
+  OTPEmailSuccess({required this.message});
+}
+
+final class OTPEmailFailure extends AppState {
+  final String error;
+  OTPEmailFailure({required this.error});
+}
+
+final class UpdatePasswordLoading extends AppState {}
+
+final class UpdatePasswordSuccess extends AppState {
+  final String message;
+  UpdatePasswordSuccess({required this.message});
+}
+
+final class UpdatePasswordFailure extends AppState {
+  final String error;
+  UpdatePasswordFailure({required this.error});
+}
+
+final class DeleteProfileLoading extends AppState {}
+
+final class DeleteProfileSuccess extends AppState {
+  final String message;
+  DeleteProfileSuccess({required this.message});
+}
+
+final class DeleteProfileFailure extends AppState {
+  final String error;
+  DeleteProfileFailure({required this.error});
+}
+
+final class AddCarsLoading extends AppState {}
+
+final class AddCarsSuccess extends AppState {
+  final String message;
+  AddCarsSuccess({required this.message});
+}
+
+final class AddCarsFailure extends AppState {
+  final String error;
+  AddCarsFailure({required this.error});
+}
+
+final class GetCarsLoading extends AppState {}
+
+final class GetCarsSuccess extends AppState {}
+
+final class GetCarsFailure extends AppState {
+  final String error;
+  GetCarsFailure({required this.error});
+}
