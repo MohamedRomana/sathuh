@@ -40,7 +40,7 @@ class _OTPscreenState extends State<OTPscreen> {
         child: Column(
           children: [
             const CustomAuthHeader(),
-    
+
             // AppInput(
             //   focusNode: emailFocus,
             //   enabledBorderColor: Colors.grey,
@@ -130,15 +130,13 @@ class _OTPscreenState extends State<OTPscreen> {
                   top: 32.h,
                   bottom: 29.h,
                   onPressed: () async {
-                   AuthCubit.get(
-                        context,
-                      ).otp(code: otpCode, email: widget.emailController.text);
+                    AuthCubit.get(
+                      context,
+                    ).otp(code: otpCode, email: widget.emailController.text);
                   },
                   child:
                       state is OTPLoading
-                          ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
+                          ? const CircularProgressIndicator(color: Colors.white)
                           : AppText(
                             text: LocaleKeys.confirm.tr(),
                             color: Colors.white,

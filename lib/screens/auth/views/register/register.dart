@@ -26,8 +26,26 @@ final _townController = TextEditingController();
 final _passController = TextEditingController();
 final _confirmPassController = TextEditingController();
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  @override
+  initState() {
+    _emailController.clear();
+    _fullNameController.clear();
+    _phoneController.clear();
+    _countryController.clear();
+    _cityController.clear();
+    _townController.clear();
+    _passController.clear();
+    _confirmPassController.clear();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +76,7 @@ class Register extends StatelessWidget {
                     context,
                     OTPscreen(emailController: _emailController),
                   );
-                  _fullNameController.clear();
-                  _phoneController.clear();
-                  _emailController.clear();
-                  _countryController.clear();
-                  _cityController.clear();
-                  _townController.clear();
-                  _passController.clear();
-                  _confirmPassController.clear();
+
                   showFlashMessage(
                     context: context,
                     type: FlashMessageType.success,

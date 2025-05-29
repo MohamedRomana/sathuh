@@ -249,7 +249,7 @@ class _LogInState extends State<LogIn> {
                   AppRouter.navigateAndFinish(context, const HomeLayout());
                 }
               },
-              child: Container(
+              child: SizedBox(
                 width: 150.w,
                 child: AppText(
                   textAlign: TextAlign.center,
