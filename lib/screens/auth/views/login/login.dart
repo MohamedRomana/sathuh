@@ -19,6 +19,7 @@ import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../../user_screens/home_layout/home_layout.dart';
 import '../../data/auth_cubit.dart';
+import '../confirm_email/confirm_email.dart';
 import '../forget_pass/forget_pass.dart';
 import '../register/register.dart';
 import '../widgets/auth_header.dart';
@@ -139,6 +140,7 @@ class _LogInState extends State<LogIn> {
                       await AuthCubit.get(context).logIn(
                         phone: _phoneController.text,
                         password: _passController.text,
+                        deviceToken: CacheHelper.getDeviceToken(),
                       );
                     }
                   },
@@ -166,9 +168,11 @@ class _LogInState extends State<LogIn> {
                     saveData(key: 'phone', value: _phoneController.text);
                     saveData(key: 'password', value: _passController.text);
 
-                    await AuthCubit.get(
-                      context,
-                    ).logIn(phone: cachedPhone, password: cachedPass);
+                    await AuthCubit.get(context).logIn(
+                      phone: cachedPhone,
+                      password: cachedPass,
+                      deviceToken: CacheHelper.getDeviceToken(),
+                    );
                   } else {
                     showFlashMessage(
                       context: context,
@@ -228,6 +232,17 @@ class _LogInState extends State<LogIn> {
                     text: LocaleKeys.forgetPass.tr(),
                     size: 14.sp,
                     color: AppColors.darkRed,
+                  ),
+                ),
+                    CacheHelper.getUserType() == "administration"
+                ? Container()
+                : TextButton(
+                  onPressed:
+                      () => AppRouter.navigateTo(context, const AuthConfirmEmail()),
+                  child: AppText(
+                    text: 'تأكيد البريد الألكتروني',
+                    size: 14.sp,
+                    color: Colors.cyan,
                   ),
                 ),
             Container(height: 10.h),

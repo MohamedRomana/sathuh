@@ -111,7 +111,14 @@ class AuthCubit extends Cubit<AuthState> {
     required String country,
     required String city,
     required String town,
+    required String deviceToken,
   }) async {
+    if (deviceToken.isEmpty) {
+      emit(
+        RegisterFailure(error: "deviceToken غير موجود، يرجى إعادة المحاولة"),
+      );
+      return;
+    }
     emit(RegisterLoading());
 
     final response = await http.post(
@@ -124,6 +131,7 @@ class AuthCubit extends Cubit<AuthState> {
         "password": password,
         "confirmationPassword": confirmPassword,
         "address": {"country": country, "city": city, "area": town},
+        "deviceToken": deviceToken,
       }),
     );
 
@@ -186,14 +194,22 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future logIn({required String phone, required String password}) async {
+  Future logIn({
+    required String phone,
+    required String password,
+    required String deviceToken,
+  }) async {
     emit(LogInLoading());
 
     try {
       final response = await http.post(
         Uri.parse("${baseUrl}auth/login"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"phone": phone, "password": password}),
+        body: jsonEncode({
+          "phone": phone,
+          "password": password,
+          "deviceToken": deviceToken,
+        }),
       );
 
       debugPrint("Response status: ${response.statusCode}");
@@ -219,23 +235,22 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future logOut() async {
     emit(LogOutLoading());
-    http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/logout"),
-      body: {
-        "lang": CacheHelper.getLang(),
-        "user_id": CacheHelper.getUserId(),
-        "device_id": CacheHelper.getDeviceToken(),
-      },
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}auth/logout"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
     );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      CacheHelper.setUserId("");
-      // CacheHelper.setUserToken("");
-      emit(LogOutSuccess(message: data["msg"]));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // CacheHelper.setUserId("");
+      CacheHelper.setUserToken("");
+      emit(LogOutSuccess(message: data["message"]));
     } else {
-      emit(LogOutFailure(error: data["msg"]));
+      emit(LogOutFailure(error: data["message"]));
     }
   }
 
@@ -265,20 +280,22 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future resendCode() async {
+  Future resendCode({required String email}) async {
     emit(ResendCodeLoading());
+
     http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/resend-code"),
-      body: {"lang": CacheHelper.getLang(), "user_id": CacheHelper.getUserId()},
+      Uri.parse("${baseUrl}auth/resendCode"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": email}),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      emit(ResendCodeSuccess(message: data["msg"]));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ResendCodeSuccess(message: data["message"]));
     } else {
-      debugPrint(data["msg"]);
-      emit(ResendCodeFailure(error: data["msg"]));
+      debugPrint(data["message"]);
+      emit(ResendCodeFailure(error: data["message"]));
     }
   }
 

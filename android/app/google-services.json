@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107015053698",
+    "project_id": "sathuh-4ddcb",
+    "storage_bucket": "sathuh-4ddcb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107015053698:android:00adf4a1f88ac639c2af9b",
+        "android_client_info": {
+          "package_name": "com.example.sathuh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpGQneco1TwXVFs1lKFsf4_NGGoswgD7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

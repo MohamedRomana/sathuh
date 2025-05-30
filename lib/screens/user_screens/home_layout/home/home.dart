@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
+import 'package:sathuh/core/constants/contsants.dart';
 import '../../../../gen/assets.gen.dart';
 import 'widgets/custom_driver_near_you.dart';
 import 'widgets/custom_services.dart';
@@ -23,10 +28,10 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocationAndAddress();
+    _getCurrentLocationAndFetchAddress();
   }
 
-  Future<void> _getCurrentLocationAndAddress() async {
+  Future<void> _getCurrentLocationAndFetchAddress() async {
     LocationPermission permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.deniedForever) return;
 
@@ -36,17 +41,24 @@ class _HomeState extends State<Home> {
 
     currentLatLng = LatLng(position.latitude, position.longitude);
 
-    final address = await getAddressFromLatLng(currentLatLng!);
+    final address = await fetchAddressFromApi(
+      position.latitude,
+      position.longitude,
+    );
+
     setState(() {
       currentAddress = address;
     });
   }
 
-  Future<String> getAddressFromLatLng(LatLng position) async {
+  Future<String> getAddressFromCoordinates(
+    double latitude,
+    double longitude,
+  ) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
+        latitude,
+        longitude,
       );
 
       if (placemarks.isNotEmpty) {
@@ -56,8 +68,37 @@ class _HomeState extends State<Home> {
     } catch (e) {
       debugPrint("Failed to get address: $e");
     }
-
     return "الموقع غير معروف";
+  }
+
+  Future<String> fetchAddressFromApi(double latitude, double longitude) async {
+    final url = Uri.parse('${baseUrl}user/addLocation');
+
+    final token = CacheHelper.getUserToken();
+    if (token.isEmpty) {
+      return "رمز التفويض غير موجود";
+    }
+
+    final body = {
+      "location": {
+        "type": "Point",
+        "coordinates": [longitude, latitude],
+      },
+    };
+
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode(body),
+    );
+    debugPrint(response.body);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['address'] ??
+          await getAddressFromCoordinates(latitude, longitude);
+    } else {
+      return await getAddressFromCoordinates(latitude, longitude);
+    }
   }
 
   @override

@@ -271,3 +271,33 @@ final class GetCarsFailure extends AppState {
   final String error;
   GetCarsFailure({required this.error});
 }
+
+final class GetBannerLoading extends AppState {}
+
+final class GetBannerSuccess extends AppState {}
+
+final class GetBannerFailure extends AppState {
+  final String error;
+  GetBannerFailure({required this.error});
+}
+
+final class AddBannerLoading extends AppState {}
+
+final class AddBannerSuccess extends AppState {
+  final String message;
+  AddBannerSuccess({required this.message});
+}
+
+final class AddBannerFailure extends AppState {
+  final String error;
+  AddBannerFailure({required this.error});
+}
+
+final class GetDriversLoading extends AppState {}
+
+final class GetDriversSuccess extends AppState {}
+
+final class GetDriversFailure extends AppState {
+  final String error;
+  GetDriversFailure({required this.error});
+}

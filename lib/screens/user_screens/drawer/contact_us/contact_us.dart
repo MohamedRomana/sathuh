@@ -16,7 +16,7 @@ import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../home_layout/home_layout.dart';
 
-// final _formKey = GlobalKey<FormState>();
+final _formKey = GlobalKey<FormState>();
 final _nameController = TextEditingController();
 final _phoneController = TextEditingController();
 final _messageController = TextEditingController();
@@ -49,10 +49,10 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: true,
           body: Stack(
             children: [
               Image.asset(
@@ -69,7 +69,7 @@ class _ContactUsState extends State<ContactUs> {
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Form(
-                  key: formKey,
+                  key: _formKey,
                   child: Column(
                     children: [
                       CustomAppBar(title: LocaleKeys.contactUs.tr()),
@@ -130,6 +130,7 @@ class _ContactUsState extends State<ContactUs> {
                         color: const Color(0xffFBFBFB),
                         enabledBorderColor: Colors.grey,
                         focusedBorderColor: AppColors.primary,
+                        inputType: TextInputType.phone,
                         hint: LocaleKeys.phone.tr(),
                         controller: _phoneController,
                         validate: (value) {
@@ -160,7 +161,7 @@ class _ContactUsState extends State<ContactUs> {
                       BlocConsumer<AppCubit, AppState>(
                         listener: (context, state) {
                           if (state is ContactUsSuccess) {
-                            AppCubit.get(context).changebottomNavIndex(0);
+                            AppCubit.get(context).changebottomNavIndex(1);
                             AppRouter.navigateAndFinish(
                               context,
                               const HomeLayout(),
@@ -185,7 +186,7 @@ class _ContactUsState extends State<ContactUs> {
                           return AppButton(
                             top: 24.h,
                             onPressed: () async {
-                              if (formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 await AppCubit.get(context).contactUs(
                                   name: _nameController.text,
                                   phone: _phoneController.text,
@@ -220,7 +221,6 @@ class _ContactUsState extends State<ContactUs> {
                           size: 20.sp,
                         ),
                       ),
-                      Container(height: 120.h),
                     ],
                   ),
                 ),

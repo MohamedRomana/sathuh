@@ -38,6 +38,8 @@ dependencies:
   dotted_border: ^2.1.0
   easy_localization: ^3.0.7
   file_picker: ^10.1.2
+  firebase_core: ^3.13.1
+  firebase_messaging: ^15.2.6
   fl_chart: ^0.71.0
   flash: ^3.1.1
   flutter:

@@ -3,30 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sathuh/core/widgets/app_button.dart';
-import 'package:sathuh/core/widgets/app_router.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
-import 'package:sathuh/core/widgets/flash_message.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../core/service/cubit/app_cubit.dart';
-import '../../../../core/widgets/app_input.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../gen/fonts.gen.dart';
-import '../../../../generated/locale_keys.g.dart';
-import 'confirm_email.dart';
+import 'package:sathuh/core/widgets/admin_bottom_nav.dart';
 
-class UpdateEmailProfile extends StatefulWidget {
+import '../../../../../core/constants/colors.dart';
+import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_button.dart';
+import '../../../../../core/widgets/app_input.dart';
+import '../../../../../core/widgets/app_router.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../../core/widgets/flash_message.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../gen/fonts.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
+import 'confirm_adm_email.dart';
+
+class UpdatEmailAdm extends StatefulWidget {
   final TextEditingController emailController;
 
-  const UpdateEmailProfile({super.key, required this.emailController});
+  const UpdatEmailAdm({super.key, required this.emailController});
 
   @override
-  State<UpdateEmailProfile> createState() => _UpdateEmailProfileState();
+  State<UpdatEmailAdm> createState() => _UpdatEmailAdmState();
 }
 
-class _UpdateEmailProfileState extends State<UpdateEmailProfile> {
+class _UpdatEmailAdmState extends State<UpdatEmailAdm> {
   final FocusNode emailFocus = FocusNode();
 
   @override
@@ -43,7 +44,7 @@ class _UpdateEmailProfileState extends State<UpdateEmailProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return AdminBottomNav(
       body: Stack(
         children: [
           Image.asset(
@@ -104,7 +105,7 @@ class _UpdateEmailProfileState extends State<UpdateEmailProfile> {
                 child: BlocConsumer<AppCubit, AppState>(
                   listener: (context, state) {
                     if (state is UpdateProfileSuccess) {
-                      AppRouter.navigateAndPop(context, const ConfirmEmail());
+                      AppRouter.navigateAndPop(context, const ConfirmAdmEmail());
                       showFlashMessage(
                         message: state.message,
                         type: FlashMessageType.success,

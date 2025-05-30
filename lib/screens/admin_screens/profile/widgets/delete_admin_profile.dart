@@ -2,32 +2,33 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/widgets/app_button.dart';
-import 'package:sathuh/core/widgets/app_router.dart';
-import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
-import 'package:sathuh/core/widgets/flash_message.dart';
+import 'package:sathuh/core/widgets/admin_bottom_nav.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
+import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_input.dart';
+import '../../../../core/widgets/app_router.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/flash_message.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../auth/views/login/login.dart';
+
 
 final _formKey = GlobalKey<FormState>();
 final _phoneController = TextEditingController();
 final _passController = TextEditingController();
 
-class DeleteAccount extends StatefulWidget {
-  const DeleteAccount({super.key});
+class DeleteAdminProfile extends StatefulWidget {
+  const DeleteAdminProfile({super.key});
 
   @override
-  State<DeleteAccount> createState() => _DeleteAccountState();
+  State<DeleteAdminProfile> createState() => _DeleteAdminProfileState();
 }
 
-class _DeleteAccountState extends State<DeleteAccount> {
+class _DeleteAdminProfileState extends State<DeleteAdminProfile>  {
   final FocusNode phoneFocusNode1 = FocusNode();
   final FocusNode passFocusNode1 = FocusNode();
   @override
@@ -48,7 +49,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return AdminBottomNav(
       body: Stack(
         children: [
           Image.asset(

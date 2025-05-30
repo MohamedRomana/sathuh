@@ -30,6 +30,15 @@ class _MyCarsState extends State<MyCars> {
     super.initState();
   }
 
+  
+  Future<void> _refresh() async {
+    AppCubit.get(context).getCars();
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
@@ -48,215 +57,221 @@ class _MyCarsState extends State<MyCars> {
                 width: double.infinity,
                 color: Colors.white.withAlpha(210),
               ),
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    CustomAppBar(
-                      title: LocaleKeys.my_cars.tr(),
-                      isHomeLayout: true,
-                    ),
-                    state is GetCarsLoading
-                        ? CustomShimmer(
-                          child: ListView.separated(
+              RefreshIndicator(
+                onRefresh: () => _refresh(),
+                color: AppColors.primary,
+                backgroundColor: Colors.white,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      CustomAppBar(
+                        title: LocaleKeys.my_cars.tr(),
+                        isHomeLayout: true,
+                      ),
+                      state is GetCarsLoading
+                          ? CustomShimmer(
+                            child: ListView.separated(
+                              padding: EdgeInsets.only(top: 20.h),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 13,
+                              separatorBuilder:
+                                  (context, index) => Container(height: 16.h),
+                              itemBuilder:
+                                  (context, index) => Container(
+                                    height: 100.h,
+                                    width: 343.w,
+                                    padding: EdgeInsets.all(16.r),
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 16.w,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 5.r,
+                                          spreadRadius: 1.r,
+                                          offset: Offset(0, 5.r),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                            ),
+                          )
+                          : ListView.separated(
                             padding: EdgeInsets.only(top: 20.h),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 13,
+                            itemCount: AppCubit.get(context).carsList.length,
                             separatorBuilder:
                                 (context, index) => Container(height: 16.h),
                             itemBuilder:
-                                (context, index) => Container(
-                                  height: 100.h,
-                                  width: 343.w,
-                                  padding: EdgeInsets.all(16.r),
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 16.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 5.r,
-                                        spreadRadius: 1.r,
-                                        offset: Offset(0, 5.r),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                          ),
-                        )
-                        : ListView.separated(
-                          padding: EdgeInsets.only(top: 20.h),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: AppCubit.get(context).carsList.length,
-                          separatorBuilder:
-                              (context, index) => Container(height: 16.h),
-                          itemBuilder:
-                              (context, index) => InkWell(
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () {
-                                  if (AppCubit.get(
-                                    context,
-                                  ).selectedCarIndexes.contains(index)) {
-                                    AppCubit.get(
+                                (context, index) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    if (AppCubit.get(
                                       context,
-                                    ).changeSelectedCar(index: -1);
-                                  } else {
-                                    AppCubit.get(
-                                      context,
-                                    ).changeSelectedCar(index: index);
-                                  }
-                                },
-                                child: Container(
-                                  width: 343.w,
-                                  padding: EdgeInsets.all(16.r),
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 16.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 5.r,
-                                        spreadRadius: 1.r,
-                                        offset: Offset(0, 5.r),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 80.h,
-                                        width: 80.w,
-                                        margin: EdgeInsetsDirectional.only(
-                                          end: 10.w,
+                                    ).selectedCarIndexes.contains(index)) {
+                                      AppCubit.get(
+                                        context,
+                                      ).changeSelectedCar(index: -1);
+                                    } else {
+                                      AppCubit.get(
+                                        context,
+                                      ).changeSelectedCar(index: index);
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 343.w,
+                                    padding: EdgeInsets.all(16.r),
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 16.w,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 5.r,
+                                          spreadRadius: 1.r,
+                                          offset: Offset(0, 5.r),
                                         ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                            15.r,
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 80.h,
+                                          width: 80.w,
+                                          margin: EdgeInsetsDirectional.only(
+                                            end: 10.w,
                                           ),
-
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              blurRadius: 5.r,
-                                              spreadRadius: 1.r,
-                                              offset: Offset(0, 5.r),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              15.r,
+                                            ),
+                
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey,
+                                                blurRadius: 5.r,
+                                                spreadRadius: 1.r,
+                                                offset: Offset(0, 5.r),
+                                              ),
+                                            ],
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              15.r,
+                                            ),
+                                            child: AppCachedImage(
+                                              image:
+                                                  AppCubit.get(
+                                                    context,
+                                                  ).carsList[index]['image'] ??
+                                                  "",
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 150.w,
+                                              child: AppText(
+                                                text:
+                                                    ' ${AppCubit.get(context).carsList[index]['type']} ${AppCubit.get(context).carsList[index]['manufactureYear']}',
+                                                size: 12.sp,
+                                                color: AppColors.secondray,
+                                                family: FontFamily.tajawalBold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 150.w,
+                                              child: AppText(
+                                                text:
+                                                    AppCubit.get(
+                                                      context,
+                                                    ).carsList[index]['model'],
+                                                size: 12.sp,
+                                                color: AppColors.secondray,
+                                                family: FontFamily.tajawalBold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 150.w,
+                                              child: AppText(
+                                                text:
+                                                    AppCubit.get(
+                                                      context,
+                                                    ).carsList[index]['color'] ??
+                                                    "",
+                                                size: 12.sp,
+                                                color: AppColors.secondray,
+                                                family: FontFamily.tajawalBold,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            15.r,
-                                          ),
-                                          child: AppCachedImage(
-                                            image:
-                                                AppCubit.get(
+                                        const Spacer(),
+                                        Row(
+                                          children: [
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              highlightColor: Colors.transparent,
+                                              onTap: () {
+                                                AppRouter.navigateTo(
                                                   context,
-                                                ).carsList[index]['image'] ??
-                                                "",
-                                          ),
+                                                  const EditCar(),
+                                                );
+                                              },
+                                              child: const Icon(
+                                                Icons.edit,
+                                                color: AppColors.primary,
+                                              ),
+                                            ),
+                                            Container(width: 16.w),
+                
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              highlightColor: Colors.transparent,
+                                              onTap: () {},
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 150.w,
-                                            child: AppText(
-                                              text:
-                                                  ' ${AppCubit.get(context).carsList[index]['type']} ${AppCubit.get(context).carsList[index]['manufactureYear']}',
-                                              size: 12.sp,
-                                              color: AppColors.secondray,
-                                              family: FontFamily.tajawalBold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 150.w,
-                                            child: AppText(
-                                              text:
-                                                  AppCubit.get(
-                                                    context,
-                                                  ).carsList[index]['model'],
-                                              size: 12.sp,
-                                              color: AppColors.secondray,
-                                              family: FontFamily.tajawalBold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 150.w,
-                                            child: AppText(
-                                              text:
-                                                  AppCubit.get(
-                                                    context,
-                                                  ).carsList[index]['color'] ??
-                                                  "",
-                                              size: 12.sp,
-                                              color: AppColors.secondray,
-                                              family: FontFamily.tajawalBold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () {
-                                              AppRouter.navigateTo(
-                                                context,
-                                                const EditCar(),
-                                              );
-                                            },
-                                            child: const Icon(
-                                              Icons.edit,
-                                              color: AppColors.primary,
-                                            ),
-                                          ),
-                                          Container(width: 16.w),
-
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () {},
-                                            child: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                        ),
-                    state is GetCarsLoading
-                        ? const SizedBox.shrink()
-                        : AppButton(
-                          top: 24.h,
-                          onPressed: () {
-                            AppRouter.navigateTo(context, const AddCars());
-                          },
-                          child: AppText(
-                            text: LocaleKeys.add_car.tr(),
-                            color: Colors.white,
-                            family: FontFamily.tajawalBold,
-                            size: 21.sp,
                           ),
-                        ),
-                  ],
+                      state is GetCarsLoading
+                          ? const SizedBox.shrink()
+                          : AppButton(
+                            top: 24.h,
+                            onPressed: () {
+                              AppRouter.navigateTo(context, const AddCars());
+                            },
+                            child: AppText(
+                              text: LocaleKeys.add_car.tr(),
+                              color: Colors.white,
+                              family: FontFamily.tajawalBold,
+                              size: 21.sp,
+                            ),
+                          ),
+                      SizedBox(height: 120.h),
+                    ],
+                  ),
                 ),
               ),
             ],

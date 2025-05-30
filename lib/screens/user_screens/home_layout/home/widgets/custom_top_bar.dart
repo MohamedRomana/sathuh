@@ -74,7 +74,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 150.w,
                         child: AppText(
                           text: LocaleKeys.welcome_dear_customer.tr(),
@@ -83,7 +83,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
                           family: FontFamily.tajawalBold,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 150.w,
                         child: AppText(
                           text: LocaleKeys.thank_you_for_your_preference.tr(),
@@ -99,7 +99,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
             ),
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 100.w,
                   child: AppText(
                     textAlign: TextAlign.end,

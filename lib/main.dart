@@ -1,9 +1,12 @@
 // ignore_for_file: deprecated_member_use
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/firebase_options.dart';
 import 'core/constants/colors.dart';
 import 'core/cache/cache_helper.dart';
 import 'core/map/location_helper.dart';
@@ -24,8 +27,9 @@ void main() async {
   ]);
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // await NotificationHelper.init();
+  await initFirebaseToken();
   LocationHelper.determinePosition();
   await EasyLocalization.ensureInitialized();
   debugPrint("token is ${CacheHelper.getUserToken()}");
@@ -101,4 +105,16 @@ class _MyAppState extends State<MyApp> {
       child: const Splash(),
     );
   }
+}
+
+Future<void> initFirebaseToken() async {
+  final deviceToken = await FirebaseMessaging.instance.getToken();
+  debugPrint("Device Token: $deviceToken");
+  if (deviceToken != null) {
+    await CacheHelper.setDeviceToken(deviceToken);
+  }
+  FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+    debugPrint("Updated Device Token: $newToken");
+    await CacheHelper.setDeviceToken(newToken);
+  });
 }

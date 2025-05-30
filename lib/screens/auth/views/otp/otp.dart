@@ -4,15 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_router.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/flash_message.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../user_screens/home_layout/home_layout.dart';
 import '../../data/auth_cubit.dart';
+import '../login/login.dart';
 import '../widgets/auth_header.dart';
 
 class OTPscreen extends StatefulWidget {
@@ -115,8 +114,7 @@ class _OTPscreenState extends State<OTPscreen> {
                     message: state.error,
                   );
                 } else if (state is OTPSuccess) {
-                  AppCubit.get(context).changebottomNavIndex(1);
-                  AppRouter.navigateAndFinish(context, const HomeLayout());
+                  AppRouter.navigateAndPop(context, const LogIn());
                   otpCode = "";
                   showFlashMessage(
                     context: context,

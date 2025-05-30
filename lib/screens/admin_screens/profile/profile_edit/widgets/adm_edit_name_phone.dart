@@ -3,33 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../core/service/cubit/app_cubit.dart';
-import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/app_input.dart';
-import '../../../../core/widgets/app_router.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/flash_message.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../generated/locale_keys.g.dart';
+import 'package:sathuh/core/widgets/admin_bottom_nav.dart';
 
-class EditNamePhone extends StatefulWidget {
+import '../../../../../core/constants/colors.dart';
+import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_button.dart';
+import '../../../../../core/widgets/app_input.dart';
+import '../../../../../core/widgets/app_router.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../../core/widgets/flash_message.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
+
+class AdmEditNamePhone extends StatefulWidget {
   final TextEditingController fullNameController;
   final TextEditingController phoneController;
-
-  const EditNamePhone({
+  const AdmEditNamePhone({
     super.key,
     required this.fullNameController,
     required this.phoneController,
   });
 
   @override
-  State<EditNamePhone> createState() => _EditNamePhoneState();
+  State<AdmEditNamePhone> createState() => _AdmEditNamePhoneState();
 }
 
-class _EditNamePhoneState extends State<EditNamePhone> {
+class _AdmEditNamePhoneState extends State<AdmEditNamePhone> {
   final FocusNode lastNameFocus = FocusNode();
   final FocusNode phoneFocus = FocusNode();
   @override
@@ -49,7 +49,7 @@ class _EditNamePhoneState extends State<EditNamePhone> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return AdminBottomNav(
       body: Stack(
         children: [
           Image.asset(

@@ -95,6 +95,16 @@ class _RegisterState extends State<Register> {
                   top: 24.h,
                   bottom: 29.h,
                   onPressed: () async {
+                    final deviceToken = CacheHelper.getDeviceToken();
+                    if (deviceToken.isEmpty) {
+                      showFlashMessage(
+                        context: context,
+                        type: FlashMessageType.error,
+                        message:
+                            "لم يتم الحصول على رمز الجهاز بعد، يرجى الانتظار والمحاولة مرة أخرى",
+                      );
+                      return;
+                    }
                     if (_formKey.currentState!.validate()) {
                       await AuthCubit.get(context).register(
                         fullName: _fullNameController.text,
@@ -105,6 +115,7 @@ class _RegisterState extends State<Register> {
                         country: _countryController.text,
                         city: _cityController.text,
                         town: _townController.text,
+                        deviceToken: CacheHelper.getDeviceToken(),
                       );
                     }
                     // AppRouter.navigateTo(context, const OTPscreen());

@@ -539,23 +539,21 @@ class AppCubit extends Cubit<AppState> {
     required String message,
   }) async {
     emit(ContactUsLoading());
+
+    String? token = CacheHelper.getUserToken();
+
     http.Response response = await http.post(
-      Uri.parse("${baseUrl}api/contact-us"),
-      body: {
-        "lang": CacheHelper.getLang(),
-        'user_id': CacheHelper.getUserId(),
-        "name": name,
-        "phone": phone,
-        "message": message,
-      },
+      Uri.parse("${baseUrl}complaint/callUs"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+      body: jsonEncode({"userName": name, "phone": phone, "message": message}),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
 
-    if (data["key"] == 1) {
-      emit(ContactUsSuccess(message: data["msg"]));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ContactUsSuccess(message: data["message"]));
     } else {
-      emit(ContactUsFailure(error: data["msg"]));
+      emit(ContactUsFailure(error: data["message"]));
     }
   }
 
@@ -789,8 +787,8 @@ class AppCubit extends Cubit<AppState> {
       debugPrint(data.toString());
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        emit(DeleteProfileSuccess(message: data["message"]));
         CacheHelper.setUserToken("");
+        emit(DeleteProfileSuccess(message: data["message"]));
       } else {
         emit(
           DeleteProfileFailure(
@@ -935,16 +933,25 @@ class AppCubit extends Cubit<AppState> {
       } else if (response.statusCode == 500) {
         emit(ServerError());
       } else {
-        emit(AddCarsFailure(error: message));
+        if (data['validationResult'] != null) {
+          final List validationErrors = data['validationResult'];
+          final List<String> errorMessages = [];
+
+          for (var error in validationErrors) {
+            final path = error['path']?.join('.') ?? '';
+            final message = error['message'] ?? 'خطأ غير معروف في $path';
+            errorMessages.add('$path: $message');
+          }
+
+          final fullErrorMessage = errorMessages.join('\n');
+          emit(AddCarsFailure(error: fullErrorMessage));
+        } else {
+          emit(AddCarsFailure(error: message));
+        }
       }
-    } catch (error) {
-      if (error is TimeoutException) {
-        debugPrint("Request timed out");
-        emit(Timeoutt());
-      } else {
-        debugPrint("Error: $error");
-        emit(AddCarsFailure(error: error.toString()));
-      }
+    } catch (e) {
+      debugPrint("Error: $e");
+      emit(AddCarsFailure(error: e.toString()));
     }
   }
 
@@ -971,6 +978,100 @@ class AppCubit extends Cubit<AppState> {
       emit(GetCarsSuccess());
     } else {
       emit(GetCarsFailure(error: data["message"]));
+    }
+  }
+
+  List banner = [];
+  Future getBanner() async {
+    emit(GetBannerLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}user/getBanner"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      banner = [];
+      for (var bannerItem in data["data"]['updatedBanners']) {
+        banner.addAll(bannerItem['image']);
+      }
+      emit(GetBannerSuccess());
+    } else {
+      emit(GetBannerFailure(error: data["message"]));
+    }
+  }
+
+  // ADMIN SERVICES
+
+  List newBanners = [];
+  Future addBanners(List<File> images) async {
+    emit(AddBannerLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("${baseUrl}admin/addBanner"),
+    );
+
+    request.headers.addAll({"Authorization": token});
+
+    for (var imageFile in images) {
+      var stream = http.ByteStream(imageFile.openRead());
+      var length = await imageFile.length();
+
+      var multipartFile = http.MultipartFile(
+        'attachment',
+        stream,
+        length,
+        filename: imageFile.path.split('/').last,
+        contentType: MediaType('image', 'jpeg'),
+      );
+
+      request.files.add(multipartFile);
+    }
+
+    try {
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Response Body: $responseBody");
+
+      Map<String, dynamic> data = jsonDecode(responseBody);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        newBanners = data["data"]['newBanner']['image'];
+        emit(AddBannerSuccess(message: data["message"]));
+      } else {
+        emit(AddBannerFailure(error: data["message"]));
+      }
+    } catch (e) {
+      debugPrint("Error uploading banners: $e");
+      emit(AddBannerFailure(error: e.toString()));
+    }
+  }
+
+  List driversList = [];
+  Future getDrivers() async {
+    emit(GetDriversLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}admin/getDrivers"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      driversList = data["data"]['drivers'];
+      emit(GetDriversSuccess());
+    } else {
+      emit(GetDriversFailure(error: data["message"]));
     }
   }
 }
