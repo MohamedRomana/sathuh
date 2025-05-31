@@ -57,7 +57,7 @@ class _PriceState extends State<Price> {
                     Container(height: 61.h),
                     const AdminTopBar(),
                     const AddImages(),
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: DefaultTabController(
                         length: 2,

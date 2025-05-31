@@ -1061,7 +1061,7 @@ class AppCubit extends Cubit<AppState> {
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
     http.Response response = await http.get(
-      Uri.parse("${baseUrl}admin/getDrivers"),
+      Uri.parse("${baseUrl}admin/getAllDrivers?page=1&size=3"),
       headers: {"Content-Type": "application/json", "Authorization": token},
     );
     debugPrint("Status Code: ${response.statusCode}");
