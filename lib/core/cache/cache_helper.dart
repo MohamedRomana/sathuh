@@ -8,12 +8,23 @@ class CacheHelper {
   static const _deviceToken = 'deviceToken';
   static const _type = 'type';
 
+  // تخزين قيمة معرف المستخدم
+
   static init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
   static setUserId(String? id) async {
     await _preferences.setString(_userId, id ?? '');
+  }
+
+  static Future<bool> saveDrawerProfileId(String id) async {
+    return await _preferences.setString('drawerProfileId', id);
+  }
+
+  // قراءة قيمة معرف المستخدم
+  static String? getdrawerProfileId() {
+    return _preferences.getString('drawerProfileId');
   }
 
   static String getUserId() {
