@@ -204,7 +204,7 @@ class CodegenLoader extends AssetLoader{
   "realEstateLocation": "مكان العقار",
   "services": "الخدمات",
   "pricePerMeter": "سعر المتر",
-  "area": "المساحة",
+  "area": "المنطقه",
   "typee": "النوع",
   "floor": "الطابق",
   "yearOfConstruction": "سنة البناء",
@@ -631,7 +631,12 @@ class CodegenLoader extends AssetLoader{
   "update_password": "تحديث كلمة المرور",
   "new_password": "كلمة المرور الجديدة",
   "old_password": "كلمة المرور القديمة",
-  "chassis_number": "رقم الشاسيه"
+  "chassis_number": "رقم الشاسيه",
+  "see_profile_picture": "عرض الصورة الشخصية",
+  "choose_profile_picture": "اختيار الصورة الشخصية",
+  "see_cover_picture": "عرض صورة الغلاف",
+  "choose_cover_picture": "اختيار صورة الغلاف",
+  "edit_cover_picture": "تعديل صورة الغلاف"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1250,7 +1255,12 @@ static const Map<String,dynamic> _en = {
   "update_password": "Update Password",
   "new_password": "New Password",
   "old_password": "Old Password",
-  "chassis_number": "Chassis Number"
+  "chassis_number": "Chassis Number",
+  "see_profile_picture": "See Profile Picture",
+  "choose_profile_picture": "Choose Profile Picture",
+  "see_cover_picture": "See Cover Picture",
+  "choose_cover_picture": "Choose Cover Picture",
+  "edit_cover_picture": "Edit Cover Picture"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

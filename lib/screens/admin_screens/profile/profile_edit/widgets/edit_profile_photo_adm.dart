@@ -159,7 +159,7 @@ class EditProfilePhotoAdm extends StatelessWidget {
                           top: 24.h,
                           onPressed: () {
                             AppCubit.get(context).uploadProfileImage(
-                              AppCubit.get(context).profileImage.first,
+                              AppCubit.get(context).profileImage.first, type: 'profile',
                             );
                           },
                           child:

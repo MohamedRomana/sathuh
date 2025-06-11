@@ -663,16 +663,20 @@ class AppCubit extends Cubit<AppState> {
 
   String? profileImageUrl;
 
-  Future<void> uploadProfileImage(File imageFile) async {
+  Future<void> uploadProfileImage(
+    File imageFile, {
+    required String type,
+  }) async {
     emit(UploadProfileImageLoading());
 
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
     var request = http.MultipartRequest(
       'PATCH',
-      Uri.parse("${baseUrl}user/profile/image"),
+      Uri.parse(
+        "${baseUrl}user/profile/uploadUserImage",
+      ).replace(queryParameters: {'type': type}),
     );
-
     request.headers['Authorization'] = token;
 
     request.files.add(
@@ -930,6 +934,7 @@ class AppCubit extends Cubit<AppState> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         emit(AddCarsSuccess(message: message));
+        getCars();
       } else if (response.statusCode == 500) {
         emit(ServerError());
       } else {
@@ -981,7 +986,131 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  List banner = [];
+  Future deleteCar({required String carId}) async {
+    emit(DeleteCarLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.delete(
+      Uri.parse("${baseUrl}car/deleteUserCar/$carId"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getCars();
+      emit(DeleteCarSuccess(message: data["message"]));
+    } else {
+      emit(DeleteCarFailure(error: data["message"]));
+    }
+  }
+
+  Map editCarMap = {};
+  Future editCar({
+    required String type,
+    required String manufactureYear,
+    required String color,
+    required String chassisNumber,
+    required String model,
+    required String carPlateNumber,
+    required String carId,
+  }) async {
+    emit(EditCarLoading());
+    try {
+      if (carImage.isEmpty) {
+        emit(EditCarFailure(error: "يرجى اختيار صورة للسيارة"));
+        return;
+      }
+
+      final token = CacheHelper.getUserToken();
+      if (token.isEmpty) {
+        emit(EditCarFailure(error: "لم يتم العثور على رمز التفويض (التوكن)"));
+        return;
+      }
+
+      debugPrint("Token: $token");
+
+      final request = http.MultipartRequest(
+        'PATCH',
+        Uri.parse("${baseUrl}car/updateUserCar/$carId"),
+      );
+
+      request.headers.addAll({
+        "Authorization": token,
+        "Content-Type": "multipart/form-data",
+      });
+
+      request.fields['type'] = type;
+      request.fields['manufactureYear'] = manufactureYear;
+      request.fields['color'] = color;
+      request.fields['chassisNumber'] = chassisNumber;
+      request.fields['model'] = model;
+      request.fields['carPlateNumber'] = carPlateNumber;
+
+      debugPrint("Request Fields: ${request.fields}");
+
+      final stream = http.ByteStream(carImage.first.openRead());
+      final length = await carImage.first.length();
+      debugPrint("Image Size: $length");
+
+      final multipartFile = http.MultipartFile(
+        'attachment',
+        stream,
+        length,
+        filename: carImage.first.path.split('/').last,
+        contentType: MediaType('image', 'jpeg'),
+      );
+
+      request.files.add(multipartFile);
+      debugPrint(
+        "Request Files: ${request.files.map((f) => f.filename).toList()}",
+      );
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Response Headers: ${response.headers}");
+      debugPrint("Response Body: $responseBody");
+
+      Map<String, dynamic> data = {};
+      try {
+        data = jsonDecode(responseBody);
+      } catch (e) {
+        debugPrint("خطأ في فك الـ JSON: $e");
+      }
+
+      final message = (data["message"] as String?) ?? "حدث خطأ غير معروف";
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        emit(EditCarSuccess(message: message));
+        getCars();
+      } else if (response.statusCode == 500) {
+        emit(ServerError());
+      } else {
+        if (data['validationResult'] != null) {
+          final List validationErrors = data['validationResult'];
+          final List<String> errorMessages = [];
+
+          for (var error in validationErrors) {
+            final path = error['path']?.join('.') ?? '';
+            final message = error['message'] ?? 'خطأ غير معروف في $path';
+            errorMessages.add('$path: $message');
+          }
+
+          final fullErrorMessage = errorMessages.join('\n');
+          emit(EditCarFailure(error: fullErrorMessage));
+        } else {
+          emit(EditCarFailure(error: message));
+        }
+      }
+    } catch (e) {
+      debugPrint("Error: $e");
+      emit(EditCarFailure(error: e.toString()));
+    }
+  }
+
+  List banners = [];
   Future getBanner() async {
     emit(GetBannerLoading());
     String? token = CacheHelper.getUserToken();
@@ -994,10 +1123,14 @@ class AppCubit extends Cubit<AppState> {
     debugPrint("Response Body: ${response.body}");
     Map<String, dynamic> data = jsonDecode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      banner = [];
-      for (var bannerItem in data["data"]['updatedBanners']) {
-        banner.addAll(bannerItem['image']);
+      final updatedBanners = data['data']['updatedBanners'] as List;
+      banners = [];
+
+      for (var banner in updatedBanners) {
+        final images = banner['image'] as List;
+        banners.addAll(images);
       }
+
       emit(GetBannerSuccess());
     } else {
       emit(GetBannerFailure(error: data["message"]));

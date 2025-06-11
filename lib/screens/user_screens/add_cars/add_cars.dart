@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
@@ -21,6 +22,10 @@ final _carModelController = TextEditingController();
 final _carYearController = TextEditingController();
 final _carColorController = TextEditingController();
 final _chasseController = TextEditingController();
+final _carLetter1 = TextEditingController();
+final _carLetter2 = TextEditingController();
+final _carLetter3 = TextEditingController();
+final _carDigits = TextEditingController();
 final _carNumberController = TextEditingController();
 
 class AddCars extends StatefulWidget {
@@ -31,6 +36,14 @@ class AddCars extends StatefulWidget {
 }
 
 class _AddCarsState extends State<AddCars> {
+  void _updateCarPlate() {
+    _carNumberController.text =
+        _carLetter1.text +
+        _carLetter2.text +
+        _carLetter3.text +
+        _carDigits.text;
+  }
+
   @override
   void initState() {
     _carTypeController.clear();
@@ -39,7 +52,16 @@ class _AddCarsState extends State<AddCars> {
     _carColorController.clear();
     _chasseController.clear();
     _carNumberController.clear();
+    _carLetter1.clear();
+    _carLetter2.clear();
+    _carLetter3.clear();
+    _carDigits.clear();
     AppCubit.get(context).carImage.clear();
+
+    _carLetter1.addListener(_updateCarPlate);
+    _carLetter2.addListener(_updateCarPlate);
+    _carLetter3.addListener(_updateCarPlate);
+    _carDigits.addListener(_updateCarPlate);
     super.initState();
   }
 
@@ -262,17 +284,16 @@ class _AddCarsState extends State<AddCars> {
                         family: FontFamily.tajawalBold,
                         size: 16.sp,
                       ),
-                      AppInput(
-                        filled: true,
-                        enabledBorderColor: Colors.grey,
-                        hint: LocaleKeys.car_plate_number.tr(),
-                        controller: _carNumberController,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return LocaleKeys.car_plate_number.tr();
-                          }
-                          return null;
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(width: 16.w),
+                          _buildPlateField(_carLetter1, 1, isLetter: true),
+                          _buildPlateField(_carLetter2, 1, isLetter: true),
+                          _buildPlateField(_carLetter3, 1, isLetter: true),
+                          _buildPlateField(_carDigits, 4, isLetter: false),
+                          SizedBox(width: 16.w),
+                        ],
                       ),
                       Center(
                         child: BlocConsumer<AppCubit, AppState>(
@@ -305,13 +326,28 @@ class _AddCarsState extends State<AddCars> {
                               top: 24.h,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
+                                  if (_carLetter1.text.isEmpty ||
+                                      _carLetter2.text.isEmpty ||
+                                      _carLetter3.text.isEmpty ||
+                                      _carDigits.text.isEmpty) {
+                                    showFlashMessage(
+                                      message: LocaleKeys.car_plate_number.tr(),
+                                      type: FlashMessageType.error,
+                                      context: context,
+                                    );
+                                    return;
+                                  }
+
+                                  final carPlateNumber =
+                                      "${_carLetter1.text} ${_carLetter2.text} ${_carLetter3.text} ${_carDigits.text}";
+
                                   AppCubit.get(context).addCars(
                                     type: _carTypeController.text,
                                     model: _carModelController.text,
                                     manufactureYear: _carYearController.text,
                                     color: _carColorController.text,
                                     chassisNumber: _chasseController.text,
-                                    carPlateNumber: _carNumberController.text,
+                                    carPlateNumber: carPlateNumber,
                                   );
                                 }
                               },
@@ -342,4 +378,45 @@ class _AddCarsState extends State<AddCars> {
       },
     );
   }
+}
+
+Widget _buildPlateField(
+  TextEditingController controller,
+  int maxLength, {
+  required bool isLetter,
+}) {
+  return SizedBox(
+    width: 60.w,
+    child: TextFormField(
+      controller: controller,
+      maxLength: maxLength,
+      textAlign: TextAlign.center,
+      keyboardType: isLetter ? TextInputType.text : TextInputType.number,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(maxLength),
+        FilteringTextInputFormatter.allow(
+          RegExp(isLetter ? r'[A-Za-z\u0600-\u06FF]' : r'[0-9]'),
+        ),
+      ],
+      decoration: InputDecoration(
+        counterText: '',
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.blue),
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return LocaleKeys.car_plate_number.tr();
+        }
+        return null;
+      },
+    ),
+  );
 }

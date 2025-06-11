@@ -11,6 +11,7 @@ import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/widgets/custom_bottom_nav.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
+import 'widgets/edit_cover_photo.dart';
 import 'widgets/edit_name_phone.dart';
 import 'widgets/edit_profile_photo.dart';
 import 'widgets/update_email_profile.dart';
@@ -102,6 +103,47 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 children: [
                                   AppText(
                                     text: LocaleKeys.edit_profile_picture.tr(),
+                                    size: 20.sp,
+                                    color: AppColors.secondray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                           InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              AppRouter.navigateTo(
+                                context,
+                                const EditCoverPhoto(),
+                              );
+                            },
+                            child: Container(
+                              width: 343.w,
+                              padding: EdgeInsets.all(16.r),
+                              margin: EdgeInsets.all(16.r),
+                              decoration: BoxDecoration(
+                                color: AppColors.borderColor,
+                                borderRadius: BorderRadius.circular(15.r),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 1.w,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 5.r,
+                                    spreadRadius: 1.r,
+                                    offset: Offset(0, 5.r),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  AppText(
+                                    text: LocaleKeys.edit_cover_picture.tr(),
                                     size: 20.sp,
                                     color: AppColors.secondray,
                                     fontWeight: FontWeight.bold,

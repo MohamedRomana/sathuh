@@ -122,7 +122,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoading());
 
     final response = await http.post(
-      Uri.parse("${baseUrl}auth/signUp"),
+      Uri.parse(
+        "${baseUrl}auth/signUp",
+      ).replace(queryParameters: {"type": CacheHelper.getUserType()}),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "userName": fullName,

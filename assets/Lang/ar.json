@@ -188,7 +188,7 @@
     "realEstateLocation" : "مكان العقار",
     "services" : "الخدمات",
     "pricePerMeter" : "سعر المتر",
-    "area" : "المساحة",
+    "area" : "المنطقه",
     "typee" : "النوع",
     "floor" : "الطابق",
     "yearOfConstruction" : "سنة البناء",
@@ -615,6 +615,10 @@
   "update_password": "تحديث كلمة المرور",
   "new_password": "كلمة المرور الجديدة",
   "old_password": "كلمة المرور القديمة",
-  "chassis_number": "رقم الشاسيه"
-
+  "chassis_number": "رقم الشاسيه",
+  "see_profile_picture": "عرض الصورة الشخصية",
+  "choose_profile_picture": "اختيار الصورة الشخصية",
+  "see_cover_picture": "عرض صورة الغلاف",
+  "choose_cover_picture": "اختيار صورة الغلاف",
+  "edit_cover_picture": "تعديل صورة الغلاف"
 }

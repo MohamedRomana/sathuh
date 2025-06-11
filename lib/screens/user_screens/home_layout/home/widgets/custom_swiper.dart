@@ -49,12 +49,12 @@ class _CustomSwiperState extends State<CustomSwiper> {
           child: Swiper(
             itemBuilder: (context, index) {
               return AppCachedImage(
-                image: AppCubit.get(context).banner[index],
+                image: AppCubit.get(context).banners[index],
                 fit: BoxFit.fill,
               );
             },
             autoplay: true,
-            itemCount: AppCubit.get(context).banner.length,
+            itemCount: AppCubit.get(context).banners.length,
             scrollDirection: Axis.horizontal,
             curve: Curves.fastOutSlowIn,
             pagination: SwiperPagination(

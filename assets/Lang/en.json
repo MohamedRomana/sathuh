@@ -615,5 +615,10 @@
       "update_password": "Update Password",
       "new_password": "New Password",
       "old_password": "Old Password",
-      "chassis_number": "Chassis Number"
+      "chassis_number": "Chassis Number",
+      "see_profile_picture": "See Profile Picture",
+      "choose_profile_picture": "Choose Profile Picture",
+      "see_cover_picture": "See Cover Picture",
+      "choose_cover_picture": "Choose Cover Picture",
+      "edit_cover_picture": "Edit Cover Picture"
 }

@@ -272,6 +272,30 @@ final class GetCarsFailure extends AppState {
   GetCarsFailure({required this.error});
 }
 
+final class DeleteCarLoading extends AppState {}
+
+final class DeleteCarSuccess extends AppState {
+  final String message;
+  DeleteCarSuccess({required this.message});
+}
+
+final class DeleteCarFailure extends AppState {
+  final String error;
+  DeleteCarFailure({required this.error});
+}
+
+final class EditCarLoading extends AppState {}
+
+final class EditCarSuccess extends AppState {
+  final String message;
+  EditCarSuccess({required this.message});
+}
+
+final class EditCarFailure extends AppState {
+  final String error;
+  EditCarFailure({required this.error});
+}
+
 final class GetBannerLoading extends AppState {}
 
 final class GetBannerSuccess extends AppState {}

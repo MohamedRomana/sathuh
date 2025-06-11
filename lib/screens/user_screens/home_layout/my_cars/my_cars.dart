@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/app_cached.dart';
 import 'package:sathuh/core/widgets/custom_app_bar.dart';
 import 'package:sathuh/core/widgets/custom_shimmer.dart';
+import 'package:sathuh/core/widgets/flash_message.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -30,7 +31,6 @@ class _MyCarsState extends State<MyCars> {
     super.initState();
   }
 
-  
   Future<void> _refresh() async {
     AppCubit.get(context).getCars();
 
@@ -113,17 +113,7 @@ class _MyCarsState extends State<MyCars> {
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () {
-                                    if (AppCubit.get(
-                                      context,
-                                    ).selectedCarIndexes.contains(index)) {
-                                      AppCubit.get(
-                                        context,
-                                      ).changeSelectedCar(index: -1);
-                                    } else {
-                                      AppCubit.get(
-                                        context,
-                                      ).changeSelectedCar(index: index);
-                                    }
+                                    AppRouter.navigateTo(context, EditCar(index: index,));
                                   },
                                   child: Container(
                                     width: 343.w,
@@ -156,7 +146,7 @@ class _MyCarsState extends State<MyCars> {
                                             borderRadius: BorderRadius.circular(
                                               15.r,
                                             ),
-                
+
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.grey,
@@ -225,11 +215,12 @@ class _MyCarsState extends State<MyCars> {
                                           children: [
                                             InkWell(
                                               splashColor: Colors.transparent,
-                                              highlightColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () {
                                                 AppRouter.navigateTo(
                                                   context,
-                                                  const EditCar(),
+                                                  EditCar(index: index),
                                                 );
                                               },
                                               child: const Icon(
@@ -238,15 +229,49 @@ class _MyCarsState extends State<MyCars> {
                                               ),
                                             ),
                                             Container(width: 16.w),
-                
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              highlightColor: Colors.transparent,
-                                              onTap: () {},
-                                              child: const Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              ),
+
+                                            BlocConsumer<AppCubit, AppState>(
+                                              listener: (context, state) {
+                                                if (state is DeleteCarSuccess) {
+                                                  showFlashMessage(
+                                                    message: state.message,
+                                                    type:
+                                                        FlashMessageType
+                                                            .success,
+                                                    context: context,
+                                                  );
+                                                } else if (state
+                                                    is DeleteCarFailure) {
+                                                  showFlashMessage(
+                                                    message: state.error,
+                                                    type:
+                                                        FlashMessageType.error,
+                                                    context: context,
+                                                  );
+                                                }
+                                              },
+                                              builder: (context, state) {
+                                                return InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    AppCubit.get(
+                                                      context,
+                                                    ).deleteCar(
+                                                      carId:
+                                                          AppCubit.get(
+                                                            context,
+                                                          ).carsList[index]['_id'],
+                                                    );
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           ],
                                         ),

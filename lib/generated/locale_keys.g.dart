@@ -620,5 +620,10 @@ abstract class  LocaleKeys {
   static const new_password = 'new_password';
   static const old_password = 'old_password';
   static const chassis_number = 'chassis_number';
+  static const see_profile_picture = 'see_profile_picture';
+  static const choose_profile_picture = 'choose_profile_picture';
+  static const see_cover_picture = 'see_cover_picture';
+  static const choose_cover_picture = 'choose_cover_picture';
+  static const edit_cover_picture = 'edit_cover_picture';
 
 }

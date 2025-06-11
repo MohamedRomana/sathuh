@@ -49,8 +49,9 @@ class TypesView extends StatelessWidget {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          CacheHelper.setUserType('client');
+                          CacheHelper.setUserType('user');
                           AppRouter.navigateAndFinish(context, const LogIn());
+                          debugPrint("User Type: ${CacheHelper.getUserType()}");
                         },
                         child: Container(
                           width: 311.w,
@@ -97,6 +98,7 @@ class TypesView extends StatelessWidget {
                         onTap: () {
                           CacheHelper.setUserType('driver');
                           AppRouter.navigateAndFinish(context, const LogIn());
+                          debugPrint("User Type: ${CacheHelper.getUserType()}");
                         },
                         child: Container(
                           width: 311.w,
@@ -141,8 +143,9 @@ class TypesView extends StatelessWidget {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          CacheHelper.setUserType('administration');
+                          CacheHelper.setUserType('admin');
                           AppRouter.navigateAndFinish(context, const LogIn());
+                          debugPrint("User Type: ${CacheHelper.getUserType()}");
                         },
                         child: Container(
                           width: 311.w,

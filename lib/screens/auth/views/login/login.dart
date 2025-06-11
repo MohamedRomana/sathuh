@@ -99,7 +99,7 @@ class _LogInState extends State<LogIn> {
                   saveData(key: 'phone', value: _phoneController.text);
                   saveData(key: 'password', value: _passController.text);
 
-                  if (CacheHelper.getUserType() == "administration") {
+                  if (CacheHelper.getUserType() == "admin") {
                     AppCubit.get(context).changebottomAdminNavIndex(1);
                     AppRouter.navigateAndFinish(
                       context,
@@ -200,7 +200,7 @@ class _LogInState extends State<LogIn> {
                 fit: BoxFit.cover,
               ),
             ),
-            CacheHelper.getUserType() == "administration"
+            CacheHelper.getUserType() == "admin"
                 ? Container()
                 : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +223,7 @@ class _LogInState extends State<LogIn> {
                   ],
                 ),
             // Container(height: 16.h),
-            CacheHelper.getUserType() == "administration"
+            CacheHelper.getUserType() == "admin"
                 ? Container()
                 : TextButton(
                   onPressed:
@@ -234,11 +234,14 @@ class _LogInState extends State<LogIn> {
                     color: AppColors.darkRed,
                   ),
                 ),
-                    CacheHelper.getUserType() == "administration"
+            CacheHelper.getUserType() == "admin"
                 ? Container()
                 : TextButton(
                   onPressed:
-                      () => AppRouter.navigateTo(context, const AuthConfirmEmail()),
+                      () => AppRouter.navigateTo(
+                        context,
+                        const AuthConfirmEmail(),
+                      ),
                   child: AppText(
                     text: 'تأكيد البريد الألكتروني',
                     size: 14.sp,
@@ -250,7 +253,7 @@ class _LogInState extends State<LogIn> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                if (CacheHelper.getUserType() == "administration") {
+                if (CacheHelper.getUserType() == "admin") {
                   AppCubit.get(context).changebottomAdminNavIndex(1);
                   AppRouter.navigateAndFinish(context, const AdminHomeLayout());
                 } else if (CacheHelper.getUserType() == "driver") {

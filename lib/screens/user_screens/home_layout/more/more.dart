@@ -192,7 +192,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     highlightColor: Colors.transparent,
                     onTap: () {
                       AppCubit.get(context).changedrawerIndex(index: 0);
-                      if (CacheHelper.getUserType() == "client") {
+                      if (CacheHelper.getUserType() == "user") {
                         AppCubit.get(context).changebottomNavIndex(1);
                         AppRouter.navigateAndFinish(
                           context,
@@ -228,7 +228,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                       child: Row(
                         children: [
-                          CacheHelper.getUserType() == "client" ||
+                          CacheHelper.getUserType() == "user" ||
                                   CacheHelper.getUserType() == "driver"
                               ? SvgPicture.asset(
                                 Assets.svg.drawerHome,
@@ -250,7 +250,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                           AppText(
                             start: 6.w,
                             text:
-                                CacheHelper.getUserType() == "client" ||
+                                CacheHelper.getUserType() == "user" ||
                                         CacheHelper.getUserType() == "driver"
                                     ? LocaleKeys.home.tr()
                                     : LocaleKeys.prices.tr(),
@@ -280,7 +280,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     highlightColor: Colors.transparent,
                     onTap: () {
                       AppCubit.get(context).changedrawerIndex(index: 1);
-                      if (CacheHelper.getUserType() == "client") {
+                      if (CacheHelper.getUserType() == "user") {
                         AppRouter.pop(context);
                         AppRouter.navigateTo(context, const Profile());
                       } else if (CacheHelper.getUserType() ==
@@ -799,7 +799,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     ),
                   ),
                 ),
-                CacheHelper.getUserType() == "client" ||
+                CacheHelper.getUserType() == "user" ||
                         CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation9,
@@ -814,7 +814,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                         highlightColor: Colors.transparent,
                         onTap: () {
                           AppCubit.get(context).changedrawerIndex(index: 7);
-                          if (CacheHelper.getUserType() == "client") {
+                          if (CacheHelper.getUserType() == "user") {
                             CacheHelper.setUserType('driver');
                             AppRouter.navigateTo(context, const LogIn());
                           } else {

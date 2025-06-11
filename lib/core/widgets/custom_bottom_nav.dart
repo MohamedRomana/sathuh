@@ -50,7 +50,7 @@ class CustomBottomNav extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () {
-              if (CacheHelper.getUserType() == "client") {
+              if (CacheHelper.getUserType() == "user") {
                 AppCubit.get(context).changebottomNavIndex(1);
                 AppRouter.navigateAndFinish(context, const HomeLayout());
               } else {
@@ -122,7 +122,7 @@ class CustomBottomNav extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  if (CacheHelper.getUserType() == "client") {
+                  if (CacheHelper.getUserType() == "user") {
                     AppCubit.get(context).changebottomNavIndex(0);
                     AppRouter.navigateAndFinish(context, const HomeLayout());
                   } else {
@@ -136,7 +136,7 @@ class CustomBottomNav extends StatelessWidget {
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      CacheHelper.getUserType() == "client"
+                      CacheHelper.getUserType() == "user"
                           ? Assets.svg.car2
                           : Assets.svg.orders,
                       height: 24.w,
@@ -146,7 +146,7 @@ class CustomBottomNav extends StatelessWidget {
                     ),
                     AppText(
                       text:
-                          CacheHelper.getUserType() == "client"
+                          CacheHelper.getUserType() == "user"
                               ? LocaleKeys.my_cars.tr()
                               : LocaleKeys.orders.tr(),
                       size:
@@ -169,7 +169,7 @@ class CustomBottomNav extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  if (CacheHelper.getUserType() == "client") {
+                  if (CacheHelper.getUserType() == "user") {
                     AppCubit.get(context).changebottomNavIndex(2);
                     AppRouter.navigateAndFinish(context, const HomeLayout());
                   } else {
@@ -183,7 +183,7 @@ class CustomBottomNav extends StatelessWidget {
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      CacheHelper.getUserType() == "client"
+                      CacheHelper.getUserType() == "user"
                           ? Assets.svg.orders
                           : Assets.svg.notifications,
                       height: 24.w,
@@ -193,12 +193,12 @@ class CustomBottomNav extends StatelessWidget {
                     ),
                     AppText(
                       text:
-                          CacheHelper.getUserType() == "client"
+                          CacheHelper.getUserType() == "user"
                               ? LocaleKeys.orders.tr()
                               : LocaleKeys.notifications.tr(),
                       size:
                           CacheHelper.getLang() == 'en' &&
-                                  CacheHelper.getUserType() == "client"
+                                  CacheHelper.getUserType() == "user"
                               ? 11.sp
                               : 12.sp,
                       color: AppColors.third,
@@ -214,7 +214,7 @@ class CustomBottomNav extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  if (CacheHelper.getUserType() == "client") {
+                  if (CacheHelper.getUserType() == "user") {
                     AppCubit.get(context).changebottomNavIndex(3);
                     AppRouter.navigateAndFinish(context, const HomeLayout());
                   } else {

@@ -14,14 +14,14 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
 
-class EditProfilePhoto extends StatefulWidget {
-  const EditProfilePhoto({super.key});
+class EditCoverPhoto extends StatefulWidget {
+  const EditCoverPhoto({super.key});
 
   @override
-  State<EditProfilePhoto> createState() => _EditProfilePhotoState();
+  State<EditCoverPhoto> createState() => _EditCoverPhotoState();
 }
 
-class _EditProfilePhotoState extends State<EditProfilePhoto> {
+class _EditCoverPhotoState extends State<EditCoverPhoto> {
   @override
   void initState() {
     AppCubit.get(context).profileImage.clear();
@@ -52,7 +52,7 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                   children: [
                     CustomAppBar(title: LocaleKeys.editprofile.tr()),
                     AppText(
-                      text: LocaleKeys.edit_profile_picture.tr(),
+                      text: LocaleKeys.edit_cover_picture.tr(),
                       size: 20.sp,
                       color: Colors.black,
                       family: FontFamily.tajawalBold,
@@ -78,25 +78,25 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                                   shape: BoxShape.circle,
                                 ),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.r),
+                                  borderRadius: BorderRadius.circular(15.r),
                                   child:
                                       (AppCubit.get(context)
-                                                  .showProfileMap['image']
+                                                  .showProfileMap['coverImage']
                                                   ?.isNotEmpty ??
                                               false)
                                           ? AppCachedImage(
                                             image:
                                                 AppCubit.get(
                                                   context,
-                                                ).showProfileMap['image'],
-                                            height: 150.w,
-                                            width: 150.w,
+                                                ).showProfileMap['coverImage'],
+                                            height: 190.w,
+                                            width: 343.w,
                                             fit: BoxFit.cover,
                                           )
                                           : Image.asset(
                                             Assets.img.unphoto.path,
-                                            height: 150.w,
-                                            width: 150.w,
+                                            height: 190.w,
+                                            width: 343.w,
                                             fit: BoxFit.cover,
                                           ),
                                 ),
@@ -115,16 +115,17 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                         : Stack(
                           children: [
                             Container(
-                              height: 150.w,
-                              width: 150.w,
+                              height: 190.w,
+                              width: 343.w,
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.circular(15.r),
                                 image: DecorationImage(
                                   image: FileImage(
                                     AppCubit.get(context).profileImage.first,
                                   ),
                                   fit: BoxFit.cover,
+                                  
                                 ),
                               ),
                             ),
@@ -171,7 +172,7 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                           onPressed: () {
                             AppCubit.get(context).uploadProfileImage(
                               AppCubit.get(context).profileImage.first,
-                              type: 'profile',
+                              type: 'cover',
                             );
                           },
                           child:
