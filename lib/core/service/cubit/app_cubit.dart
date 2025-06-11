@@ -1140,6 +1140,7 @@ class AppCubit extends Cubit<AppState> {
   // ADMIN SERVICES
 
   List newBanners = [];
+  List oldBanners = [];
   Future addBanners(List<File> images) async {
     emit(AddBannerLoading());
     String? token = CacheHelper.getUserToken();
@@ -1177,7 +1178,12 @@ class AppCubit extends Cubit<AppState> {
       Map<String, dynamic> data = jsonDecode(responseBody);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        newBanners = data["data"]['newBanner']['image'];
+        oldBanners = data["data"]['newBanner']['image'];
+        newBanners.addAll(
+          List<String>.from(data["data"]['newBanner']['image']),
+        );
+        newBanners = newBanners.toSet().toList();
+        debugPrint("newBanners = $newBanners");
         emit(AddBannerSuccess(message: data["message"]));
       } else {
         emit(AddBannerFailure(error: data["message"]));

@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../../core/constants/contsants.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../generated/locale_keys.g.dart';
 
@@ -21,25 +21,9 @@ class AddImages extends StatefulWidget {
 }
 
 class _AddImagesState extends State<AddImages> {
-  List<File> _images = [];
-
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<void> _loadSavedImages() async {
-    final prefs = await SharedPreferences.getInstance();
-    final paths = prefs.getStringList('saved_images') ?? [];
-    setState(() {
-      _images = paths.map((path) => File(path)).toList();
-    });
-  }
-
-  Future<void> _saveImagePaths() async {
-    final prefs = await SharedPreferences.getInstance();
-    final paths = _images.map((file) => file.path).toList();
-    await prefs.setStringList('saved_images', paths);
   }
 
   Future<List<File>> _pickImages() async {
@@ -50,30 +34,27 @@ class _AddImagesState extends State<AddImages> {
 
     if (result != null) {
       final newImages = result.paths.map((path) => File(path!)).toList();
-      setState(() {
-        _images.addAll(newImages);
-      });
-      await _saveImagePaths();
+      AppCubit.get(context).addBanners(newImages); // مباشرة إلى السيرفر
       return newImages;
     }
     return [];
   }
 
-  void _removeImage(int index) async {
+  void _removeImage(int index) {
     setState(() {
-      _images.removeAt(index);
+      AppCubit.get(context).newBanners.removeAt(index);
     });
-    _saveImagePaths();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
+        final banners = AppCubit.get(context).newBanners;
         return Column(
           children: [
             Container(height: 24.h),
-            AppCubit.get(context).newBanners.isEmpty
+            banners.isEmpty
                 ? Center(
                   child: AppText(
                     text: LocaleKeys.no_saved_images.tr(),
@@ -87,19 +68,23 @@ class _AddImagesState extends State<AddImages> {
                   child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     scrollDirection: Axis.horizontal,
-                    itemCount: AppCubit.get(context).newBanners.length,
+                    itemCount: banners.length,
                     separatorBuilder: (context, index) => Container(width: 16),
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.r),
-                            child: Image.file(
-                              AppCubit.get(context).newBanners[index],
+                            child: Image.network(
+                              '$baseUrl/uploads/${banners[index]}',
                               width: 160,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.broken_image);
+                              },
                             ),
                           ),
+
                           Positioned(
                             top: 4,
                             right: 4,
@@ -127,7 +112,6 @@ class _AddImagesState extends State<AddImages> {
             BlocConsumer<AppCubit, AppState>(
               listener: (context, state) {
                 if (state is AddBannerSuccess) {
-                  _loadSavedImages();
                   showFlashMessage(
                     message: state.message,
                     type: FlashMessageType.success,
@@ -144,10 +128,7 @@ class _AddImagesState extends State<AddImages> {
               builder: (context, state) {
                 return ElevatedButton(
                   onPressed: () async {
-                    List<File> pickedImages = await _pickImages();
-                    if (pickedImages.isNotEmpty) {
-                      AppCubit.get(context).addBanners(pickedImages);
-                    }
+                    await _pickImages();
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all<Color>(

@@ -83,9 +83,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           ? CacheHelper.getUserToken() != ""
               ? CacheHelper.getUserType() == "user"
                   ? AppRouter.navigateAndPop(context, const HomeLayout())
+                  : CacheHelper.getUserType() == "admin"
+                  ? AppRouter.navigateAndPop(context, const AdminHomeLayout())
                   : AppRouter.navigateAndPop(context, const DriverHomeLayout())
-              : CacheHelper.getUserType() == "admin"
-              ? AppRouter.navigateAndPop(context, const AdminHomeLayout())
               : AppRouter.navigateAndPop(context, const TypesView())
           : AppRouter.navigateAndPop(context, const LanguageView());
       // CacheHelper.getLang() != ""

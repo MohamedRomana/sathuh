@@ -47,7 +47,7 @@ class _ProductRatesState extends State<ProductRates> {
                   size: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
-                CacheHelper.getUserType() == 'client'
+                CacheHelper.getUserType() == 'user'
                     ? SizedBox(
                       height: 40.h,
                       child: AppButton(

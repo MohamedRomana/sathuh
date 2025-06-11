@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/app_cached.dart';
-import '../../../../../core/constants/colors.dart';
 
 class CustomSwiper extends StatefulWidget {
   const CustomSwiper({super.key});
@@ -50,22 +49,22 @@ class _CustomSwiperState extends State<CustomSwiper> {
             itemBuilder: (context, index) {
               return AppCachedImage(
                 image: AppCubit.get(context).banners[index],
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               );
             },
             autoplay: true,
             itemCount: AppCubit.get(context).banners.length,
             scrollDirection: Axis.horizontal,
             curve: Curves.fastOutSlowIn,
-            pagination: SwiperPagination(
-              alignment: Alignment.bottomCenter,
-              builder: DotSwiperPaginationBuilder(
-                color: const Color(0xffB3B3B3),
-                activeColor: AppColors.primary,
-                size: 8.r,
-                activeSize: 11.r,
-              ),
-            ),
+            // pagination: SwiperPagination(
+            //   alignment: Alignment.bottomCenter,
+            //   builder: DotSwiperPaginationBuilder(
+            //     color: const Color(0xffB3B3B3),
+            //     activeColor: AppColors.primary,
+            //     size: 8.r,
+            //     activeSize: 11.r,
+            //   ),
+            // ),
           ),
         );
       },

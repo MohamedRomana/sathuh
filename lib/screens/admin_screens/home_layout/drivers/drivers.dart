@@ -97,6 +97,8 @@ class _DriversState extends State<Drivers> {
                                                         ?.isNotEmpty ??
                                                     false)
                                                 ? AppCachedImage(
+                                                  width: 60.w,
+                                                  height: 60.w,
                                                   image:
                                                       AppCubit.get(
                                                         context,
@@ -104,6 +106,8 @@ class _DriversState extends State<Drivers> {
                                                   fit: BoxFit.cover,
                                                 )
                                                 : Image.asset(
+                                                   width: 60.w,
+                                                  height: 60.w,
                                                   Assets.img.unphoto.path,
                                                   fit: BoxFit.cover,
                                                 ),

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -334,7 +336,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                   ),
                 ),
 
-                CacheHelper.getUserType() == 'client' ||
+                CacheHelper.getUserType() == 'user' ||
                         CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation4,
@@ -450,7 +452,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                     ),
 
-                CacheHelper.getUserType() == 'client' ||
+                CacheHelper.getUserType() == 'user' ||
                         CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation5,
@@ -511,7 +513,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     )
                     : Container(),
 
-                CacheHelper.getUserType() == 'client' ||
+                CacheHelper.getUserType() == 'user' ||
                         CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(
                       animation: _animation6,
@@ -640,7 +642,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      if (CacheHelper.getUserType() == 'client') {
+                      if (CacheHelper.getUserType() == 'user') {
                         AppCubit.get(context).changedrawerIndex(index: 6);
                         AppRouter.navigateTo(context, const Notifications());
                       } else if (CacheHelper.getUserType() == 'driver') {
