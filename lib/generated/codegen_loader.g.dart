@@ -636,7 +636,13 @@ class CodegenLoader extends AssetLoader{
   "choose_profile_picture": "اختيار الصورة الشخصية",
   "see_cover_picture": "عرض صورة الغلاف",
   "choose_cover_picture": "اختيار صورة الغلاف",
-  "edit_cover_picture": "تعديل صورة الغلاف"
+  "edit_cover_picture": "تعديل صورة الغلاف",
+  "no_complaints": "لا يوجد شكاوي",
+  "no_drivers": "لا يوجد سائقين",
+  "offline": "غير متصل",
+  "driver_location_unavailable": "موقع السائق غير متوفر",
+  "block_driver": "حظر السائق",
+  "unblock_driver": "إلغاء حظر السائق"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1260,7 +1266,13 @@ static const Map<String,dynamic> _en = {
   "choose_profile_picture": "Choose Profile Picture",
   "see_cover_picture": "See Cover Picture",
   "choose_cover_picture": "Choose Cover Picture",
-  "edit_cover_picture": "Edit Cover Picture"
+  "edit_cover_picture": "Edit Cover Picture",
+  "no_complaints": "No complaints",
+  "no_drivers": "No drivers",
+  "offline": "Offline",
+  "driver_location_unavailable": "Driver location is unavailable",
+  "block_driver": "Block Driver",
+  "unblock_driver": "Unblock Driver"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

@@ -19,18 +19,8 @@ final _yearPriceController = TextEditingController();
 final _priceController2 = TextEditingController();
 final _percentageController = TextEditingController();
 
-class Price extends StatefulWidget {
+class Price extends StatelessWidget {
   const Price({super.key});
-
-  @override
-  State<Price> createState() => _PriceState();
-}
-
-class _PriceState extends State<Price> {
-  @override
-  initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

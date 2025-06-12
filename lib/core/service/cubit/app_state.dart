@@ -325,3 +325,24 @@ final class GetDriversFailure extends AppState {
   final String error;
   GetDriversFailure({required this.error});
 }
+
+final class GetComplaintsLoading extends AppState {}
+
+final class GetComplaintsSuccess extends AppState {}
+
+final class GetComplaintsFailure extends AppState {
+  final String error;
+  GetComplaintsFailure({required this.error});
+}
+
+final class DriverBanLoading extends AppState {}
+
+final class DriverBanSuccess extends AppState {
+  final String message;
+  DriverBanSuccess({required this.message});
+}
+
+final class DriverBanFailure extends AppState {
+  final String error;
+  DriverBanFailure({required this.error});
+}

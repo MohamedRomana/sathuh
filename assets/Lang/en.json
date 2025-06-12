@@ -620,5 +620,11 @@
       "choose_profile_picture": "Choose Profile Picture",
       "see_cover_picture": "See Cover Picture",
       "choose_cover_picture": "Choose Cover Picture",
-      "edit_cover_picture": "Edit Cover Picture"
+      "edit_cover_picture": "Edit Cover Picture",
+      "no_complaints": "No complaints",
+      "no_drivers": "No drivers",
+      "offline": "Offline",
+      "driver_location_unavailable": "Driver location is unavailable",
+      "block_driver": "Block Driver",
+      "unblock_driver": "Unblock Driver"
 }

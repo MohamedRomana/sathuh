@@ -70,18 +70,20 @@ class _AdminHomeLayoutState extends State<AdminHomeLayout>
           onWillPop: () async {
             bool? shouldPop = await showDialog<bool>(
               context: context,
+              
               builder:
                   (context) => AlertDialog(
+                    backgroundColor: Colors.white,
                     title: Text(LocaleKeys.doYouWantToLeaveThisApp.tr()),
                     content: Text(LocaleKeys.areYouSure.tr()),
                     actions: [
                       TextButton(
                         onPressed: () => SystemNavigator.pop(),
-                        child: Text(LocaleKeys.yes.tr()),
+                        child: Text(LocaleKeys.yes.tr(),style: TextStyle(color: Colors.green, fontSize: 16.sp),),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: Text(LocaleKeys.no.tr()),
+                        child: Text(LocaleKeys.no.tr(), style: TextStyle(color: Colors.red, fontSize: 16.sp),),
                       ),
                     ],
                   ),

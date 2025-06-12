@@ -11,8 +11,10 @@ import '../../../../generated/locale_keys.g.dart';
 import '../../satha_service/satha_service.dart';
 
 class DriverLocation extends StatelessWidget {
+  final double? lat;
+  final double? lng;
   final bool? isAdmin;
-  const DriverLocation({super.key, this.isAdmin = false});
+  const DriverLocation({super.key, this.isAdmin = false, this.lat, this.lng});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class DriverLocation extends StatelessWidget {
       body: Stack(
         children: [
           FlutterMap(
-            options: const MapOptions(
-              initialCenter: LatLng(24.7136, 46.6753), // الرياض كمثال
+            options: MapOptions(
+              initialCenter: LatLng(lat ?? 24.7136, lng ?? 46.6753),
               initialZoom: 13.0,
             ),
             children: [
@@ -32,13 +34,13 @@ class DriverLocation extends StatelessWidget {
                 userAgentPackageName: 'com.example.app',
                 tileProvider: NetworkTileProvider(),
               ),
-              const MarkerLayer(
+              MarkerLayer(
                 markers: [
                   Marker(
-                    point: LatLng(24.7136, 46.6753),
+                    point: LatLng(lat ?? 24.7136, lng ?? 46.6753),
                     width: 80,
                     height: 80,
-                    child: Icon(
+                    child: const Icon(
                       Icons.location_pin,
                       color: Colors.red,
                       size: 40,

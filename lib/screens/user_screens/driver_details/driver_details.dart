@@ -9,7 +9,6 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
-import 'rates/product_rates.dart';
 import 'widgets/custom_about_provider.dart';
 import 'widgets/provider_header.dart';
 
@@ -39,7 +38,7 @@ class DriverDetails extends StatelessWidget {
                 CustomAppBar(title: LocaleKeys.driver.tr()),
                 const ProviderHeader(),
                 const CustomAboutProvider(),
-                const ProductRates(),
+                // const ProductRates(),
                 AppButton(
                   onPressed: () {
                     openWhatsApp('0100020202020');

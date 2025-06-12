@@ -15,7 +15,8 @@ final _formKey = GlobalKey<FormState>();
 final _commentController = TextEditingController();
 
 class ProductRates extends StatefulWidget {
-  const ProductRates({super.key});
+  final int index2;
+  const ProductRates({super.key, required this.index2});
 
   @override
   State<ProductRates> createState() => _ProductRatesState();
@@ -75,7 +76,7 @@ class _ProductRatesState extends State<ProductRates> {
               ],
             ),
             Container(height: 10.h),
-            const UsersReviews(),
+             UsersReviews(index2: widget.index2,),
           ],
         );
       },

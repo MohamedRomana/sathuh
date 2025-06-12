@@ -625,5 +625,11 @@ abstract class  LocaleKeys {
   static const see_cover_picture = 'see_cover_picture';
   static const choose_cover_picture = 'choose_cover_picture';
   static const edit_cover_picture = 'edit_cover_picture';
+  static const no_complaints = 'no_complaints';
+  static const no_drivers = 'no_drivers';
+  static const offline = 'offline';
+  static const driver_location_unavailable = 'driver_location_unavailable';
+  static const block_driver = 'block_driver';
+  static const unblock_driver = 'unblock_driver';
 
 }

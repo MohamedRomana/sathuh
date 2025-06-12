@@ -3,16 +3,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/widgets/app_cached.dart';
 import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_lottie_widget.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/fonts.gen.dart';
 
 class UsersReviews extends StatefulWidget {
-  const UsersReviews({super.key});
+  final int index2;
+  const UsersReviews({super.key, required this.index2});
 
   @override
   State<UsersReviews> createState() => UsersReviewsState();
@@ -45,58 +48,121 @@ class UsersReviewsState extends State<UsersReviews> {
                   ),
                 ],
               ),
-              child: ListView.separated(
-                padding: EdgeInsetsDirectional.only(
-                  start: 16.w,
-                  end: 16.w,
-                  bottom: 20.h,
-                ),
-                itemCount: visibleCount < 10 ? visibleCount : 10,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder:
-                    (context, index) => const Divider(color: Colors.grey),
-                itemBuilder:
-                    (context, index) => Column(
-                      children: [
-                        Container(height: 10.h),
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(1000.r),
-                              child: Image.asset(
-                                Assets.img.client.path,
-                                height: 30.w,
-                                width: 30.w,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Container(width: 5.w),
-                            RatingBar.readOnly(
-                              filledIcon: Icons.star,
-                              emptyIcon: Icons.star_border,
-                              initialRating: 2,
-                              maxRating: 5,
-                              isHalfAllowed: true,
-                              halfFilledIcon: Icons.star_half,
-                              size: 18.sp,
-                            ),
-                          ],
+              child:
+                  AppCubit.get(
+                        context,
+                      ).driversList[widget.index2]['ratings'].isEmpty
+                      ? CustomLottieWidget(
+                        height: 150.w,
+                        width: 150.w,
+                        lottieName: Assets.img.notiEmpty,
+                      )
+                      : ListView.separated(
+                        padding: EdgeInsetsDirectional.only(
+                          start: 16.w,
+                          end: 16.w,
+                          bottom: 20.h,
                         ),
-                        SizedBox(
-                          width: 300.w,
-                          child: AppText(
-                            top: 6.h,
-                            text: 'test test test test test',
-                            lines: 3,
-                            size: 12.sp,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Container(height: 10.h),
-                      ],
-                    ),
-              ),
+                        itemCount:
+                            visibleCount <
+                                    AppCubit.get(context)
+                                        .driversList[widget.index2]['ratings']
+                                        .length
+                                ? visibleCount
+                                : AppCubit.get(
+                                  context,
+                                ).driversList[widget.index2]['ratings'].length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder:
+                            (context, index) =>
+                                const Divider(color: Colors.grey),
+                        itemBuilder:
+                            (context, index) => Column(
+                              children: [
+                                Container(height: 10.h),
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        1000.r,
+                                      ),
+                                      child:
+                                          (AppCubit.get(context)
+                                                      .driversList[widget
+                                                          .index2]['ratings'][index]['userId']['image']
+                                                      ?.isNotEmpty ??
+                                                  false)
+                                              ? AppCachedImage(
+                                                image:
+                                                    AppCubit.get(
+                                                      context,
+                                                    ).driversList[widget
+                                                        .index2]['ratings'][index]['userId']['image'],
+                                                height: 30.w,
+                                                width: 30.w,
+                                                fit: BoxFit.cover,
+                                              )
+                                              : Image.asset(
+                                                Assets.img.client.path,
+                                                height: 30.w,
+                                                width: 30.w,
+                                                fit: BoxFit.cover,
+                                              ),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 200.w,
+                                          child: AppText(
+                                            text:
+                                                AppCubit.get(
+                                                  context,
+                                                ).driversList[widget
+                                                    .index2]['ratings'][index]['userId']['userName'] ??
+                                                "",
+                                            size: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        RatingBar.readOnly(
+                                          filledIcon: Icons.star,
+                                          emptyIcon: Icons.star_border,
+                                          initialRating:
+                                              AppCubit.get(context)
+                                                  .driversList[widget
+                                                      .index2]['ratings'][index]['rating']
+                                                  .toDouble() ??
+                                              0.0,
+                                          maxRating: 5,
+                                          isHalfAllowed: true,
+                                          halfFilledIcon: Icons.star_half,
+                                          size: 18.sp,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 300.w,
+                                  child: AppText(
+                                    top: 6.h,
+                                    text:
+                                        AppCubit.get(context).driversList[widget
+                                            .index2]['ratings'][index]['comment'] ??
+                                        "",
+                                    lines: 3,
+                                    size: 14.sp,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Container(height: 10.h),
+                              ],
+                            ),
+                      ),
             ),
             Container(height: 16.h),
             Row(
@@ -149,6 +215,9 @@ class UsersReviewsState extends State<UsersReviews> {
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
+                      setState(() {
+                        visibleCount = 2;
+                      });
                     },
                   ),
               ],

@@ -23,6 +23,7 @@ class DriverContainer extends StatelessWidget {
         ),
         Container(
           width: 343.w,
+          clipBehavior: Clip.antiAlias,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           margin: EdgeInsetsDirectional.symmetric(horizontal: 16.w),
           decoration: BoxDecoration(
@@ -66,7 +67,7 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
+                  SizedBox(
                     width: 180.w,
                     child: AppText(
                       textAlign: TextAlign.end,
@@ -89,7 +90,7 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
+                  SizedBox(
                     width: 180.w,
                     child: AppText(
                       textAlign: TextAlign.end,
@@ -112,7 +113,7 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
+                  SizedBox(
                     width: 180.w,
                     child: AppText(
                       textAlign: TextAlign.end,
@@ -141,7 +142,7 @@ class DriverContainer extends StatelessWidget {
                     onTap: () {
                       makePhoneCall('+2010123456789');
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: 180.w,
                       child: AppText(
                         textAlign: TextAlign.end,
@@ -165,7 +166,7 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
+                  SizedBox(
                     width: 180.w,
                     child: AppText(
                       textAlign: TextAlign.end,
@@ -188,8 +189,8 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
-                    width: 180.w,
+                  SizedBox(
+                    width: 150.w,
                     child: AppText(
                       textAlign: TextAlign.end,
                       text: 'نعم',
@@ -211,7 +212,7 @@ class DriverContainer extends StatelessWidget {
                     size: 16.sp,
                   ),
                   const Spacer(),
-                  Container(
+                  SizedBox(
                     width: 180.w,
                     child: AppText(
                       textAlign: TextAlign.end,

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import '../../../../../core/constants/colors.dart';
@@ -27,60 +28,70 @@ class _AdminTopBarState extends State<AdminTopBar> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: () {
-        AppRouter.navigateTo(context, const AdmProfile());
-      },
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsetsDirectional.only(start: 16.w, end: 5.w),
-            height: 50.w,
-            width: 50.w,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey, width: 3.w),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100.r),
-              child:
-                  (AppCubit.get(context).showProfileMap['image']?.isNotEmpty ??
-                          false)
-                      ? AppCachedImage(
-                        image: AppCubit.get(context).showProfileMap['image'],
-                        fit: BoxFit.cover,
-                      )
-                      : Image.asset(Assets.img.unphoto.path, fit: BoxFit.cover),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) {
+        return InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            AppRouter.navigateTo(context, const AdmProfile());
+          },
+          child: Row(
             children: [
-              SizedBox(
-                width: 150.w,
-                child: AppText(
-                  text: LocaleKeys.welcome.tr(),
-                  size: 12.sp,
-                  color: AppColors.secondray,
-                  family: FontFamily.tajawalBold,
+              Container(
+                margin: EdgeInsetsDirectional.only(start: 16.w, end: 5.w),
+                height: 50.w,
+                width: 50.w,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey, width: 3.w),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.r),
+                  child:
+                      (AppCubit.get(
+                                context,
+                              ).showProfileMap['image']?.isNotEmpty ??
+                              false)
+                          ? AppCachedImage(
+                            image:
+                                AppCubit.get(context).showProfileMap['image'],
+                            fit: BoxFit.cover,
+                          )
+                          : Image.asset(
+                            Assets.img.unphoto.path,
+                            fit: BoxFit.cover,
+                          ),
                 ),
               ),
-              SizedBox(
-                width: 150.w,
-                child: AppText(
-                  text: LocaleKeys.thank_you_for_your_preference.tr(),
-                  size: 10.sp,
-                  color: AppColors.secondray,
-                  family: FontFamily.tajawalBold,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 150.w,
+                    child: AppText(
+                      text: LocaleKeys.welcome.tr(),
+                      size: 12.sp,
+                      color: AppColors.secondray,
+                      family: FontFamily.tajawalBold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 150.w,
+                    child: AppText(
+                      text: LocaleKeys.thank_you_for_your_preference.tr(),
+                      size: 10.sp,
+                      color: AppColors.secondray,
+                      family: FontFamily.tajawalBold,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

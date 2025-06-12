@@ -1200,7 +1200,7 @@ class AppCubit extends Cubit<AppState> {
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
     http.Response response = await http.get(
-      Uri.parse("${baseUrl}admin/getAllDrivers?page=1&size=3"),
+      Uri.parse("${baseUrl}admin/getAllDrivers"),
       headers: {"Content-Type": "application/json", "Authorization": token},
     );
     debugPrint("Status Code: ${response.statusCode}");
@@ -1211,6 +1211,48 @@ class AppCubit extends Cubit<AppState> {
       emit(GetDriversSuccess());
     } else {
       emit(GetDriversFailure(error: data["message"]));
+    }
+  }
+
+  List complaintsList = [];
+  Future getComplaints() async {
+    emit(GetComplaintsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}admin/getAllCompliants"),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      complaintsList = data["data"]['complaints'];
+      emit(GetComplaintsSuccess());
+      getDrivers();
+    } else {
+      emit(GetComplaintsFailure(error: data["message"]));
+    }
+  }
+
+  Future driverBan({required String driverId, required String type}) async {
+    emit(DriverBanLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.patch(
+      Uri.parse(
+        "${baseUrl}admin/banDriver/$driverId",
+      ).replace(queryParameters: {"type": type}),
+      headers: {"Content-Type": "application/json", "Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getDrivers();
+      emit(DriverBanSuccess(message: data["message"]));
+    } else {
+      emit(DriverBanFailure(error: data["message"]));
     }
   }
 }
