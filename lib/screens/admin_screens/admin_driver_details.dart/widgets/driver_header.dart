@@ -165,7 +165,12 @@ class DriverHeader extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () {
-                    AppRouter.navigateTo(context, const AdmChatDetails());
+                    AppRouter.navigateTo(
+                      context,
+                      AdmChatDetails(
+                        user: AppCubit.get(context).driversList[index]['user'],
+                      ),
+                    );
                   },
                   child: Container(
                     height: 60.w,

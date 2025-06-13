@@ -120,10 +120,10 @@ class WorkOrders extends StatelessWidget {
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () {
-                                      AppRouter.navigateTo(
-                                        context,
-                                        const AdmChatDetails(),
-                                      );
+                                      // AppRouter.navigateTo(
+                                      //   context,
+                                      //   const AdmChatDetails(),
+                                      // );
                                     },
                                     child: const Icon(
                                       Icons.chat,

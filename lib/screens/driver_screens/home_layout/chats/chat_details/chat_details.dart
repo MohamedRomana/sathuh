@@ -7,7 +7,7 @@ import '../../../../../core/widgets/app_input.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../generated/locale_keys.g.dart';
-import '../../../../user_screens/chat_details/widgets/custom_chat_with_container.dart';
+import 'widgets/driver_chat_with.dart';
 
 final _messageSendController = TextEditingController();
 
@@ -103,7 +103,7 @@ class _DrivChatDetailsState extends State<DrivChatDetails>
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomAppBar(title: LocaleKeys.chat.tr()),
-              const CustomChatWithContainer(),
+              const CustomDriverChatWithContainer(),
               Expanded(
                 child: ListView.separated(
                   controller: _scrollController,

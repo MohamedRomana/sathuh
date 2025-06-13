@@ -205,7 +205,12 @@ class _ComplaintsState extends State<Complaints> {
                                             onTap: () {
                                               AppRouter.navigateTo(
                                                 context,
-                                                const AdmChatDetails(),
+                                                AdmChatDetails(
+                                                  user:
+                                                      AppCubit.get(
+                                                        context,
+                                                      ).complaintsList[index]['userId'],
+                                                ),
                                               );
                                             },
                                             child: const Icon(

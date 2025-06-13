@@ -337,7 +337,12 @@ class _DriversState extends State<Drivers> {
                                             onTap: () {
                                               AppRouter.navigateTo(
                                                 context,
-                                                const AdmChatDetails(),
+                                                AdmChatDetails(
+                                                  user:
+                                                      AppCubit.get(
+                                                        context,
+                                                      ).driversList[index]['user'],
+                                                ),
                                               );
                                             },
                                             child: const Icon(

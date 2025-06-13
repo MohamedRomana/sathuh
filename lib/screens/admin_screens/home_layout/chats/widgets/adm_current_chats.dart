@@ -42,7 +42,7 @@ class AdmCurrentChats extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                AppRouter.navigateTo(context, const AdmChatDetails());
+                // AppRouter.navigateTo(context, const AdmChatDetails());
               },
               child: Row(
                 children: [
@@ -66,7 +66,7 @@ class AdmCurrentChats extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 170.w,
                             child: AppText(
                               text: ' اسم تجريبي',
@@ -75,7 +75,7 @@ class AdmCurrentChats extends StatelessWidget {
                               family: Assets.fonts.tajawalBold,
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 70.w,
                             child: AppText(
                               textAlign: TextAlign.end,
@@ -86,7 +86,7 @@ class AdmCurrentChats extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         width: 200.w,
                         child: AppText(
                           text: 'يريد اسم العميل التواصل معك',

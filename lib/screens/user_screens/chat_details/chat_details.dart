@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
+import 'package:sathuh/core/constants/contsants.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/custom_app_bar.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -9,7 +11,7 @@ import '../../../core/widgets/app_input.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
 import 'widgets/chat_message.dart';
-import 'widgets/custom_chat_with_container.dart';
+import 'widgets/client_chat_with.dart';
 
 final _messageSendController = TextEditingController();
 
@@ -44,10 +46,10 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
 
   void _connectToSocket() {
     socket = IO.io(
-      'https://towtruck.cloud:3000', // غيّر ده بالرابط الصحيح
+      baseUrl, // غيّر ده بالرابط الصحيح
       IO.OptionBuilder()
           .setTransports(['websocket'])
-          .disableAutoConnect()
+          .disableAutoConnect().setExtraHeaders({'Authorization': CacheHelper.getUserToken()})
           .build(),
     );
 
@@ -181,7 +183,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomAppBar(title: LocaleKeys.chat.tr()),
-              const CustomChatWithContainer(),
+              const CustomClientChatWithContainer(),
               Expanded(
                 child: ListView.separated(
                   controller: _scrollController,
