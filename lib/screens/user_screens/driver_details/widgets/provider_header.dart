@@ -1,7 +1,6 @@
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/contsants.dart';
 import '../../../../core/service/cubit/app_cubit.dart';

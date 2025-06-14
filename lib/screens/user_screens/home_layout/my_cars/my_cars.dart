@@ -69,7 +69,8 @@ class _MyCarsState extends State<MyCars> {
                         title: LocaleKeys.my_cars.tr(),
                         isHomeLayout: true,
                       ),
-                      state is GetCarsLoading
+                      state is GetCarsLoading &&
+                              AppCubit.get(context).carsList.isEmpty
                           ? CustomShimmer(
                             child: ListView.separated(
                               padding: EdgeInsets.only(top: 20.h),
@@ -113,7 +114,10 @@ class _MyCarsState extends State<MyCars> {
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () {
-                                    AppRouter.navigateTo(context, EditCar(index: index,));
+                                    AppRouter.navigateTo(
+                                      context,
+                                      EditCar(index: index),
+                                    );
                                   },
                                   child: Container(
                                     width: 343.w,

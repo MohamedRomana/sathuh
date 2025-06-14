@@ -1137,6 +1137,124 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  List carProblemsList = [];
+  Future carProblems() async {
+    emit(GetCarProblemsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}problem/getCarProblems"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      carProblemsList = data['data']['allCarProblems'];
+      emit(GetCarProblemsSuccess());
+    } else {
+      emit(GetCarProblemsFailure(error: data["message"]));
+    }
+  }
+
+  List servicesList = [];
+  Future services() async {
+    emit(GetServicesLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}service//getAllServices"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      servicesList = data['data']['allServices'];
+      emit(GetServicesSuccess());
+    } else {
+      emit(GetServicesFailure(error: data["message"]));
+    }
+  }
+
+  Future addRequest({
+    required String serviceId,
+    required String carId,
+    required String problemId,
+    required String otherProblemText,
+    required double pickLat,
+    required double pickLng,
+    required double dropLat,
+    required double dropLng,
+  }) async {
+    emit(AddRequestLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}request/addRequest/$serviceId"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({
+        "carId": carId,
+        "problems": [problemId],
+        "otherProblemText": otherProblemText,
+        "pickupLocation": {
+          "coordinates": [pickLng, pickLat],
+        },
+        "dropoffLocation": {
+          "coordinates": [dropLng, dropLat],
+        },
+      }),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(AddRequestSuccess(message: data["message"]));
+    } else {
+      emit(AddRequestFailure(error: data["message"]));
+    }
+  }
+
+  Map requestMap = {};
+  Future getRequests({required String requestId}) async {
+    emit(GetRequestsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}request/getRequests/$requestId"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      requestMap = data['data']['request'];
+      emit(GetRequestsSuccess());
+    } else {
+      emit(GetRequestsFailure(error: data["message"]));
+    }
+  }
+
+List completedRequestsList = [];
+  Future completedRequest() async {
+    emit(GetCompletedRequestsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}request/getCompletedRequests"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      completedRequestsList = data['data']['requests'];
+      emit(GetCompletedRequestsSuccess());
+    } else {
+      emit(GetCompletedRequestsFailure(error: data["message"]));
+    }
+  }
+
   // ADMIN SERVICES
 
   List newBanners = [];

@@ -346,3 +346,51 @@ final class DriverBanFailure extends AppState {
   final String error;
   DriverBanFailure({required this.error});
 }
+
+final class GetCarProblemsLoading extends AppState {}
+
+final class GetCarProblemsSuccess extends AppState {}
+
+final class GetCarProblemsFailure extends AppState {
+  final String error;
+  GetCarProblemsFailure({required this.error});
+}
+
+final class GetServicesLoading extends AppState {}
+
+final class GetServicesSuccess extends AppState {}
+
+final class GetServicesFailure extends AppState {
+  final String error;
+  GetServicesFailure({required this.error});
+}
+
+final class AddRequestLoading extends AppState {}
+
+final class AddRequestSuccess extends AppState {
+  final String message;
+  AddRequestSuccess({required this.message});
+}
+
+final class AddRequestFailure extends AppState {
+  final String error;
+  AddRequestFailure({required this.error});
+}
+
+final class GetRequestsLoading extends AppState {}
+
+final class GetRequestsSuccess extends AppState {}
+
+final class GetRequestsFailure extends AppState {
+  final String error;
+  GetRequestsFailure({required this.error});
+}
+
+final class GetCompletedRequestsLoading extends AppState {}
+
+final class GetCompletedRequestsSuccess extends AppState {}
+
+final class GetCompletedRequestsFailure extends AppState {
+  final String error;
+  GetCompletedRequestsFailure({required this.error});
+}

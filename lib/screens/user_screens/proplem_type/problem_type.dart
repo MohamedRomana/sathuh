@@ -19,7 +19,10 @@ import 'widgets/problems_list.dart';
 final _problemController = TextEditingController();
 
 class ProblemType extends StatefulWidget {
-  const ProblemType({super.key});
+  final String carId;
+  final String serviceId;
+
+  const ProblemType({super.key, required this.carId, required this.serviceId});
 
   @override
   State<ProblemType> createState() => _ProblemTypeState();
@@ -30,6 +33,8 @@ class _ProblemTypeState extends State<ProblemType> {
   void initState() {
     AppCubit.get(context).changeSelectedProblem(index: -1);
     AppCubit.get(context).changeIndexs(index: -1);
+    AppCubit.get(context).carProblems();
+    _problemController.clear();
     super.initState();
   }
 
@@ -38,6 +43,7 @@ class _ProblemTypeState extends State<ProblemType> {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return CustomBottomNav(
+          resizeToAvoidBottomInset: true,
           body: Stack(
             children: [
               Image.asset(
@@ -71,7 +77,21 @@ class _ProblemTypeState extends State<ProblemType> {
                         } else {
                           AppRouter.navigateTo(
                             context,
-                            const OpenStreetMapView(),
+                            OpenStreetMapView(
+                              problemId:
+                                  AppCubit.get(
+                                    context,
+                                  ).carProblemsList[AppCubit.get(
+                                    context,
+                                  ).selectedProblemIndexes[0]]['_id'],
+                              problemController: _problemController,
+                              carsId: widget.carId,
+                              serviceId: widget.serviceId,
+                            ),
+                          );
+
+                          debugPrint(
+                            'problem id: ${AppCubit.get(context).carProblemsList[AppCubit.get(context).selectedProblemIndexes[0]]['_id']}',
                           );
                         }
                       },

@@ -818,10 +818,10 @@ class _CustomDrawerState extends State<CustomDrawer>
                           AppCubit.get(context).changedrawerIndex(index: 7);
                           if (CacheHelper.getUserType() == "user") {
                             CacheHelper.setUserType('driver');
-                            AppRouter.navigateTo(context, const LogIn());
+                            AppRouter.navigateAndFinish(context, const LogIn());
                           } else {
-                            CacheHelper.setUserType('client');
-                            AppRouter.navigateTo(context, const LogIn());
+                            CacheHelper.setUserType('user');
+                            AppRouter.navigateAndFinish(context, const LogIn());
                           }
                         },
                         child: Container(

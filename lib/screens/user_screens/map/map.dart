@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,7 +17,18 @@ import '../../../core/widgets/flash_message.dart';
 import 'widgets/pay_details.dart';
 
 class OpenStreetMapView extends StatefulWidget {
-  const OpenStreetMapView({super.key});
+  final String problemId;
+  final String carsId;
+  final String serviceId;
+  final TextEditingController problemController;
+
+  const OpenStreetMapView({
+    super.key,
+    required this.problemId,
+    required this.problemController,
+    required this.carsId,
+    required this.serviceId,
+  });
 
   @override
   State<OpenStreetMapView> createState() => _OpenStreetMapViewState();
@@ -243,9 +255,14 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
             bottom: 20.h,
             start: 16.w,
             end: 16.w,
-            child: AppButton(
-              onPressed: () {
-                if (totalDistance != null) {
+            child: BlocConsumer<AppCubit, AppState>(
+              listener: (context, state) {
+                if (state is AddRequestSuccess) {
+                  showFlashMessage(
+                    message: state.message,
+                    type: FlashMessageType.success,
+                    context: context,
+                  );
                   showModalBottomSheet(
                     context: context,
                     builder:
@@ -255,20 +272,57 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
                           arrivalTime: arrivalTime,
                         ),
                   );
-                } else {
+                } else if (state is AddRequestFailure) {
                   showFlashMessage(
-                    context: context,
-                    message: LocaleKeys.set_destination.tr(),
+                    message: state.error,
                     type: FlashMessageType.error,
+                    context: context,
                   );
                 }
               },
-              child: AppText(
-                text: LocaleKeys.confirm.tr(),
-                size: 21.sp,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              builder: (context, state) {
+                return AppButton(
+                  onPressed: () {
+                    if (totalDistance != null) {
+                      debugPrint("serviceId: ${widget.serviceId},");
+                      debugPrint("carId: ${widget.carsId}");
+                      debugPrint("problemId: ${widget.problemId}");
+                      debugPrint(
+                        "otherProblemText: ${widget.problemController.text}",
+                      );
+                      debugPrint("pickLat: ${currentLocation!.latitude}");
+                      debugPrint("pickLng: ${currentLocation!.longitude}");
+                      debugPrint("dropLat: ${destinationLocation!.latitude}");
+                      debugPrint("dropLng: ${destinationLocation!.longitude}");
+                      AppCubit.get(context).addRequest(
+                        serviceId: widget.serviceId,
+                        carId: widget.carsId,
+                        problemId: widget.problemId,
+                        otherProblemText: widget.problemController.text,
+                        pickLat: currentLocation!.latitude,
+                        pickLng: currentLocation!.longitude,
+                        dropLat: destinationLocation!.latitude,
+                        dropLng: destinationLocation!.longitude,
+                      );
+                    } else {
+                      showFlashMessage(
+                        context: context,
+                        message: LocaleKeys.set_destination.tr(),
+                        type: FlashMessageType.error,
+                      );
+                    }
+                  },
+                  child:
+                      state is AddRequestLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : AppText(
+                            text: LocaleKeys.confirm.tr(),
+                            size: 21.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                );
+              },
             ),
           ),
           PositionedDirectional(
