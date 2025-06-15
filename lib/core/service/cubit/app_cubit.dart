@@ -1177,6 +1177,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  String requestId = "";
   Future addRequest({
     required String serviceId,
     required String carId,
@@ -1210,6 +1211,7 @@ class AppCubit extends Cubit<AppState> {
     Map<String, dynamic> data = jsonDecode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       emit(AddRequestSuccess(message: data["message"]));
+      requestId = data["data"]["request"]["_id"];
     } else {
       emit(AddRequestFailure(error: data["message"]));
     }
@@ -1221,11 +1223,12 @@ class AppCubit extends Cubit<AppState> {
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
     http.Response response = await http.get(
-      Uri.parse("${baseUrl}request/getRequests/$requestId"),
+      Uri.parse("${baseUrl}request/details/$requestId"),
       headers: {"Authorization": token},
     );
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
+
     Map<String, dynamic> data = jsonDecode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       requestMap = data['data']['request'];
@@ -1235,13 +1238,37 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-List completedRequestsList = [];
+  Future confirmRequest({required String requestId}) async {
+    emit(ConfirmRequestLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}request/confirm/$requestId"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({
+        "paymentMethod": paymentIndex == 0 ? "cash" : "online",
+      }),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    debugPrint("requestId Body: $requestId");
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ConfirmRequestSuccess(message: data["message"]));
+    } else {
+      emit(ConfirmRequestFailure(error: data["message"]));
+    }
+  }
+
+  List completedRequestsList = [];
   Future completedRequest() async {
     emit(GetCompletedRequestsLoading());
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
     http.Response response = await http.get(
-      Uri.parse("${baseUrl}request/getCompletedRequests"),
+      Uri.parse("${baseUrl}request/completed?page=1&size=1"),
       headers: {"Authorization": token},
     );
     debugPrint("Status Code: ${response.statusCode}");
@@ -1252,6 +1279,26 @@ List completedRequestsList = [];
       emit(GetCompletedRequestsSuccess());
     } else {
       emit(GetCompletedRequestsFailure(error: data["message"]));
+    }
+  }
+
+List inRoadRequestsList = [];
+  Future inRoadRequest() async {
+    emit(InRoadRequestLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}request/inRoad?page=1&size=1"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      inRoadRequestsList = data['data']['requests'];
+      emit(InRoadRequestSuccess(message: data["message"]));
+    } else {
+      emit(InRoadRequestFailure(error: data["message"]));
     }
   }
 

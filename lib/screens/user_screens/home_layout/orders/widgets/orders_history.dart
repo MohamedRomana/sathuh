@@ -6,6 +6,9 @@ import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_list_shimmer.dart';
+import '../../../../../core/widgets/custom_lottie_widget.dart';
+import '../../../../../gen/assets.gen.dart';
 import '../order_details/order_details.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -18,7 +21,7 @@ class OrderHistory extends StatefulWidget {
 class _OrderHistoryState extends State<OrderHistory> {
   @override
   void initState() {
-    // AppCubit.get(context).getOrders(status: 'finish');
+    AppCubit.get(context).completedRequest();
     super.initState();
   }
 
@@ -26,7 +29,13 @@ class _OrderHistoryState extends State<OrderHistory> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return ListView.separated(
+        return  state is GetCompletedRequestsLoading
+            ? const CustomListShimmer()
+            : AppCubit.get(context).inRoadRequestsList.isEmpty
+            ? Center(
+              child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
+            )
+            :  ListView.separated(
           padding: EdgeInsetsDirectional.only(
             start: 16.w,
             end: 16.w,
@@ -35,7 +44,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           ),
           separatorBuilder:
               (BuildContext context, int index) => Container(height: 16.h),
-          itemCount: 10,
+          itemCount: AppCubit.get(context).completedRequestsList.length,
           itemBuilder:
               (BuildContext context, int index) => InkWell(
                 onTap: () {
@@ -58,10 +67,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppText(
-                              text: '${LocaleKeys.order_number.tr()} #45454',
-                              size: 16.sp,
-                              family: 'DINArabic-Medium',
+                            SizedBox(
+                              width: 120.w,
+                              child: AppText(
+                                text:
+                                    '${LocaleKeys.order_number.tr()} ${AppCubit.get(context).completedRequestsList[index]['id'] ?? ""}',
+                                size: 16.sp,
+                                family: 'DINArabic-Medium',
+                              ),
                             ),
                             Row(
                               children: [
@@ -71,7 +84,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                                   size: 14.sp,
                                 ),
                                 AppText(
-                                  text: "10/10/2022",
+                                  text: _formatDate(
+                                    AppCubit.get(
+                                          context,
+                                        ).completedRequestsList[index]['createdAt'] ??
+                                        "",
+                                  ),
+
                                   size: 14.sp,
                                   color: Colors.grey,
                                 ),
@@ -80,7 +99,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                           ],
                         ),
                         AppText(
-                          text: '${LocaleKeys.serviceName.tr()}: خدمة سطحة',
+                          text:
+                              '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).completedRequestsList[index]['serviceId']['type'] ?? ""}',
                           size: 16.sp,
                           family: 'DINArabic-Light',
                         ),
@@ -97,10 +117,17 @@ class _OrderHistoryState extends State<OrderHistory> {
                               ),
                             ),
                             child: Center(
-                              child: AppText(
-                                text: 'مكتمل',
-                                size: 13.sp,
-                                color: const Color(0xffFF8800),
+                              child: SizedBox(
+                                width: 83.w,
+                                child: AppText(
+                                  text:
+                                      AppCubit.get(
+                                        context,
+                                      ).completedRequestsList[index]['status'] ??
+                                      "",
+                                  size: 13.sp,
+                                  color: const Color(0xffFF8800),
+                                ),
                               ),
                             ),
                           ),
@@ -114,4 +141,10 @@ class _OrderHistoryState extends State<OrderHistory> {
       },
     );
   }
+}
+
+String _formatDate(String? isoDate) {
+  if (isoDate == null) return '';
+  final date = DateTime.parse(isoDate);
+  return DateFormat('dd/MM/yyyy').format(date);
 }

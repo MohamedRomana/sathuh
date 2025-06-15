@@ -394,3 +394,27 @@ final class GetCompletedRequestsFailure extends AppState {
   final String error;
   GetCompletedRequestsFailure({required this.error});
 }
+
+final class ConfirmRequestLoading extends AppState {}
+
+final class ConfirmRequestSuccess extends AppState {
+  final String message;
+  ConfirmRequestSuccess({required this.message});
+}
+
+final class ConfirmRequestFailure extends AppState {
+  final String error;
+  ConfirmRequestFailure({required this.error});
+}
+
+final class InRoadRequestLoading extends AppState {}
+
+final class InRoadRequestSuccess extends AppState {
+  final String message;
+  InRoadRequestSuccess({required this.message});
+}
+
+final class InRoadRequestFailure extends AppState {
+  final String error;
+  InRoadRequestFailure({required this.error});
+}

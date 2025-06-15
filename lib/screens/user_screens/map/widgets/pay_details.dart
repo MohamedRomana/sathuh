@@ -29,11 +29,24 @@ class PaymentDetails extends StatefulWidget {
 class _PaymentDetailsState extends State<PaymentDetails> {
   @override
   void initState() {
+    AppCubit.get(
+      context,
+    ).getRequests(requestId: AppCubit.get(context).requestId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    int estimatedMinutes =
+        AppCubit.get(context).requestMap['estimatedTimeInMinutes'] ?? 0;
+
+    // نحسب وقت الوصول
+    DateTime arrivalTime = DateTime.now().add(
+      Duration(minutes: estimatedMinutes),
+    );
+
+    // نحوله إلى صيغة 12:00 PM مثلاً
+    String formattedArrivalTime = DateFormat.jm().format(arrivalTime);
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return Container(
@@ -47,213 +60,228 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               topRight: Radius.circular(20.r),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppText(
-                text: LocaleKeys.serviceDetails.tr(),
-                size: 21.sp,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 100.w,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(50),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text: LocaleKeys.arrival_abbreviation.tr(),
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            bottom: 5.h,
+          child:
+              state is GetRequestsLoading
+                  ? const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  )
+                  : Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(
+                        text: LocaleKeys.serviceDetails.tr(),
+                        size: 21.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 100.w,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withAlpha(50),
+                                  blurRadius: 5.r,
+                                  spreadRadius: 1.r,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text: LocaleKeys.arrival_abbreviation.tr(),
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    bottom: 5.h,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text:
+                                        '${AppCubit.get(context).requestMap['distanceInMeters'] ?? ""} ${LocaleKeys.meter.tr()}',
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text:
-                                '${widget.totalDistance!.toStringAsFixed(0)} ${LocaleKeys.meter.tr()}',
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
+                          Container(
+                            height: 100.w,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withAlpha(50),
+                                  blurRadius: 5.r,
+                                  spreadRadius: 1.r,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text: LocaleKeys.arrival_time.tr(),
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    bottom: 5.h,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text:
+                                        '${AppCubit.get(context).requestMap['estimatedTimeInMinutes'] ?? ""} ${LocaleKeys.minute.tr()}',
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          Container(
+                            height: 100.w,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withAlpha(50),
+                                  blurRadius: 5.r,
+                                  spreadRadius: 1.r,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text: LocaleKeys.arrival_time.tr(),
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    bottom: 5.h,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 100.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.center,
+                                    text: formattedArrivalTime,
+                                    size: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: 343.w,
+                        padding: EdgeInsets.all(16.r),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withAlpha(50),
+                              blurRadius: 5.r,
+                              spreadRadius: 1.r,
+                              offset: Offset(0, 5.r),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                AppText(
+                                  text: LocaleKeys.meter_price.tr(),
+                                  size: 16.sp,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                const Spacer(),
+                                SizedBox(
+                                  width: 200.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.end,
+                                    text:
+                                        '${AppCubit.get(context).requestMap['pricePerMeter'] ?? ""} ${LocaleKeys.sar.tr()}',
+                                    size: 16.sp,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                AppText(
+                                  text: LocaleKeys.cost.tr(),
+                                  size: 16.sp,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                const Spacer(),
+                                SizedBox(
+                                  width: 200.w,
+                                  child: AppText(
+                                    textAlign: TextAlign.end,
+                                    text:
+                                        '${AppCubit.get(context).requestMap['totalPrice'] ?? ""} ${LocaleKeys.sar.tr()}',
+                                    size: 16.sp,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          AppRouter.pop(context);
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => const PaymentSheet(),
+                          );
+                        },
+                        child: AppText(
+                          text: LocaleKeys.confirm.tr(),
+                          size: 21.sp,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    height: 100.w,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(50),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text: LocaleKeys.time.tr(),
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            bottom: 5.h,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text:
-                                '${widget.travelTime} ${LocaleKeys.minute.tr()}',
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 100.w,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(50),
-                          blurRadius: 5.r,
-                          spreadRadius: 1.r,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text: LocaleKeys.arrival_time.tr(),
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            bottom: 5.h,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 100.w,
-                          child: AppText(
-                            textAlign: TextAlign.center,
-                            text: '${widget.arrivalTime}',
-                            size: 16.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                width: 343.w,
-                padding: EdgeInsets.all(16.r),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withAlpha(50),
-                      blurRadius: 5.r,
-                      spreadRadius: 1.r,
-                      offset: Offset(0, 5.r),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        AppText(
-                          text: LocaleKeys.meter_price.tr(),
-                          size: 16.sp,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        const Spacer(),
-                        AppText(
-                          text: '20 ${LocaleKeys.sar.tr()}',
-                          size: 16.sp,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      children: [
-                        AppText(
-                          text: LocaleKeys.cost.tr(),
-                          size: 16.sp,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        const Spacer(),
-                        AppText(
-                          text: '20 ${LocaleKeys.sar.tr()}',
-                          size: 16.sp,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              AppButton(
-                color: Colors.white,
-                onPressed: () {
-                  AppRouter.pop(context);
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const PaymentSheet(),
-                  );
-                },
-                child: AppText(
-                  text: LocaleKeys.confirm.tr(),
-                  size: 21.sp,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
         );
       },
     );

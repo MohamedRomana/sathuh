@@ -9,7 +9,6 @@ import '../../../core/widgets/app_router.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/flash_message.dart';
 import '../../../generated/locale_keys.g.dart';
-import '../bank_transfer/bank_transfer.dart';
 import '../home_layout/home_layout.dart';
 
 class PaymentSheet extends StatefulWidget {
@@ -187,28 +186,53 @@ class _PaymentSheetState extends State<PaymentSheet> {
                 ],
               ),
               Center(
-                child: AppButton(
-                  onPressed: () {
-                    if (AppCubit.get(context).paymentIndex == -1) {
+                child: BlocConsumer<AppCubit, AppState>(
+                  listener: (context, state) {
+                    if (state is ConfirmRequestSuccess) {
                       showFlashMessage(
-                        message: LocaleKeys.choosePaymentMethod.tr(),
-                        type: FlashMessageType.warning,
+                        message: state.message,
+                        type: FlashMessageType.success,
                         context: context,
                       );
-                    } else if (AppCubit.get(context).paymentIndex == 0) {
                       AppCubit.get(context).changebottomNavIndex(1);
                       AppRouter.navigateAndFinish(context, const HomeLayout());
-                    } else if (AppCubit.get(context).paymentIndex == 1) {
-                      AppRouter.navigateTo(context, const BankTransferPage());
+                    } else if (state is ConfirmRequestFailure) {
+                      showFlashMessage(
+                        message: state.error,
+                        type: FlashMessageType.error,
+                        context: context,
+                      );
                     }
                   },
-                  top: 30.h,
-                  child: AppText(
-                    text: LocaleKeys.confirm.tr(),
-                    size: 21.sp,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  builder: (context, state) {
+                    return AppButton(
+                      onPressed: () {
+                        if (AppCubit.get(context).paymentIndex == -1) {
+                          showFlashMessage(
+                            message: LocaleKeys.choosePaymentMethod.tr(),
+                            type: FlashMessageType.warning,
+                            context: context,
+                          );
+                        } else {
+                          AppCubit.get(context).confirmRequest(
+                            requestId: AppCubit.get(context).requestId,
+                          );
+                        }
+                      },
+                      top: 30.h,
+                      child:
+                          state is ConfirmRequestLoading
+                              ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                              : AppText(
+                                text: LocaleKeys.confirm.tr(),
+                                size: 21.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    );
+                  },
                 ),
               ),
             ],
