@@ -22,8 +22,6 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
 import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
-import '../../../screens/user_screens/chat_details/widgets/chat_message.dart'
-    hide ChatMessageModel;
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
 import '../../../screens/user_screens/home_layout/home/home.dart';
 import '../../../screens/user_screens/home_layout/orders/orders.dart';
