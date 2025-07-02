@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,18 @@ import 'package:sathuh/screens/admin_screens/home_layout/price/price.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/chats/driver_chats.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/home/driver_home.dart';
 import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
 import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
+import '../../../screens/user_screens/chat_details/widgets/chat_message.dart'
+    hide ChatMessageModel;
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
 import '../../../screens/user_screens/home_layout/home/home.dart';
 import '../../../screens/user_screens/home_layout/orders/orders.dart';
 import '../../cache/cache_helper.dart';
 import '../../constants/contsants.dart';
+import '../models/chat_models.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
@@ -631,6 +636,7 @@ class AppCubit extends Cubit<AppState> {
     debugPrint("Profile API response: $data");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      CacheHelper.setUserId(data["data"]['user']['_id']);
       showProfileMap = data["data"]['user'];
       emit(GetProfileSuccess());
     } else {
@@ -1262,6 +1268,26 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  List allNearDriversList = [];
+  Future allNearDrivers({required String requestId}) async {
+    emit(GetAllNearDriversLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}request/allNearDrivers/$requestId"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      allNearDriversList = data['data']['nearbyDrivers'];
+      emit(GetAllNearDriversSuccess());
+    } else {
+      emit(GetAllNearDriversFailure(error: data["message"]));
+    }
+  }
+
   List completedRequestsList = [];
   Future completedRequest() async {
     emit(GetCompletedRequestsLoading());
@@ -1282,7 +1308,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-List inRoadRequestsList = [];
+  List inRoadRequestsList = [];
   Future inRoadRequest() async {
     emit(InRoadRequestLoading());
     String? token = CacheHelper.getUserToken();
@@ -1420,10 +1446,151 @@ List inRoadRequestsList = [];
       emit(DriverBanFailure(error: data["message"]));
     }
   }
+
+  final Dio _dio = Dio(); // استخدم Dio لجلب البيانات من الـ API
+  late IO.Socket socket; // اجعل السوكيت جزءًا من الـ Cubit لإدارة مركزية
+  List<ChatRoomModel> chatRooms = []; // قائمة الرومات
+  List<ChatMessageModel> currentChatMessages = []; // رسائل المحادثة الحالية
+
+  // بيانات المستخدم الحالي (افترض أنها موجودة في showProfileMap)
+  Map<String, dynamic> currentUser = {'_id': CacheHelper.getUserId()};
+
+  void initSocket() {
+    socket = IO.io(
+      'https://towtruck.cloud', // URL السيرفر
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .disableAutoConnect() // لا تتصل تلقائيًا، سنتحكم في الاتصال يدوياً
+          .setExtraHeaders({
+            'Authorization': CacheHelper.getUserToken(),
+          }) // التوكن
+          .build(),
+    );
+
+    socket.connect();
+
+    socket.onConnect((_) {
+      debugPrint('✅ Socket Connected to https://towtruck.cloud');
+      // يمكنك هنا إرسال حدث للـ server لإعلامه بأن المستخدم متصل
+      // مثلاً: socket.emit('userOnline', {'userId': showProfileMap['_id']});
+    });
+
+    socket.on('successMessage', (data) {
+      debugPrint('✅ successMessage: ${data['message']}');
+      // أضف الرسالة المستلمة إلى قائمة الرسائل الحالية
+      if (data != null && data['message'] != null && data['fromId'] != null) {
+        currentChatMessages.add(ChatMessageModel.fromJson(data));
+        emit(SendMessageSuccess()); // تحديث الـ UI
+      }
+    });
+
+    socket.on('receiveMessage', (data) {
+      debugPrint('📩 receiveMessage: ${data['message']}');
+      if (data != null && data['message'] != null && data['fromId'] != null) {
+        currentChatMessages.add(ChatMessageModel.fromJson(data));
+        emit(GetChatMessagesSuccess(List.from(currentChatMessages)));
+      }
+    });
+
+    socket.on('socket_Error', (error) {
+      debugPrint('❌ Socket Error: $error');
+      emit(AppError('Socket Error: $error'));
+    });
+
+    socket.onDisconnect((_) {
+      debugPrint('❌ Socket Disconnected');
+    });
+  }
+
+  Future<void> getChatRooms() async {
+    emit(GetChatRoomsLoading());
+    try {
+      final response = await _dio.get(
+        'https://towtruck.cloud/api/chat/rooms',
+        options: Options(
+          headers: {'Authorization': CacheHelper.getUserToken()},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        chatRooms =
+            (response.data['data'] as List)
+                .map((e) => ChatRoomModel.fromJson(e))
+                .toList();
+        emit(GetChatRoomsSuccess(chatRooms));
+      } else {
+        emit(
+          GetChatRoomsError(
+            response.data['message'] ?? 'Failed to load chat rooms',
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Error getting chat rooms: $e');
+      emit(GetChatRoomsError(e.toString()));
+    }
+  }
+
+  Future<void> getChatMessages(String destId) async {
+    emit(GetChatMessagesLoading());
+    try {
+      final response = await _dio.get(
+        'https://towtruck.cloud/api/chat/messages/$destId',
+        options: Options(
+          headers: {'Authorization': CacheHelper.getUserToken()},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        currentChatMessages =
+            (response.data['data'] as List)
+                .map((e) => ChatMessageModel.fromJson(e))
+                .toList();
+        emit(GetChatMessagesSuccess(currentChatMessages));
+      } else {
+        emit(
+          GetChatMessagesError(
+            response.data['message'] ?? 'Failed to load messages',
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Error getting chat messages: $e');
+      emit(GetChatMessagesError(e.toString()));
+    }
+  }
+
+  void sendMessage(String message, String destId) {
+    if (message.trim().isEmpty) return;
+
+    socket.emit('sendMessage', {'message': message, 'destId': destId});
+
+    currentChatMessages.add(
+      ChatMessageModel(
+        fromId: showProfileMap['_id'],
+        message: message,
+        timestamp: DateTime.now().toIso8601String(),
+      ),
+    );
+    emit(SendMessageSuccess());
+  }
+
+  @override
+  Future<void> close() {
+    socket.disconnect(); // افصل السوكيت عند إغلاق الـ Cubit
+    socket.dispose();
+    return super.close();
+  }
 }
 
 class LocationResult {
   final String name;
   final LatLng latLng;
   LocationResult({required this.name, required this.latLng});
+}
+
+// app_state.dart
+class AppError extends AppState {
+  final String error;
+  AppError(this.error);
 }

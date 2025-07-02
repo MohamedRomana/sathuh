@@ -130,24 +130,6 @@ final class PrivacyPolicyFailure extends AppState {
   PrivacyPolicyFailure({required this.error});
 }
 
-final class GetChatMessagesLoading extends AppState {}
-
-final class GetChatMessagesSuccess extends AppState {}
-
-final class GetChatMessagesFailure extends AppState {
-  final String error;
-  GetChatMessagesFailure({required this.error});
-}
-
-final class SendMessageLoading extends AppState {}
-
-final class SendMessageSuccess extends AppState {}
-
-final class SendMessageFailure extends AppState {
-  final String error;
-  SendMessageFailure({required this.error});
-}
-
 final class GetSectionsLoading extends AppState {}
 
 final class GetSectionsSuccess extends AppState {}
@@ -417,4 +399,40 @@ final class InRoadRequestSuccess extends AppState {
 final class InRoadRequestFailure extends AppState {
   final String error;
   InRoadRequestFailure({required this.error});
+}
+
+final class GetAllNearDriversLoading extends AppState {}
+
+final class GetAllNearDriversSuccess extends AppState {}
+
+final class GetAllNearDriversFailure extends AppState {
+  final String error;
+  GetAllNearDriversFailure({required this.error});
+}
+
+class GetChatRoomsLoading extends AppState {}
+class GetChatRoomsSuccess extends AppState {
+  final List<ChatRoomModel> chatRooms;
+  GetChatRoomsSuccess(this.chatRooms);
+}
+class GetChatRoomsError extends AppState {
+  final String error;
+  GetChatRoomsError(this.error);
+}
+
+class GetChatMessagesLoading extends AppState {}
+class GetChatMessagesSuccess extends AppState {
+  final List<ChatMessageModel> messages;
+  GetChatMessagesSuccess(this.messages);
+}
+class GetChatMessagesError extends AppState {
+  final String error;
+  GetChatMessagesError(this.error);
+}
+
+class SendMessageLoading extends AppState {}
+class SendMessageSuccess extends AppState {}
+class SendMessageError extends AppState {
+  final String error;
+  SendMessageError(this.error);
 }

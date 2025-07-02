@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
+import '../../../../core/service/models/chat_models.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../gen/assets.gen.dart';
-
-class ChatMessageModel {
-  final String fromId;
-  final String message;
-
-  ChatMessageModel({required this.fromId, required this.message});
-}
 
 class ChatMessage extends StatelessWidget {
   final ChatMessageModel chatMessages;

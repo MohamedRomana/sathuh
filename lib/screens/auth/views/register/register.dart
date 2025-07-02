@@ -14,7 +14,6 @@ import '../../data/auth_cubit.dart';
 import '../otp/otp.dart';
 import '../widgets/auth_header.dart';
 import 'widgets/fields.dart';
-import 'widgets/image_row.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _fullNameController = TextEditingController();
@@ -66,9 +65,6 @@ class _RegisterState extends State<Register> {
               cityController: _cityController,
               townController: _townController,
             ),
-            CacheHelper.getUserType() == "driver"
-                ? const ImageRow()
-                : Container(),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is RegisterSuccess) {

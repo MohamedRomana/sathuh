@@ -118,73 +118,74 @@ class _PaymentSheetState extends State<PaymentSheet> {
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  Container(height: 21.h),
-                  InkWell(
-                    onTap: () {
-                      if (AppCubit.get(context).paymentIndex == 1) {
-                        AppCubit.get(context).changePaymentIndex(index: -1);
-                      } else {
-                        AppCubit.get(context).changePaymentIndex(index: 1);
-                      }
-                    },
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    child: Container(
-                      padding: EdgeInsets.all(16.r),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withOpacity(0.3),
-                            blurRadius: 5.r,
-                            spreadRadius: 1.r,
-                            offset: Offset(0, 5.r),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.payments,
-                            size: 25.sp,
-                            color: AppColors.primary,
-                          ),
-                          Container(width: 8.w),
-                          AppText(
-                            text: LocaleKeys.onlinePayment.tr(),
-                            size: 15.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          const Spacer(),
-                          Container(
-                            height: 25.h,
-                            width: 24.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color:
-                                  AppCubit.get(context).paymentIndex == 1
-                                      ? AppColors.primary
-                                      : Colors.transparent,
-                              border: Border.all(color: AppColors.primary),
-                            ),
-                            child: Icon(
-                              Icons.done,
-                              color:
-                                  AppCubit.get(context).paymentIndex == 1
-                                      ? Colors.white
-                                      : Colors.transparent,
-                              size: 16.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Column(
+              //   children: [
+              //     Container(height: 21.h),
+              //     InkWell(
+              //       onTap: () {
+              //         if (AppCubit.get(context).paymentIndex == 1) {
+              //           AppCubit.get(context).changePaymentIndex(index: -1);
+              //         } else {
+              //           AppCubit.get(context).changePaymentIndex(index: 1);
+              //         }
+              //       },
+              //       splashColor: Colors.transparent,
+              //       highlightColor: Colors.transparent,
+              //       child: Container(
+              //         padding: EdgeInsets.all(16.r),
+              //         decoration: BoxDecoration(
+              //           color: Colors.white,
+              //           borderRadius: BorderRadius.circular(10.r),
+              //           boxShadow: [
+              //             BoxShadow(
+              //               color: AppColors.primary.withOpacity(0.3),
+              //               blurRadius: 5.r,
+              //               spreadRadius: 1.r,
+              //               offset: Offset(0, 5.r),
+              //             ),
+              //           ],
+              //         ),
+              //         child: Row(
+              //           children: [
+              //             Icon(
+              //               Icons.payments,
+              //               size: 25.sp,
+              //               color: AppColors.primary,
+              //             ),
+              //             Container(width: 8.w),
+              //             AppText(
+              //               text: LocaleKeys.onlinePayment.tr(),
+              //               size: 15.sp,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //             const Spacer(),
+              //             Container(
+              //               height: 25.h,
+              //               width: 24.w,
+              //               decoration: BoxDecoration(
+              //                 shape: BoxShape.circle,
+              //                 color:
+              //                     AppCubit.get(context).paymentIndex == 1
+              //                         ? AppColors.primary
+              //                         : Colors.transparent,
+              //                 border: Border.all(color: AppColors.primary),
+              //               ),
+              //               child: Icon(
+              //                 Icons.done,
+              //                 color:
+              //                     AppCubit.get(context).paymentIndex == 1
+              //                         ? Colors.white
+              //                         : Colors.transparent,
+              //                 size: 16.sp,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              const Spacer(),
               Center(
                 child: BlocConsumer<AppCubit, AppState>(
                   listener: (context, state) {
