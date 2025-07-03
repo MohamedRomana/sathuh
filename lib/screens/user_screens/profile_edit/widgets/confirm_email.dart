@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:sathuh/core/widgets/custom_app_bar.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -29,7 +28,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return Scaffold(
       body: Stack(
         children: [
           Image.asset(

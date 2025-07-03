@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_router.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
@@ -47,8 +46,10 @@ class _DeleteAccountState extends State<DeleteAccount> {
   }
 
   @override
+
+
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return Scaffold(
       body: Stack(
         children: [
           Image.asset(

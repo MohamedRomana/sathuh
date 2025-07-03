@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -49,7 +48,7 @@ class _EditNamePhoneState extends State<EditNamePhone> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return Scaffold(
       body: Stack(
         children: [
           Image.asset(

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sathuh/core/widgets/app_button.dart';
 import 'package:sathuh/core/widgets/app_router.dart';
-import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
@@ -43,7 +42,7 @@ class _UpdateEmailProfileState extends State<UpdateEmailProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNav(
+    return Scaffold(
       body: Stack(
         children: [
           Image.asset(
