@@ -27,7 +27,7 @@ class Chats extends StatelessWidget {
           Column(
             children: [
               CustomAppBar(title: LocaleKeys.chats.tr()),
-              const CustomPrevoiusChats(),
+              const CustomChats(),
             ],
           ),
         ],

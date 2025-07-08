@@ -11,12 +11,11 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../chat_details/chat_details.dart';
 
-class CustomPrevoiusChats extends StatelessWidget {
-  const CustomPrevoiusChats({super.key});
+class CustomChats extends StatelessWidget {
+  const CustomChats({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // قم باستدعاء الدالة لجلب قائمة المحادثات عند بناء الـ Widget
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AppCubit.get(context).getChatRooms();
     });

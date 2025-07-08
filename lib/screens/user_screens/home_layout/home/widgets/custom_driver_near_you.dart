@@ -157,9 +157,7 @@ class _CustomDriverNearYouState extends State<CustomDriverNearYou> {
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () {
-                                      AppCubit.get(
-                                        context,
-                                      ).changebottomNavIndex(3);
+
                                     },
                                     child: const Icon(
                                       Icons.chat,

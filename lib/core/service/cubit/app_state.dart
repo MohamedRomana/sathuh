@@ -436,3 +436,14 @@ class SendMessageError extends AppState {
   final String error;
   SendMessageError(this.error);
 }
+
+class SendMessagePending extends AppState {}
+
+class CreateChatRoomLoading extends AppState {}
+
+class CreateChatRoomSuccess extends AppState {}
+
+class CreateChatRoomError extends AppState {
+  final String error;
+  CreateChatRoomError(this.error);
+}

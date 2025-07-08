@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -22,11 +24,13 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
 import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
+import '../../../screens/user_screens/chat_details/chat_details.dart';
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
 import '../../../screens/user_screens/home_layout/home/home.dart';
 import '../../../screens/user_screens/home_layout/orders/orders.dart';
 import '../../cache/cache_helper.dart';
 import '../../constants/contsants.dart';
+import '../../widgets/app_router.dart';
 import '../models/chat_models.dart';
 part 'app_state.dart';
 
@@ -1474,18 +1478,19 @@ class AppCubit extends Cubit<AppState> {
     });
 
     socket.on('successMessage', (data) {
-      debugPrint('✅ successMessage: ${data['message']}');
-      // أضف الرسالة المستلمة إلى قائمة الرسائل الحالية
-      if (data != null && data['message'] != null && data['fromId'] != null) {
-        currentChatMessages.add(ChatMessageModel.fromJson(data));
-        emit(SendMessageSuccess()); // تحديث الـ UI
+      debugPrint('✅ successMessage: $data');
+      if (data != null && data['message'] != null) {
+        final newMessage = ChatMessageModel.fromJson(data['message']);
+        currentChatMessages.add(newMessage);
+        emit(SendMessageSuccess());
       }
     });
 
     socket.on('receiveMessage', (data) {
-      debugPrint('📩 receiveMessage: ${data['message']}');
-      if (data != null && data['message'] != null && data['fromId'] != null) {
-        currentChatMessages.add(ChatMessageModel.fromJson(data));
+      debugPrint('📩 receiveMessage: $data');
+      if (data != null && data['message'] != null) {
+        final newMessage = ChatMessageModel.fromJson(data['message']);
+        currentChatMessages.add(newMessage);
         emit(GetChatMessagesSuccess(List.from(currentChatMessages)));
       }
     });
@@ -1504,7 +1509,7 @@ class AppCubit extends Cubit<AppState> {
     emit(GetChatRoomsLoading());
     try {
       final response = await _dio.get(
-        'https://towtruck.cloud/api/chat/rooms',
+        'https://towtruck.cloud/chat/getAllChats',
         options: Options(
           headers: {'Authorization': CacheHelper.getUserToken()},
         ),
@@ -1561,8 +1566,10 @@ class AppCubit extends Cubit<AppState> {
   void sendMessage(String message, String destId) {
     if (message.trim().isEmpty) return;
 
+    // Emit الرسالة للسيرفر
     socket.emit('sendMessage', {'message': message, 'destId': destId});
 
+    // ضفها محليًا مؤقتًا بانتظار successMessage
     currentChatMessages.add(
       ChatMessageModel(
         fromId: showProfileMap['_id'],
@@ -1570,12 +1577,43 @@ class AppCubit extends Cubit<AppState> {
         timestamp: DateTime.now().toIso8601String(),
       ),
     );
-    emit(SendMessageSuccess());
+
+    emit(SendMessagePending()); // حالة pending بدل success مباشرة
+  }
+
+  Future<void> createNewChatRoom({
+    required String destId,
+    required String otherUserName,
+    required BuildContext context,
+  }) async {
+    emit(CreateChatRoomLoading());
+    try {
+      final response = await _dio.post(
+        'https://towtruck.cloud/api/chat/createRoom',
+        data: {'destId': destId},
+        options: Options(
+          headers: {'Authorization': CacheHelper.getUserToken()},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        emit(CreateChatRoomSuccess());
+        AppRouter.navigateTo(
+          context,
+          ChatDetails(destId: destId, otherUserName: otherUserName),
+        );
+      } else {
+        emit(CreateChatRoomError('فشل إنشاء غرفة الدردشة'));
+      }
+    } catch (e) {
+      debugPrint('❌ Error creating chat room: $e');
+      emit(CreateChatRoomError(e.toString()));
+    }
   }
 
   @override
   Future<void> close() {
-    socket.disconnect(); // افصل السوكيت عند إغلاق الـ Cubit
+    socket.disconnect();
     socket.dispose();
     return super.close();
   }
