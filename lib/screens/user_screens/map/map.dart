@@ -17,17 +17,17 @@ import '../../../core/widgets/flash_message.dart';
 import 'widgets/pay_details.dart';
 
 class OpenStreetMapView extends StatefulWidget {
-  final String problemId;
+  final List<String> problemIds;
   final String carsId;
   final String serviceId;
   final TextEditingController problemController;
 
   const OpenStreetMapView({
     super.key,
-    required this.problemId,
     required this.problemController,
     required this.carsId,
     required this.serviceId,
+    required this.problemIds,
   });
 
   @override
@@ -286,7 +286,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
                     if (totalDistance != null) {
                       debugPrint("serviceId: ${widget.serviceId},");
                       debugPrint("carId: ${widget.carsId}");
-                      debugPrint("problemId: ${widget.problemId}");
+                      debugPrint("problemId: ${widget.problemIds}");
                       debugPrint(
                         "otherProblemText: ${widget.problemController.text}",
                       );
@@ -297,7 +297,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
                       AppCubit.get(context).addRequest(
                         serviceId: widget.serviceId,
                         carId: widget.carsId,
-                        problemId: widget.problemId,
+                        problemId: widget.problemIds,
                         otherProblemText: widget.problemController.text,
                         pickLat: currentLocation!.latitude,
                         pickLng: currentLocation!.longitude,

@@ -214,9 +214,13 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeIndex());
   }
 
-  List<int> selectedProblemIndexes = [-1];
+  List<int> selectedProblemIndexes = [];
   void changeSelectedProblem({required int index}) {
-    selectedProblemIndexes = [index];
+    if (selectedProblemIndexes.contains(index)) {
+      selectedProblemIndexes.remove(index);
+    } else {
+      selectedProblemIndexes.add(index);
+    }
     emit(ChangeIndex());
   }
 
@@ -1189,7 +1193,7 @@ class AppCubit extends Cubit<AppState> {
   Future addRequest({
     required String serviceId,
     required String carId,
-    required String problemId,
+    required List<String> problemId,
     required String otherProblemText,
     required double pickLat,
     required double pickLng,
@@ -1204,7 +1208,7 @@ class AppCubit extends Cubit<AppState> {
       headers: {"Authorization": token, "Content-Type": "application/json"},
       body: jsonEncode({
         "carId": carId,
-        "problems": [problemId],
+        "problems": problemId,
         "otherProblemText": otherProblemText,
         "pickupLocation": {
           "coordinates": [pickLng, pickLat],

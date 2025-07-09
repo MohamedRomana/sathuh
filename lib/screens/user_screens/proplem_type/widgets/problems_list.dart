@@ -54,15 +54,7 @@ class ProblemsList extends StatelessWidget {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      if (AppCubit.get(
-                        context,
-                      ).selectedProblemIndexes.contains(index)) {
-                        AppCubit.get(context).changeSelectedProblem(index: -1);
-                      } else {
-                        AppCubit.get(
-                          context,
-                        ).changeSelectedProblem(index: index);
-                      }
+                      AppCubit.get(context).changeSelectedProblem(index: index);
                     },
                     child: Container(
                       width: 343.w,

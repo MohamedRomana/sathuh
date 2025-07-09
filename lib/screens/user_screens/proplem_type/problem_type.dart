@@ -66,33 +66,38 @@ class _ProblemTypeState extends State<ProblemType> {
                     CustomAnotherProblem(problemController: _problemController),
                     AppButton(
                       onPressed: () {
-                        if (AppCubit.get(
-                          context,
-                        ).selectedProblemIndexes.contains(-1)) {
+                        final selectedIndexes =
+                            AppCubit.get(context).selectedProblemIndexes;
+
+                        if (selectedIndexes.isEmpty) {
                           showFlashMessage(
                             message: LocaleKeys.select_problem.tr(),
                             type: FlashMessageType.warning,
                             context: context,
                           );
                         } else {
+                          final selectedIds =
+                              selectedIndexes
+                                  .map(
+                                    (index) =>
+                                        AppCubit.get(
+                                              context,
+                                            ).carProblemsList[index]['_id']
+                                            as String,
+                                  )
+                                  .toList();
+
                           AppRouter.navigateTo(
                             context,
                             OpenStreetMapView(
-                              problemId:
-                                  AppCubit.get(
-                                    context,
-                                  ).carProblemsList[AppCubit.get(
-                                    context,
-                                  ).selectedProblemIndexes[0]]['_id'],
+                              problemIds: selectedIds,
                               problemController: _problemController,
                               carsId: widget.carId,
                               serviceId: widget.serviceId,
                             ),
                           );
 
-                          debugPrint(
-                            'problem id: ${AppCubit.get(context).carProblemsList[AppCubit.get(context).selectedProblemIndexes[0]]['_id']}',
-                          );
+                          debugPrint('Selected problem IDs: $selectedIds');
                         }
                       },
                       top: 24.h,
