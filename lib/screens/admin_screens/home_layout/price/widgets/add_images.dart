@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,8 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
+import 'package:sathuh/core/widgets/app_cached.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
-import '../../../../../core/constants/contsants.dart';
+import '../../../../../core/cache/cache_helper.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../generated/locale_keys.g.dart';
 
@@ -24,6 +24,7 @@ class _AddImagesState extends State<AddImages> {
   @override
   void initState() {
     super.initState();
+    AppCubit.get(context).getBanner();
   }
 
   Future<List<File>> _pickImages() async {
@@ -40,21 +41,15 @@ class _AddImagesState extends State<AddImages> {
     return [];
   }
 
-  void _removeImage(int index) {
-    setState(() {
-      AppCubit.get(context).newBanners.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        final banners = AppCubit.get(context).newBanners;
+        debugPrint(CacheHelper.getUserToken());
         return Column(
           children: [
             Container(height: 24.h),
-            banners.isEmpty
+            AppCubit.get(context).banners.isEmpty
                 ? Center(
                   child: AppText(
                     text: LocaleKeys.no_saved_images.tr(),
@@ -64,43 +59,71 @@ class _AddImagesState extends State<AddImages> {
                   ),
                 )
                 : SizedBox(
-                  height: 200,
+                  height: 150.h,
                   child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     scrollDirection: Axis.horizontal,
-                    itemCount: banners.length,
+                    itemCount: AppCubit.get(context).banners.length,
                     separatorBuilder: (context, index) => Container(width: 16),
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.r),
-                            child: Image.network(
-                              '$baseUrl/uploads/${banners[index]}',
+                            child: AppCachedImage(
+                              image: AppCubit.get(context).banners[index],
                               width: 160,
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(Icons.broken_image);
-                              },
                             ),
                           ),
 
                           Positioned(
                             top: 4,
                             right: 4,
-                            child: InkWell(
-                              onTap: () => _removeImage(index),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.5),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
+                            child: BlocConsumer<AppCubit, AppState>(
+                              listener: (context, state) {
+                                if (state is DeleteBannerSuccess) {
+                                  showFlashMessage(
+                                    message: state.message,
+                                    type: FlashMessageType.success,
+                                    context: context,
+                                  );
+                                } else if (state is DeleteBannerFailure) {
+                                  showFlashMessage(
+                                    message: state.error,
+                                    type: FlashMessageType.error,
+                                    context: context,
+                                  );
+                                }
+                              },
+                              builder: (context, state) {
+                                return InkWell(
+                                  onTap: () {
+                                    final imageUrl =
+                                        AppCubit.get(context).banners[index];
+                                    final imageName = imageUrl.split('/').last;
+
+                                    AppCubit.get(context).deleteBanner(
+                                      bannerId:
+                                          AppCubit.get(
+                                            context,
+                                          ).bannerIds[index],
+                                      image: imageName,
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],

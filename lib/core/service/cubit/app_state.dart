@@ -411,27 +411,33 @@ final class GetAllNearDriversFailure extends AppState {
 }
 
 class GetChatRoomsLoading extends AppState {}
+
 class GetChatRoomsSuccess extends AppState {
   final List<ChatRoomModel> chatRooms;
   GetChatRoomsSuccess(this.chatRooms);
 }
+
 class GetChatRoomsError extends AppState {
   final String error;
   GetChatRoomsError(this.error);
 }
 
 class GetChatMessagesLoading extends AppState {}
+
 class GetChatMessagesSuccess extends AppState {
   final List<ChatMessageModel> messages;
   GetChatMessagesSuccess(this.messages);
 }
+
 class GetChatMessagesError extends AppState {
   final String error;
   GetChatMessagesError(this.error);
 }
 
 class SendMessageLoading extends AppState {}
+
 class SendMessageSuccess extends AppState {}
+
 class SendMessageError extends AppState {
   final String error;
   SendMessageError(this.error);
@@ -446,4 +452,50 @@ class CreateChatRoomSuccess extends AppState {}
 class CreateChatRoomError extends AppState {
   final String error;
   CreateChatRoomError(this.error);
+}
+
+class DeleteBannerLoading extends AppState {}
+
+class DeleteBannerSuccess extends AppState {
+  final String message;
+  DeleteBannerSuccess({required this.message});
+}
+
+class DeleteBannerFailure extends AppState {
+  final String error;
+  DeleteBannerFailure({required this.error});
+}
+
+class UpdatePriceLoading extends AppState {}
+
+class UpdatePriceSuccess extends AppState {
+  final String message;
+  UpdatePriceSuccess({required this.message});
+}
+
+class UpdatePriceFailure extends AppState {
+  final String error;
+  UpdatePriceFailure({required this.error});
+}
+
+class GetSubscriptionsLoading extends AppState {}
+
+class GetSubscriptionsSuccess extends AppState {}
+
+class GetSubscriptionsFailure extends AppState {
+  final String error;
+  GetSubscriptionsFailure({required this.error});
+}
+
+class UpdateSubscriptionLoading extends AppState {
+}
+
+class UpdateSubscriptionSuccess extends AppState {
+  final String message;
+  UpdateSubscriptionSuccess({required this.message});
+}
+
+class UpdateSubscriptionFailure extends AppState {
+  final String error;
+  UpdateSubscriptionFailure({required this.error});
 }

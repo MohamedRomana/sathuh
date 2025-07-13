@@ -1123,6 +1123,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List banners = [];
+  List bannerIds = [];
   Future getBanner() async {
     emit(GetBannerLoading());
     String? token = CacheHelper.getUserToken();
@@ -1137,15 +1138,39 @@ class AppCubit extends Cubit<AppState> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       final updatedBanners = data['data']['updatedBanners'] as List;
       banners = [];
+      bannerIds = [];
 
       for (var banner in updatedBanners) {
         final images = banner['image'] as List;
         banners.addAll(images);
       }
 
+      for (var banner in updatedBanners) {
+        final id = banner['_id'] as String;
+        bannerIds.add(id);
+      }
+
       emit(GetBannerSuccess());
     } else {
       emit(GetBannerFailure(error: data["message"]));
+    }
+  }
+
+  Future deleteBanner({required String bannerId, required String image}) async {
+    emit(DeleteBannerLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.delete(
+      Uri.parse("${baseUrl}admin/deleteBanner/$bannerId/$image"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(DeleteBannerSuccess(message: data["message"]));
+    } else {
+      emit(DeleteBannerFailure(error: data["message"]));
     }
   }
 
@@ -1620,6 +1645,75 @@ class AppCubit extends Cubit<AppState> {
     socket.disconnect();
     socket.dispose();
     return super.close();
+  }
+
+  Future updatePrice({
+    required String serviceId,
+    required String pricePerMeter,
+  }) async {
+    emit(UpdatePriceLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}admin/updatePricePerMeter/$serviceId"),
+      headers: {"Authorization": token},
+      body: jsonEncode({"pricePerMeter": pricePerMeter}),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdatePriceSuccess(message: data["message"]));
+    } else {
+      emit(UpdatePriceFailure(error: data["message"]));
+    }
+  }
+
+  Map subMap = {};
+  Future getSubscriptions() async {
+    emit(GetSubscriptionsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}driver/subscription/Price?type=monthly"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      subMap = data["data"]['subscription'];
+      emit(GetSubscriptionsSuccess());
+    } else {
+      emit(GetSubscriptionsFailure(error: data["message"]));
+    }
+  }
+
+  Future updateSubscription({
+    required String type,
+    required serviceId,
+    required String price,
+  }) async {
+    emit(UpdateSubscriptionLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}admin/subscription/update"),
+      headers: {"Authorization": token},
+      body: jsonEncode({
+        "planType": type,
+        "serviceId": serviceId,
+        "price": price,
+      }),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdateSubscriptionSuccess(message: data["message"]));
+    } else {
+      emit(UpdateSubscriptionFailure(error: data["message"]));
+    }
   }
 }
 
