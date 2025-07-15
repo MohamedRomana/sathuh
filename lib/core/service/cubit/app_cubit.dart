@@ -1359,6 +1359,26 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  List pendingRequestsList = [];
+  Future pendingRequest() async {
+    emit(PendingRequestLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}request/pending?page=1&size=10"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      pendingRequestsList = data['data']['requests']['data'];
+      emit(PendingRequestSuccess());
+    } else {
+      emit(PendingRequestFailure(error: data["message"]));
+    }
+  }
+
   // ADMIN SERVICES
 
   List newBanners = [];
@@ -1713,6 +1733,26 @@ class AppCubit extends Cubit<AppState> {
       emit(UpdateSubscriptionSuccess(message: data["message"]));
     } else {
       emit(UpdateSubscriptionFailure(error: data["message"]));
+    }
+  }
+
+  List notificationsList = [];
+  Future getNotifications({int page = 0, int size = 1}) async {
+    emit(GetNotificationsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}user/notification?page=$page&size=$size"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      notificationsList = data["data"]['notifications'];
+      emit(GetNotificationsSuccess());
+    } else {
+      emit(GetNotificationsFailure(error: data["message"]));
     }
   }
 }

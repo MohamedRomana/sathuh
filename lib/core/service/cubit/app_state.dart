@@ -487,8 +487,7 @@ class GetSubscriptionsFailure extends AppState {
   GetSubscriptionsFailure({required this.error});
 }
 
-class UpdateSubscriptionLoading extends AppState {
-}
+class UpdateSubscriptionLoading extends AppState {}
 
 class UpdateSubscriptionSuccess extends AppState {
   final String message;
@@ -498,4 +497,22 @@ class UpdateSubscriptionSuccess extends AppState {
 class UpdateSubscriptionFailure extends AppState {
   final String error;
   UpdateSubscriptionFailure({required this.error});
+}
+
+class GetNotificationsLoading extends AppState {}
+
+class GetNotificationsSuccess extends AppState {}
+
+class GetNotificationsFailure extends AppState {
+  final String error;
+  GetNotificationsFailure({required this.error});
+}
+
+class PendingRequestLoading extends AppState {}
+
+class PendingRequestSuccess extends AppState {}
+
+class PendingRequestFailure extends AppState {
+  final String error;
+  PendingRequestFailure({required this.error});
 }

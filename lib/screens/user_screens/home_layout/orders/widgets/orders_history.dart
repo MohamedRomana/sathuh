@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/generated/locale_keys.g.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
-import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_list_shimmer.dart';
 import '../../../../../core/widgets/custom_lottie_widget.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../order_details/order_details.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
@@ -48,7 +46,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           itemBuilder:
               (BuildContext context, int index) => InkWell(
                 onTap: () {
-                  AppRouter.navigateTo(context, const OrderDetails());
+                  // AppRouter.navigateTo(context, const OrderDetails(index: index,));
                 },
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
@@ -68,7 +66,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 120.w,
+                              width: 200.w,
                               child: AppText(
                                 text:
                                     '${LocaleKeys.order_number.tr()} ${AppCubit.get(context).completedRequestsList[index]['id'] ?? ""}',
@@ -98,12 +96,12 @@ class _OrderHistoryState extends State<OrderHistory> {
                             ),
                           ],
                         ),
-                        AppText(
-                          text:
-                              '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).completedRequestsList[index]['serviceId']['type'] ?? ""}',
-                          size: 16.sp,
-                          family: 'DINArabic-Light',
-                        ),
+                        // AppText(
+                        //   text:
+                        //       '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).completedRequestsList[index]['serviceId']['type'] ?? ""}',
+                        //   size: 16.sp,
+                        //   family: 'DINArabic-Light',
+                        // ),
                         Align(
                           alignment: AlignmentDirectional.centerEnd,
                           child: Container(

@@ -21,7 +21,7 @@ class CurrentRequests extends StatefulWidget {
 class _CurrentRequestsState extends State<CurrentRequests> {
   @override
   void initState() {
-    AppCubit.get(context).inRoadRequest();
+    AppCubit.get(context).pendingRequest();
     super.initState();
   }
 
@@ -29,9 +29,9 @@ class _CurrentRequestsState extends State<CurrentRequests> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return state is InRoadRequestLoading
+        return state is PendingRequestLoading
             ? const CustomListShimmer()
-            : AppCubit.get(context).inRoadRequestsList.isEmpty
+            : AppCubit.get(context).pendingRequestsList.isEmpty
             ? Center(
               child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
             )
@@ -44,11 +44,11 @@ class _CurrentRequestsState extends State<CurrentRequests> {
               ),
               separatorBuilder:
                   (BuildContext context, int index) => Container(height: 16.h),
-              itemCount: AppCubit.get(context).inRoadRequestsList.length,
+              itemCount: AppCubit.get(context).pendingRequestsList.length,
               itemBuilder:
                   (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      AppRouter.navigateTo(context, const OrderDetails());
+                      AppRouter.navigateTo(context,  OrderDetails(index: index,));
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -75,11 +75,14 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppText(
-                                  text:
-                                      '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).inRoadRequestsList[index]['id']}',
-                                  size: 16.sp,
-                                  family: 'DINArabic-Medium',
+                                SizedBox(
+                                  width: 200.w,
+                                  child: AppText(
+                                    text:
+                                        '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).pendingRequestsList[index]['id']}',
+                                    size: 16.sp,
+                                    family: 'DINArabic-Medium',
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -92,7 +95,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                                       text: _formatDate(
                                         AppCubit.get(
                                               context,
-                                            ).inRoadRequestsList[index]['createdAt'] ??
+                                            ).pendingRequestsList[index]['createdAt'] ??
                                             "",
                                       ),
                                       size: 14.sp,
@@ -102,12 +105,12 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                                 ),
                               ],
                             ),
-                            AppText(
-                              text:
-                                  '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).inRoadRequestsList[index]['serviceId']['type'] ?? ""}',
-                              size: 16.sp,
-                              family: 'DINArabic-Light',
-                            ),
+                            // AppText(
+                            //   text:
+                            //       '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).pendingRequestsList[index]['serviceId']['type']. ?? ""}',
+                            //   size: 16.sp,
+                            //   family: 'DINArabic-Light',
+                            // ),
                             Align(
                               alignment: AlignmentDirectional.centerEnd,
                               child: Container(
@@ -127,7 +130,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                                       text:
                                           AppCubit.get(
                                             context,
-                                          ).inRoadRequestsList[index]['status'] ??
+                                          ).pendingRequestsList[index]['status'] ??
                                           "",
                                       size: 13.sp,
                                       color: const Color(0xffFF8800),

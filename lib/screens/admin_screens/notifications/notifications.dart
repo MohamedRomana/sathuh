@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/admin_bottom_nav.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/widgets/app_text.dart';
@@ -9,8 +10,19 @@ import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
 
-class AdmNotifications extends StatelessWidget {
+class AdmNotifications extends StatefulWidget {
   const AdmNotifications({super.key});
+
+  @override
+  State<AdmNotifications> createState() => _AdmNotificationsState();
+}
+
+class _AdmNotificationsState extends State<AdmNotifications> {
+  @override
+  void initState() {
+    AppCubit.get(context).getNotifications();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
