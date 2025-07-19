@@ -20,6 +20,7 @@ import '../../../../generated/locale_keys.g.dart';
 import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
 import '../../../admin_screens/profile/adm_profile.dart';
+import '../../../admin_screens/work_orders/work_orders.dart';
 import '../../../auth/views/login/login.dart';
 import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../../driver_screens/notifications/driver_notifications.dart';
@@ -395,63 +396,62 @@ class _CustomDrawerState extends State<CustomDrawer>
                       ),
                     )
                     :
-                    //  AnimatedBuilder(
-                    //   animation: _animation4,
-                    //   builder: (context, child) {
-                    //     return Transform.translate(
-                    //       offset: Offset(_animation4.value, 0),
-                    //       child: child,
-                    //     );
-                    //   },
-                    //   child: InkWell(
-                    //     splashColor: Colors.transparent,
-                    //     highlightColor: Colors.transparent,
-                    //     onTap: () {
-                    //       AppCubit.get(context).changedrawerIndex(index: 2);
-                    //       AppRouter.navigateTo(context, const WorkOrders());
-                    //     },
-                    //     child: Container(
-                    //       width: 250.w,
-                    //       padding: EdgeInsets.symmetric(
-                    //         horizontal: 16.w,
-                    //         vertical: 8.h,
-                    //       ),
-                    //       margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                    //       decoration: BoxDecoration(
-                    //         color:
-                    //             AppCubit.get(context).drawerIndex == 2
-                    //                 ? AppColors.primary
-                    //                 : Colors.transparent,
-                    //         borderRadius: BorderRadius.circular(100.r),
-                    //       ),
-                    //       child: Row(
-                    //         children: [
-                    //           SvgPicture.asset(
-                    //             Assets.svg.orderDetails,
-                    //             height: 24.w,
-                    //             width: 24.w,
-                    //             color:
-                    //                 AppCubit.get(context).drawerIndex == 2
-                    //                     ? Colors.white
-                    //                     : AppColors.secondray,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //           AppText(
-                    //             start: 6.w,
-                    //             text: LocaleKeys.work_requests.tr(),
-                    //             color:
-                    //                 AppCubit.get(context).drawerIndex == 2
-                    //                     ? Colors.white
-                    //                     : Colors.black,
-                    //             size: 16.sp,
-                    //             family: FontFamily.tajawalBold,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(),
+                     AnimatedBuilder(
+                      animation: _animation4,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(_animation4.value, 0),
+                          child: child,
+                        );
+                      },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          AppCubit.get(context).changedrawerIndex(index: 2);
+                          AppRouter.navigateTo(context, const WorkOrders());
+                        },
+                        child: Container(
+                          width: 250.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                          decoration: BoxDecoration(
+                            color:
+                                AppCubit.get(context).drawerIndex == 2
+                                    ? AppColors.primary
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100.r),
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                Assets.svg.orderDetails,
+                                height: 24.w,
+                                width: 24.w,
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : AppColors.secondray,
+                                fit: BoxFit.cover,
+                              ),
+                              AppText(
+                                start: 6.w,
+                                text: LocaleKeys.work_requests.tr(),
+                                color:
+                                    AppCubit.get(context).drawerIndex == 2
+                                        ? Colors.white
+                                        : Colors.black,
+                                size: 16.sp,
+                                family: FontFamily.tajawalBold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
                 CacheHelper.getUserType() == 'user' ||
                         CacheHelper.getUserType() == 'driver'
