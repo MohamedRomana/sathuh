@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sathuh/gen/fonts.gen.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
@@ -19,155 +20,165 @@ class CustomCurrentOrders extends StatefulWidget {
 }
 
 class _CustomCurrentOrdersState extends State<CustomCurrentOrders> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    AppCubit.get(context).inRoadRequest();
     super.initState();
+    AppCubit.get(context).pendingRequest();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        AppCubit.get(context).pendingRequest();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return AppCubit.get(context).inRoadRequestsList.isEmpty
-            ? const SizedBox()
-            : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppText(
-                  start: 16.w,
-                  text: LocaleKeys.current_orders.tr(),
-                  size: 20.sp,
-                  fontWeight: FontWeight.bold,
-                  bottom: 16.h,
-                ),
-                state is InRoadRequestLoading
-                    ? const CustomListShimmer()
-                    : AppCubit.get(context).inRoadRequestsList.isEmpty
-                    ? Center(
-                      child: CustomLottieWidget(
-                        lottieName: Assets.img.emptyorder,
-                      ),
-                    )
-                    : ListView.separated(
-                      padding: EdgeInsetsDirectional.only(
-                        start: 16.w,
-                        end: 16.w,
-                        top: 24.h,
-                        bottom: 120.h,
-                      ),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder:
-                          (BuildContext context, int index) =>
-                              Container(height: 16.h),
-                      itemCount:
-                          AppCubit.get(context).inRoadRequestsList.length,
-                      itemBuilder:
-                          (BuildContext context, int index) => InkWell(
-                            onTap: () {
-                              AppRouter.navigateTo(
-                                context,
-                                const DrivOrderDetails(),
-                              );
-                            },
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            child: Container(
-                              width: 343.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: 5.r,
-                                    spreadRadius: 1.r,
-                                    offset: Offset(0, 5.r),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(16.sp),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        AppText(
+        return state is PendingRequestLoading
+            ? const CustomListShimmer()
+            : AppCubit.get(context).pendingRequestsList.isEmpty
+            ? Center(
+              child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
+            )
+            : SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    text: LocaleKeys.currentOrders.tr(),
+                    size: 20.sp,
+                    family: FontFamily.tajawalBold,
+                    start: 16.w,
+                  ),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+
+                    padding: EdgeInsetsDirectional.only(
+                      start: 16.w,
+                      end: 16.w,
+                      top: 24.h,
+                      bottom: 120.h,
+                    ),
+                    separatorBuilder:
+                        (BuildContext context, int index) =>
+                            Container(height: 16.h),
+                    itemCount: AppCubit.get(context).pendingRequestsList.length,
+                    itemBuilder:
+                        (BuildContext context, int index) => InkWell(
+                          onTap: () {
+                            AppRouter.navigateTo(
+                              context,
+                              DrivOrderDetails(index: index),
+                            );
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          child: Container(
+                            width: 343.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 5.r,
+                                  spreadRadius: 1.r,
+                                  offset: Offset(0, 5.r),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(16.sp),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 200.w,
+                                        child: AppText(
                                           text:
-                                              '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).inRoadRequestsList[index]['id']}',
+                                              '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).pendingRequestsList[index]['id']}',
                                           size: 16.sp,
                                           family: 'DINArabic-Medium',
                                         ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.access_time,
-                                              color: Colors.grey,
-                                              size: 14.sp,
-                                            ),
-                                            AppText(
-                                              text: _formatDate(
-                                                AppCubit.get(
-                                                      context,
-                                                    ).inRoadRequestsList[index]['createdAt'] ??
-                                                    "",
-                                              ),
-                                              size: 14.sp,
-                                              color: Colors.grey,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    AppText(
-                                      text:
-                                          '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).inRoadRequestsList[index]['serviceId']['type'] ?? ""}',
-                                      size: 16.sp,
-                                      family: 'DINArabic-Light',
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional.centerEnd,
-                                      child: Container(
-                                        height: 24.h,
-                                        width: 83.w,
-                                        decoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          borderRadius: BorderRadius.circular(
-                                            30.r,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.access_time,
+                                            color: Colors.grey,
+                                            size: 14.sp,
                                           ),
-                                          border: Border.all(
-                                            color: const Color(0xffFF8800),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: SizedBox(
-                                            width: 50.w,
-                                            child: AppText(
-                                              text:
-                                                  AppCubit.get(
+                                          AppText(
+                                            text: _formatDate(
+                                              AppCubit.get(
                                                     context,
-                                                  ).inRoadRequestsList[index]['status'] ??
+                                                  ).pendingRequestsList[index]['createdAt'] ??
                                                   "",
-                                              size: 13.sp,
-                                              color: const Color(0xffFF8800),
                                             ),
+                                            size: 14.sp,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  AppText(
+                                    text:
+                                        '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).pendingRequestsList[index]['serviceId'] == '6832d41daaf83e5694854d65' ? 'سطحه عاديه' : 'سطحه هيدروليك'}',
+                                    size: 16.sp,
+                                    family: 'DINArabic-Light',
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    child: Container(
+                                      height: 24.h,
+                                      width: 83.w,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(
+                                          30.r,
+                                        ),
+                                        border: Border.all(
+                                          color: const Color(0xffFF8800),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: SizedBox(
+                                          width: 50.w,
+                                          child: AppText(
+                                            text:
+                                                AppCubit.get(
+                                                  context,
+                                                ).pendingRequestsList[index]['status'] ??
+                                                "",
+                                            size: 13.sp,
+                                            color: const Color(0xffFF8800),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                    ),
-              ],
+                        ),
+                  ),
+                ],
+              ),
             );
       },
     );

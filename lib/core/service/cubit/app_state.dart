@@ -516,3 +516,5 @@ class PendingRequestFailure extends AppState {
   final String error;
   PendingRequestFailure({required this.error});
 }
+
+class NewPendingRequestAdded extends AppState {}

@@ -1234,7 +1234,7 @@ class AppCubit extends Cubit<AppState> {
       body: jsonEncode({
         "carId": carId,
         "problems": problemId,
-        "otherProblemText": otherProblemText,
+       if (otherProblemText.isNotEmpty)  "otherProblemText": otherProblemText,
         "pickupLocation": {
           "coordinates": [pickLng, pickLat],
         },

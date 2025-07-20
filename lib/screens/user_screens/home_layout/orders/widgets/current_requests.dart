@@ -19,10 +19,19 @@ class CurrentRequests extends StatefulWidget {
 }
 
 class _CurrentRequestsState extends State<CurrentRequests> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    AppCubit.get(context).pendingRequest();
     super.initState();
+    AppCubit.get(context).pendingRequest();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        AppCubit.get(context).pendingRequest();
+      }
+    });
   }
 
   @override
@@ -36,6 +45,8 @@ class _CurrentRequestsState extends State<CurrentRequests> {
               child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
             )
             : ListView.separated(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(
                 start: 16.w,
                 end: 16.w,
@@ -48,7 +59,10 @@ class _CurrentRequestsState extends State<CurrentRequests> {
               itemBuilder:
                   (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      AppRouter.navigateTo(context,  OrderDetails(index: index,));
+                      AppRouter.navigateTo(
+                        context,
+                        OrderDetails(index: index, isPending: true),
+                      );
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -105,12 +119,12 @@ class _CurrentRequestsState extends State<CurrentRequests> {
                                 ),
                               ],
                             ),
-                            // AppText(
-                            //   text:
-                            //       '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).pendingRequestsList[index]['serviceId']['type']. ?? ""}',
-                            //   size: 16.sp,
-                            //   family: 'DINArabic-Light',
-                            // ),
+                            AppText(
+                              text:
+                                  '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).pendingRequestsList[index]['serviceId'] == '6832d41daaf83e5694854d65' ? 'سطحه عاديه' : 'سطحه هيدروليك'}',
+                              size: 16.sp,
+                              family: 'DINArabic-Light',
+                            ),
                             Align(
                               alignment: AlignmentDirectional.centerEnd,
                               child: Container(

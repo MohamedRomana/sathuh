@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../../gen/assets.gen.dart';
 import 'widgets/custom_current_orders.dart';
 import 'widgets/driver_swiper.dart';
@@ -16,6 +17,28 @@ class DriverHome extends StatefulWidget {
 }
 
 class _DriverHomeState extends State<DriverHome> {
+  IO.Socket? socket;
+  void initSocketConnection() {
+    socket = IO.io("https://towtruck.cloud", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
+
+    socket!.connect();
+
+    socket!.onConnect((_) {
+      debugPrint("✅ Connected to socket");
+    });
+
+    socket!.onDisconnect((_) {
+      debugPrint("Socket disconnected");
+    });
+
+    socket!.on("unauthorized", (message) {
+      debugPrint("Unauthorized: $message");
+    });
+  }
+
   String? currentAddress = "جارٍ تحديد الموقع...";
   LatLng? currentLatLng;
 
@@ -35,9 +58,31 @@ class _DriverHomeState extends State<DriverHome> {
 
     currentLatLng = LatLng(position.latitude, position.longitude);
 
+    // 🔥 هنا بنبعت الموقع بعد ما يتحدد
+    socket?.emit("updateDriverLocation", {
+      "latitude": position.latitude,
+      "longitude": position.longitude,
+    });
+
     final address = await getAddressFromLatLng(currentLatLng!);
     setState(() {
       currentAddress = address;
+    });
+
+    // 🛰️ بنسمع لتغير الموقع كل ثانية مثلاً
+    Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+      ),
+    ).listen((position) {
+      socket?.emit("updateDriverLocation", {
+        "latitude": position.latitude,
+        "longitude": position.longitude,
+      });
+      print(
+        "📤 Updated Driver Location: ${position.latitude}, ${position.longitude}",
+      );
     });
   }
 

@@ -16,7 +16,12 @@ import '../../../generated/locale_keys.g.dart';
 
 class DrivOrderDetails extends StatelessWidget {
   final bool isHistory;
-  const DrivOrderDetails({super.key, this.isHistory = false});
+  final int index;
+  const DrivOrderDetails({
+    super.key,
+    this.isHistory = false,
+    required this.index,
+  });
 
   void showAddressBottomSheet(
     BuildContext context,
@@ -30,7 +35,7 @@ class DrivOrderDetails extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (_) {
-        return Container(
+        return SizedBox(
           height: 400.h,
           child: Padding(
             padding: EdgeInsets.all(16.r),
@@ -163,7 +168,7 @@ class DrivOrderDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        Container(
+                        SizedBox(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -186,7 +191,7 @@ class DrivOrderDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        Container(
+                        SizedBox(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -209,7 +214,7 @@ class DrivOrderDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        Container(
+                        SizedBox(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -238,7 +243,7 @@ class DrivOrderDetails extends StatelessWidget {
                           onTap: () {
                             makePhoneCall('0100000000');
                           },
-                          child: Container(
+                          child: SizedBox(
                             width: 150.w,
                             child: const AppText(
                               textAlign: TextAlign.end,
@@ -268,7 +273,7 @@ class DrivOrderDetails extends StatelessWidget {
                           onTap: () {
                             makePhoneCall('0100000000');
                           },
-                          child: Container(
+                          child: SizedBox(
                             width: 150.w,
                             child: const AppText(
                               textAlign: TextAlign.end,
@@ -306,7 +311,7 @@ class DrivOrderDetails extends StatelessWidget {
                                 ), // إحداثيات الرياض كمثال
                               ),
 
-                          child: Container(
+                          child: SizedBox(
                             width: 150.w,
                             child: FutureBuilder<String>(
                               future: getAddressFromLatLng(
@@ -370,7 +375,7 @@ class DrivOrderDetails extends StatelessWidget {
                                 ), // إحداثيات الرياض كمثال
                               ),
 
-                          child: Container(
+                          child: SizedBox(
                             width: 150.w,
                             child: FutureBuilder<String>(
                               future: getAddressFromLatLng(
@@ -423,7 +428,7 @@ class DrivOrderDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        Container(
+                        SizedBox(
                           width: 150.w,
                           child: const AppText(
                             textAlign: TextAlign.end,
@@ -446,7 +451,7 @@ class DrivOrderDetails extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         const Spacer(),
-                        Container(
+                        SizedBox(
                           width: 150.w,
                           child: AppText(
                             textAlign: TextAlign.end,
@@ -466,7 +471,7 @@ class DrivOrderDetails extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 40.h,
                       child: AppButton(
                         width: 150.w,
@@ -480,7 +485,7 @@ class DrivOrderDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 40.h,
                       child: AppButton(
                         width: 150.w,

@@ -48,7 +48,7 @@ class _DriveOrdersHistoryState extends State<DriveOrdersHistory> {
               itemBuilder:
                   (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      AppRouter.navigateTo(context, const DrivOrderDetails());
+                      AppRouter.navigateTo(context,  DrivOrderDetails(index: index,));
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,

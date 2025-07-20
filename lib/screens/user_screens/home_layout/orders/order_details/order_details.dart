@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import 'package:sathuh/core/widgets/custom_bottom_nav.dart';
-import '../../../../../core/constants/contsants.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../gen/assets.gen.dart';
@@ -17,7 +15,8 @@ import '../../../../../generated/locale_keys.g.dart';
 
 class OrderDetails extends StatelessWidget {
   final int index;
-  const OrderDetails({super.key, required this.index});
+  final bool isPending;
+  const OrderDetails({super.key, required this.index, this.isPending = false});
 
   void showAddressBottomSheet(
     BuildContext context,
@@ -71,7 +70,7 @@ class OrderDetails extends StatelessWidget {
                         TileLayer(
                           urlTemplate:
                               'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          userAgentPackageName: 'com.example.app',
+                          userAgentPackageName: 'sathuh',
                         ),
                         MarkerLayer(
                           markers: [
@@ -158,52 +157,56 @@ class OrderDetails extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            AppText(
-                              text: LocaleKeys.customer_name.tr(),
-                              size: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            const Spacer(),
-                            SizedBox(
-                              width: 150.w,
-                              child:  AppText(
-                                textAlign: TextAlign.end,
-                                text: AppCubit.get(context).pendingRequestsList[index]['userId'],
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: const Divider(color: Colors.grey),
-                        ),
-                        Row(
-                          children: [
-                            AppText(
-                              text: LocaleKeys.driver_name.tr(),
-                              size: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            const Spacer(),
-                            SizedBox(
-                              width: 150.w,
-                              child: const AppText(
-                                textAlign: TextAlign.end,
-                                text: 'خالد علي',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: const Divider(color: Colors.grey),
-                        ),
+                        // Row(
+                        //   children: [
+                        //     AppText(
+                        //       text: LocaleKeys.customer_name.tr(),
+                        //       size: 16.sp,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     const Spacer(),
+                        //     SizedBox(
+                        //       width: 150.w,
+                        //       child: AppText(
+                        //         textAlign: TextAlign.end,
+                        //         text:
+                        //             AppCubit.get(
+                        //               context,
+                        //             ).pendingRequestsList[index]['userId'],
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.grey,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
+                        //   child: const Divider(color: Colors.grey),
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     AppText(
+                        //       text: LocaleKeys.driver_name.tr(),
+                        //       size: 16.sp,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     const Spacer(),
+                        //     SizedBox(
+                        //       width: 150.w,
+                        //       child: const AppText(
+                        //         textAlign: TextAlign.end,
+                        //         text: 'خالد علي',
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.grey,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
+                        //   child: const Divider(color: Colors.grey),
+                        // ),
+                  
                         Row(
                           children: [
                             AppText(
@@ -214,9 +217,22 @@ class OrderDetails extends StatelessWidget {
                             const Spacer(),
                             SizedBox(
                               width: 150.w,
-                              child: const AppText(
+                              child: AppText(
                                 textAlign: TextAlign.end,
-                                text: 'خدمة سطحه',
+                                text:
+                                    isPending
+                                        ? AppCubit.get(
+                                                  context,
+                                                ).pendingRequestsList[index]['serviceId'] ==
+                                                '6832d41daaf83e5694854d65'
+                                            ? 'سطحه عاديه'
+                                            : 'سطحه هيدروليك'
+                                        : AppCubit.get(
+                                              context,
+                                            ).completedRequestsList[index]['serviceId'] ==
+                                            '6832d41daaf83e5694854d65'
+                                        ? 'سطحه عاديه'
+                                        : 'سطحه هيدروليك',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey,
                               ),
@@ -227,66 +243,68 @@ class OrderDetails extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: const Divider(color: Colors.grey),
                         ),
-                        Row(
-                          children: [
-                            AppText(
-                              text: LocaleKeys.customer_phone.tr(),
-                              size: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () {
-                                makePhoneCall('0100000000');
-                              },
-                              child: SizedBox(
-                                width: 150.w,
-                                child: const AppText(
-                                  textAlign: TextAlign.end,
-                                  text: '0100000000',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: const Divider(color: Colors.grey),
-                        ),
-                        Row(
-                          children: [
-                            AppText(
-                              text: LocaleKeys.driver_phone.tr(),
-                              size: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () {
-                                makePhoneCall('0100000000');
-                              },
-                              child: SizedBox(
-                                width: 150.w,
-                                child: const AppText(
-                                  textAlign: TextAlign.end,
-                                  text: '0100000000',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: const Divider(color: Colors.grey),
-                        ),
+                     
+                        // Row(
+                        //   children: [
+                        //     AppText(
+                        //       text: LocaleKeys.customer_phone.tr(),
+                        //       size: 16.sp,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     const Spacer(),
+                        //     InkWell(
+                        //       splashColor: Colors.transparent,
+                        //       highlightColor: Colors.transparent,
+                        //       onTap: () {
+                        //         makePhoneCall('0100000000');
+                        //       },
+                        //       child: SizedBox(
+                        //         width: 150.w,
+                        //         child: const AppText(
+                        //           textAlign: TextAlign.end,
+                        //           text: '0100000000',
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.blue,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
+                        //   child: const Divider(color: Colors.grey),
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     AppText(
+                        //       text: LocaleKeys.driver_phone.tr(),
+                        //       size: 16.sp,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //     const Spacer(),
+                        //     InkWell(
+                        //       splashColor: Colors.transparent,
+                        //       highlightColor: Colors.transparent,
+                        //       onTap: () {
+                        //         makePhoneCall('0100000000');
+                        //       },
+                        //       child: SizedBox(
+                        //         width: 150.w,
+                        //         child: const AppText(
+                        //           textAlign: TextAlign.end,
+                        //           text: '0100000000',
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.blue,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
+                        //   child: const Divider(color: Colors.grey),
+                        // ),
+                  
                         Row(
                           children: [
                             AppText(
@@ -301,18 +319,42 @@ class OrderDetails extends StatelessWidget {
                                     context,
                                     LocaleKeys.customer_location.tr(),
                                     LocaleKeys.full_start_location_here.tr(),
-                                    const LatLng(
-                                      24.7136,
-                                      46.6753,
+                                    LatLng(
+                                      isPending
+                                          ? AppCubit.get(
+                                            context,
+                                          ).pendingRequestsList[index]['pickupLocation']['coordinates'][1]
+                                          : AppCubit.get(
+                                            context,
+                                          ).completedRequestsList[index]['pickupLocation']['coordinates'][1],
+                                      isPending
+                                          ? AppCubit.get(
+                                            context,
+                                          ).pendingRequestsList[index]['pickupLocation']['coordinates'][0]
+                                          : AppCubit.get(
+                                            context,
+                                          ).completedRequestsList[index]['pickupLocation']['coordinates'][0],
                                     ), // إحداثيات الرياض كمثال
                                   ),
-    
+
                               child: SizedBox(
                                 width: 150.w,
                                 child: FutureBuilder<String>(
                                   future: getAddressFromLatLng(
-                                    24.7136,
-                                    46.6753,
+                                    isPending
+                                        ? AppCubit.get(
+                                          context,
+                                        ).pendingRequestsList[index]['pickupLocation']['coordinates'][1]
+                                        : AppCubit.get(
+                                          context,
+                                        ).completedRequestsList[index]['pickupLocation']['coordinates'][1],
+                                    isPending
+                                        ? AppCubit.get(
+                                          context,
+                                        ).pendingRequestsList[index]['pickupLocation']['coordinates'][0]
+                                        : AppCubit.get(
+                                          context,
+                                        ).completedRequestsList[index]['pickupLocation']['coordinates'][0],
                                   ), // الإحداثيات الفعلية
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -350,7 +392,7 @@ class OrderDetails extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: const Divider(color: Colors.grey),
                         ),
-    
+
                         Row(
                           children: [
                             AppText(
@@ -365,12 +407,24 @@ class OrderDetails extends StatelessWidget {
                                     context,
                                     LocaleKeys.dropoff_location.tr(),
                                     LocaleKeys.full_start_location_here.tr(),
-                                    const LatLng(
-                                      24.7136,
-                                      46.6753,
+                                    LatLng(
+                                      isPending
+                                          ? AppCubit.get(
+                                            context,
+                                          ).pendingRequestsList[index]['dropoffLocation']['coordinates'][1]
+                                          : AppCubit.get(
+                                            context,
+                                          ).completedRequestsList[index]['dropoffLocation']['coordinates'][1],
+                                      isPending
+                                          ? AppCubit.get(
+                                            context,
+                                          ).pendingRequestsList[index]['dropoffLocation']['coordinates'][0]
+                                          : AppCubit.get(
+                                            context,
+                                          ).completedRequestsList[index]['dropoffLocation']['coordinates'][0],
                                     ), // إحداثيات الرياض كمثال
                                   ),
-    
+
                               child: SizedBox(
                                 width: 150.w,
                                 child: FutureBuilder<String>(
@@ -424,9 +478,10 @@ class OrderDetails extends StatelessWidget {
                             const Spacer(),
                             SizedBox(
                               width: 150.w,
-                              child: const AppText(
+                              child: AppText(
                                 textAlign: TextAlign.end,
-                                text: '100 كم',
+                                text:
+                                    '${isPending ? AppCubit.get(context).pendingRequestsList[index]['distanceInMeters'].toString() : AppCubit.get(context).completedRequestsList[index]['distanceInMeters'].toString()} ',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey,
                               ),
@@ -449,7 +504,8 @@ class OrderDetails extends StatelessWidget {
                               width: 150.w,
                               child: AppText(
                                 textAlign: TextAlign.end,
-                                text: '1000 ${LocaleKeys.sar.tr()}',
+                                text:
+                                    '${isPending ? AppCubit.get(context).pendingRequestsList[index]['totalPrice'].toString() : AppCubit.get(context).completedRequestsList[index]['totalPrice'].toString()} ${LocaleKeys.sar.tr()}',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey,
                               ),

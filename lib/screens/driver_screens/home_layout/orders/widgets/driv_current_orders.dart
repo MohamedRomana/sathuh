@@ -19,23 +19,34 @@ class DrivCurrentOrders extends StatefulWidget {
 }
 
 class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    AppCubit.get(context).inRoadRequest();
     super.initState();
+    AppCubit.get(context).pendingRequest();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        AppCubit.get(context).pendingRequest();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return state is InRoadRequestLoading
+        return state is PendingRequestLoading
             ? const CustomListShimmer()
-            : AppCubit.get(context).inRoadRequestsList.isEmpty
+            : AppCubit.get(context).pendingRequestsList.isEmpty
             ? Center(
               child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
             )
             : ListView.separated(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(
                 start: 16.w,
                 end: 16.w,
@@ -44,11 +55,14 @@ class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
               ),
               separatorBuilder:
                   (BuildContext context, int index) => Container(height: 16.h),
-              itemCount: AppCubit.get(context).inRoadRequestsList.length,
+              itemCount: AppCubit.get(context).pendingRequestsList.length,
               itemBuilder:
                   (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      AppRouter.navigateTo(context, const DrivOrderDetails());
+                      AppRouter.navigateTo(
+                        context,
+                        DrivOrderDetails(index: index),
+                      );
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -75,11 +89,14 @@ class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppText(
-                                  text:
-                                      '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).inRoadRequestsList[index]['id']}',
-                                  size: 16.sp,
-                                  family: 'DINArabic-Medium',
+                                SizedBox(
+                                  width: 200.w,
+                                  child: AppText(
+                                    text:
+                                        '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).pendingRequestsList[index]['id']}',
+                                    size: 16.sp,
+                                    family: 'DINArabic-Medium',
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -92,7 +109,7 @@ class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
                                       text: _formatDate(
                                         AppCubit.get(
                                               context,
-                                            ).inRoadRequestsList[index]['createdAt'] ??
+                                            ).pendingRequestsList[index]['createdAt'] ??
                                             "",
                                       ),
                                       size: 14.sp,
@@ -104,7 +121,7 @@ class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
                             ),
                             AppText(
                               text:
-                                  '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).inRoadRequestsList[index]['serviceId']['type'] ?? ""}',
+                                  '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).pendingRequestsList[index]['serviceId'] == '6832d41daaf83e5694854d65' ? 'سطحه عاديه' : 'سطحه هيدروليك'}',
                               size: 16.sp,
                               family: 'DINArabic-Light',
                             ),
@@ -127,7 +144,7 @@ class _DrivCurrentOrdersState extends State<DrivCurrentOrders> {
                                       text:
                                           AppCubit.get(
                                             context,
-                                          ).inRoadRequestsList[index]['status'] ??
+                                          ).pendingRequestsList[index]['status'] ??
                                           "",
                                       size: 13.sp,
                                       color: const Color(0xffFF8800),

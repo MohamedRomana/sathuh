@@ -144,7 +144,7 @@ class _OpenStreetMapViewState extends State<OpenStreetMapView> {
                 urlTemplate:
                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: const ['a', 'b', 'c'],
-                userAgentPackageName: 'com.example.app',
+                userAgentPackageName: 'sathuh',
               ),
               PolylineLayer(
                 polylines: [
