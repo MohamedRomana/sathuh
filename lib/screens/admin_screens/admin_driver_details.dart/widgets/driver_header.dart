@@ -178,6 +178,9 @@ class DriverHeader extends StatelessWidget {
                             AppCubit.get(
                               context,
                             ).driversList[index]['user']['_id'],
+                        name: '',
+                        image: '',
+                        oldMessages: const [],
                       ),
                     );
                   },

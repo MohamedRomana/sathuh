@@ -133,6 +133,9 @@ class ComplaintsDetails extends StatelessWidget {
                                           AppCubit.get(
                                             context,
                                           ).complaintsList[index]['userId']['_id'],
+                                      name: '',
+                                      image: '',
+                                      oldMessages: const [],
                                     ),
                                   );
                                 },

@@ -3,13 +3,25 @@ class ChatMessageModel {
   final String message;
   final String createdAt;
   final bool isPending;
-  final String? localId;
 
   ChatMessageModel({
     required this.fromId,
     required this.message,
     required this.createdAt,
-    this.isPending = false,
-    this.localId,
+    required this.isPending,
   });
+
+  ChatMessageModel copyWith({
+    String? fromId,
+    String? message,
+    String? createdAt,
+    bool? isPending,
+  }) {
+    return ChatMessageModel(
+      fromId: fromId ?? this.fromId,
+      message: message ?? this.message,
+      createdAt: createdAt ?? this.createdAt,
+      isPending: isPending ?? this.isPending,
+    );
+  }
 }

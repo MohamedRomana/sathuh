@@ -100,7 +100,7 @@ class _ConfirmAdmEmailState extends State<ConfirmAdmEmail> {
                       message: state.error,
                     );
                   } else if (state is OTPEmailSuccess) {
-                    CacheHelper.setUserType('administration');
+                    CacheHelper.setUserType('admin');
                     AppRouter.navigateAndFinish(context, const LogIn());
                     otpCode = "";
                     showFlashMessage(

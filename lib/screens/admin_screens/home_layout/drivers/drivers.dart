@@ -342,6 +342,9 @@ class _DriversState extends State<Drivers> {
                                                       AppCubit.get(
                                                         context,
                                                       ).driversList[index]['user']['_id'],
+                                                  name: '',
+                                                  image: '',
+                                                  oldMessages: const [],
                                                 ),
                                               );
                                             },

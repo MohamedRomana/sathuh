@@ -2,24 +2,36 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sathuh/core/widgets/driver_bottom_nav.dart';
+import '../../../core/cache/cache_helper.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/service/cubit/app_cubit.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_app_bar.dart';
+import '../../../core/widgets/custom_lottie_widget.dart';
+import '../../../core/widgets/custom_shimmer.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/locale_keys.g.dart';
 
-class DriverNotifications extends StatelessWidget {
+class DriverNotifications extends StatefulWidget {
   const DriverNotifications({super.key});
 
+  @override
+  State<DriverNotifications> createState() => _DriverNotificationsState();
+}
+
+class _DriverNotificationsState extends State<DriverNotifications> {
+    @override
+  void initState() {
+    AppCubit.get(context).getNotifications();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return DriverBottomNav(
-          body: Stack(
+          body:Stack(
             children: [
               Image.asset(
                 Assets.img.background.path,
@@ -37,56 +49,30 @@ class DriverNotifications extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomAppBar(title: LocaleKeys.notifications.tr()),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsetsDirectional.only(
-                        top: 16.h,
-                        bottom: 140.h,
-                        start: 16.w,
-                        end: 16.w,
-                      ),
-                      itemCount: 10,
-                      separatorBuilder:
-                          (context, index) => Container(height: 16.h),
-                      itemBuilder:
-                          (context, index) => Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(10.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5.r),
-                                  blurRadius: 5.r,
-                                  spreadRadius: 1.r,
-                                  offset: Offset(0, 5.r),
-                                ),
-                              ],
-                            ),
-                            child: Slidable(
-                              key: const ValueKey(0),
-                              endActionPane: ActionPane(
-                                motion: const StretchMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (context) {
-                                      // AppCubit.get(context).deleteNotification(
-                                      //   notificationId: AppCubit.get(context)
-                                      //       .notificationsModel[index]
-                                      //       .id
-                                      //       .toString(),
-                                      //   index: index,
-                                      // );
-                                    },
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
-                                    icon: Icons.delete,
-                                    label: LocaleKeys.delete.tr(),
-                                  ),
-                                ],
-                              ),
-                              child: Container(
+                    state is GetNotificationsLoading &&
+                            AppCubit.get(context).notificationsList.isEmpty
+                        ? const CustomShimmer()
+                        : AppCubit.get(context).notificationsList.isEmpty
+                        ? Center(
+                          child: CustomLottieWidget(
+                            lottieName: Assets.img.emptyorder,
+                          ),
+                        )
+                        : ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsetsDirectional.only(
+                            top: 16.h,
+                            bottom: 140.h,
+                            start: 16.w,
+                            end: 16.w,
+                          ),
+                          itemCount:
+                              AppCubit.get(context).notificationsList.length,
+                          separatorBuilder:
+                              (context, index) => Container(height: 16.h),
+                          itemBuilder:
+                              (context, index) => Container(
                                 width: 343.w,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 16.w,
@@ -97,7 +83,7 @@ class DriverNotifications extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.primary,
+                                      color: AppColors.primary.withAlpha(50),
                                       blurRadius: 5.r,
                                       spreadRadius: 1.r,
                                       offset: Offset(0, 5.r),
@@ -136,16 +122,27 @@ class DriverNotifications extends StatelessWidget {
                                           children: [
                                             AppText(
                                               bottom: 9.h,
-                                              text: 'جديد',
+                                              text:
+                                                  AppCubit.get(
+                                                    context,
+                                                  ).notificationsList[index]['type'],
                                               color: const Color(0xff3FAD46),
                                               size: 14.sp,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               height: 35.h,
                                               width: 180.w,
                                               child: AppText(
                                                 text:
-                                                    'رساله تجريبيه رساله تجريبيه رساله تجريبيه رساله تجريبيه رساله تجريبيه رساله تجريبيه رساله تجريبيه',
+                                                    CacheHelper.getLang() ==
+                                                            'en'
+                                                        ? AppCubit.get(
+                                                          context,
+                                                        ).notificationsList[index]['message_en']
+                                                        : AppCubit.get(
+                                                              context,
+                                                            ).notificationsList[index]['message_ar'] ??
+                                                            'No title',
                                                 lines: 2,
                                                 size: 12.sp,
                                                 color: Colors.grey,
@@ -155,10 +152,15 @@ class DriverNotifications extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 70.w,
                                       child: AppText(
-                                        text: 'منذ 10 دقيقه',
+                                        text: _formatDate(
+                                          AppCubit.get(
+                                                context,
+                                              ).notificationsList[index]['createdAt'] ??
+                                              "",
+                                        ),
                                         color: Colors.black,
                                         size: 12.sp,
                                       ),
@@ -166,9 +168,7 @@ class DriverNotifications extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
-                          ),
-                    ),
+                        ),
                   ],
                 ),
               ),
@@ -178,4 +178,10 @@ class DriverNotifications extends StatelessWidget {
       },
     );
   }
+}
+
+String _formatDate(String? isoDate) {
+  if (isoDate == null) return '';
+  final date = DateTime.parse(isoDate);
+  return DateFormat('dd/MM/yyyy').format(date);
 }

@@ -179,6 +179,9 @@ class DrivOrderDetails extends StatelessWidget {
                                         : AppCubit.get(
                                           context,
                                         ).completedRequestsList[index]['userId'],
+                                name: '',
+                                image: '',
+                                oldMessages: const [],
                               ),
                             );
                           },

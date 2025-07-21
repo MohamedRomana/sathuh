@@ -210,6 +210,9 @@ class _ComplaintsState extends State<Complaints> {
                                                       AppCubit.get(
                                                         context,
                                                       ).complaintsList[index]['userId']['_id'],
+                                                  name: '',
+                                                  image: '',
+                                                  oldMessages: const [],
                                                 ),
                                               );
                                             },
