@@ -1,22 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/widgets/app_button.dart';
-import '../../../../../core/widgets/app_router.dart';
-import '../../../../../core/widgets/app_text.dart';
-import '../../../../../gen/fonts.gen.dart';
-import '../../../../../generated/locale_keys.g.dart';
-import '../../../../user_screens/bank_transfer/bank_transfer.dart';
+import 'package:sathuh/core/widgets/app_button.dart';
+import 'package:sathuh/core/widgets/app_router.dart';
+import 'package:sathuh/screens/user_screens/bank_transfer/bank_transfer.dart';
+import '../../../../core/widgets/app_text.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../../generated/locale_keys.g.dart';
 
-class MonthsDetails extends StatelessWidget {
+class YearsDetails extends StatelessWidget {
   final bool sub;
-  const MonthsDetails({super.key, this.sub = false});
+
+  const YearsDetails({super.key, this.sub = false});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.all(16.r),
-
       backgroundColor: Colors.white,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

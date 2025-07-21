@@ -626,5 +626,15 @@
   "offline": "غير متصل",
   "driver_location_unavailable": "موقع السائق غير متوفر",
   "block_driver": "حظر السائق",
-  "unblock_driver": "إلغاء حظر السائق"
+  "unblock_driver": "إلغاء حظر السائق",
+  "add_price_per_meter": "اضافة سعر بالمتر",
+  "edit_price_per_meter": "تعديل سعر بالمتر",
+  "edit_price_per_meter_required": "تعديل سعر بالمتر مطلوب",
+  "add_price_per_meter_required": "اضافة سعر بالمتر مطلوب",
+  "add_percentage": "اضافة نسبة",
+  "add_percentage_required": "اضافة نسبة مطلوبه",
+  "edit_percentage": "تعديل النسبه",
+  "edit_percentage_required": "تعديل النسبه مطلوبه",
+  "regular_flatbed": "سطحه عاديه",
+  "hydraulic_flatbed": "سطحه هيدروليك"
 }

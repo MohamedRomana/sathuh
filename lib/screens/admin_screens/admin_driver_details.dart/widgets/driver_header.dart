@@ -88,17 +88,23 @@ class DriverHeader extends StatelessWidget {
               ),
               PositionedDirectional(
                 bottom: 100.h,
-                start: 140.w,
-                child: AppText(
-                  bottom: 16.h,
-                  top: 16.h,
-                  text:
-                      AppCubit.get(
-                        context,
-                      ).driversList[index]['user']['userName'] ??
-                      "",
-                  size: 24.sp,
-                  color: Colors.white,
+                // start: 140.w,
+                start: 16.w,
+                end: 16.w,
+                child: SizedBox(
+                  width: 150.w,
+                  child: AppText(
+                    textAlign: TextAlign.center,
+                    bottom: 16.h,
+                    top: 16.h,
+                    text:
+                        AppCubit.get(
+                          context,
+                        ).driversList[index]['user']['userName'] ??
+                        "",
+                    size: 24.sp,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               // PositionedDirectional(
@@ -168,7 +174,10 @@ class DriverHeader extends StatelessWidget {
                     AppRouter.navigateTo(
                       context,
                       AdmChatDetails(
-                        user: AppCubit.get(context).driversList[index]['user'],
+                        id:
+                            AppCubit.get(
+                              context,
+                            ).driversList[index]['user']['_id'],
                       ),
                     );
                   },

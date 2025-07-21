@@ -129,10 +129,10 @@ class ComplaintsDetails extends StatelessWidget {
                                   AppRouter.navigateTo(
                                     context,
                                     AdmChatDetails(
-                                      user:
+                                      id:
                                           AppCubit.get(
                                             context,
-                                          ).complaintsList[index]['userId'],
+                                          ).complaintsList[index]['userId']['_id'],
                                     ),
                                   );
                                 },

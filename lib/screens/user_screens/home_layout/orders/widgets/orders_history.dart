@@ -44,14 +44,16 @@ class _OrderHistoryState extends State<OrderHistory> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return state is GetCompletedRequestsLoading
+        return state is GetCompletedRequestsLoading &&
+                AppCubit.get(context).completedRequestsList.isEmpty
             ? const CustomListShimmer()
-            : AppCubit.get(context).inRoadRequestsList.isEmpty
+            : AppCubit.get(context).completedRequestsList.isEmpty
             ? Center(
               child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
             )
             : ListView.separated(
               controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(
                 start: 16.w,
                 end: 16.w,
@@ -64,7 +66,10 @@ class _OrderHistoryState extends State<OrderHistory> {
               itemBuilder:
                   (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      AppRouter.navigateTo(context, OrderDetails(index: index));
+                      AppRouter.navigateTo(
+                        context,
+                        OrderDetails(index: index, isPending: true),
+                      );
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -73,6 +78,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5.r,
+                            spreadRadius: 1.r,
+                            offset: Offset(0, 5.r),
+                          ),
+                        ],
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(16.sp),
@@ -87,7 +100,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                   width: 200.w,
                                   child: AppText(
                                     text:
-                                        '${LocaleKeys.order_number.tr()} ${AppCubit.get(context).completedRequestsList[index]['id'] ?? ""}',
+                                        '${LocaleKeys.orderNumber.tr()} ${AppCubit.get(context).completedRequestsList[index]['id']}',
                                     size: 16.sp,
                                     family: 'DINArabic-Medium',
                                   ),
@@ -106,7 +119,6 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             ).completedRequestsList[index]['createdAt'] ??
                                             "",
                                       ),
-
                                       size: 14.sp,
                                       color: Colors.grey,
                                     ),
@@ -114,12 +126,12 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 ),
                               ],
                             ),
-                            // AppText(
-                            //   text:
-                            //       '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).completedRequestsList[index]['serviceId']['type'] ?? ""}',
-                            //   size: 16.sp,
-                            //   family: 'DINArabic-Light',
-                            // ),
+                            AppText(
+                              text:
+                                  '${LocaleKeys.serviceName.tr()}: ${AppCubit.get(context).completedRequestsList[index]['serviceId'] == '6832d41daaf83e5694854d65' ? 'سطحه عاديه' : 'سطحه هيدروليك'}',
+                              size: 16.sp,
+                              family: 'DINArabic-Light',
+                            ),
                             Align(
                               alignment: AlignmentDirectional.centerEnd,
                               child: Container(
@@ -134,7 +146,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 ),
                                 child: Center(
                                   child: SizedBox(
-                                    width: 83.w,
+                                    width: 50.w,
                                     child: AppText(
                                       text:
                                           AppCubit.get(

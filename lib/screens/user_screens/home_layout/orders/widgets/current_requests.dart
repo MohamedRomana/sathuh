@@ -38,7 +38,7 @@ class _CurrentRequestsState extends State<CurrentRequests> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return state is PendingRequestLoading
+        return state is PendingRequestLoading && AppCubit.get(context).pendingRequestsList.isEmpty
             ? const CustomListShimmer()
             : AppCubit.get(context).pendingRequestsList.isEmpty
             ? Center(

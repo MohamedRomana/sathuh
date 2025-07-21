@@ -338,10 +338,10 @@ class _DriversState extends State<Drivers> {
                                               AppRouter.navigateTo(
                                                 context,
                                                 AdmChatDetails(
-                                                  user:
+                                                  id:
                                                       AppCubit.get(
                                                         context,
-                                                      ).driversList[index]['user'],
+                                                      ).driversList[index]['user']['_id'],
                                                 ),
                                               );
                                             },

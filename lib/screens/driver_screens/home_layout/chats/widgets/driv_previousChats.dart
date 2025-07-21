@@ -1,106 +1,140 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:sathuh/core/service/cubit/app_cubit.dart';
 import '../../../../../core/constants/colors.dart';
+import '../../../../../core/widgets/app_cached.dart';
 import '../../../../../core/widgets/app_router.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../gen/assets.gen.dart';
+import '../../../../../gen/fonts.gen.dart';
 import '../chat_details/chat_details.dart';
 
-class DrivPreviouschats extends StatelessWidget {
-  const DrivPreviouschats({super.key});
+class DrivPreviousChats extends StatefulWidget {
+  const DrivPreviousChats({super.key});
+
+  @override
+  State<DrivPreviousChats> createState() => _DrivPreviousChatsState();
+}
+
+class _DrivPreviousChatsState extends State<DrivPreviousChats> {
+  @override
+  void initState() {
+    AppCubit.get(context).getChats();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 650.h,
-      clipBehavior: Clip.antiAlias,
-      padding: EdgeInsets.all(16.r),
-      margin: EdgeInsetsDirectional.only(start: 16.w, end: 16.w, bottom: 130.h),
-      decoration: BoxDecoration(
-        color: const Color(0xffF3F3F3),
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5.r,
-            spreadRadius: 1.r,
-            offset: Offset(0, 5.r),
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) {
+        return ListView.separated(
+          padding: EdgeInsetsDirectional.only(
+            start: 16.w,
+            end: 16.w,
+            bottom: 120.h,
           ),
-        ],
-      ),
-      child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 10,
-        separatorBuilder:
-            (context, index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: const Divider(thickness: 1, color: Colors.grey),
-            ),
-        itemBuilder:
-            (context, index) => InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
-                AppRouter.navigateTo(context, const DrivChatDetails());
-              },
-              child: Row(
-                children: [
-                  Container(
-                    height: 45.w,
-                    width: 45.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(100.r),
+          itemCount: AppCubit.get(context).chatsList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => SizedBox(height: 16.h),
+          itemBuilder:
+              (context, index) => InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+
+                onTap: () {
+                  AppRouter.navigateTo(
+                    context,
+                    DrivChatDetails(
+                      id:
+                          AppCubit.get(
+                            context,
+                          ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['_id'],
                     ),
-                    child: SvgPicture.asset(
-                      Assets.svg.drawerProfile,
-                      height: 45.w,
-                      width: 45.w,
-                      fit: BoxFit.cover,
-                    ),
+                  );
+                },
+                child: Container(
+                  width: 343.w,
+                  padding: EdgeInsetsDirectional.all(16.r),
+                  decoration: BoxDecoration(
+                    color: AppColors.third,
+                    borderRadius: BorderRadius.circular(15.r),
+                    border: Border.all(color: AppColors.third, width: 1.w),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.third.withAlpha(70),
+                        blurRadius: 5.r,
+                        spreadRadius: 1.r,
+                        offset: Offset(0, 3.r),
+                      ),
+                    ],
                   ),
-                  Container(width: 6.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Row(
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(1000.r),
+                        child: AppCachedImage(
+                          image:
+                              AppCubit.get(
+                                context,
+                              ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['image'],
+                          width: 50.w,
+                          height: 50.h,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 170.w,
-                            child: AppText(
-                              text: ' اسم تجريبي',
-                              size: 16.sp,
-                              color: AppColors.primary,
-                              family: Assets.fonts.tajawalBold,
-                            ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 190.w,
+                                child: AppText(
+                                  textAlign: TextAlign.start,
+                                  start: 7.w,
+                                  text:
+                                      AppCubit.get(
+                                        context,
+                                      ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['userName'],
+                                  size: 16.sp,
+                                  color: const Color(0xff8C6263),
+                                  family: FontFamily.tajawalBold,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 70.w,
+                                child: AppText(
+                                  textAlign: TextAlign.end,
+                                  start: 7.w,
+                                  text: 'منذ 2 ساعة',
+                                  size: 14.sp,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
                           ),
-                          Container(
-                            width: 70.w,
+                          SizedBox(
+                            width: 250.w,
                             child: AppText(
-                              textAlign: TextAlign.end,
-                              text: 'منذ 2 ساعة',
-                              size: 12.sp,
-                              family: Assets.fonts.tajawalBold,
+                              top: 8.h,
+                              textAlign: TextAlign.start,
+                              start: 7.w,
+                              text: 'يريد اسم العميل التواصل معك',
+                              size: 14.sp,
                             ),
                           ),
                         ],
                       ),
-                      Container(
-                        width: 200.w,
-                        child: AppText(
-                          text: 'يريد اسم العميل التواصل معك',
-                          size: 12.sp,
-                          color: Colors.grey,
-                          family: Assets.fonts.tajawalBold,
-                        ),
-                      ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-      ),
+        );
+      },
     );
   }
 }

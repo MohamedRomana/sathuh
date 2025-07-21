@@ -7,7 +7,6 @@ import '../../../core/constants/contsants.dart';
 import '../../../core/widgets/app_router.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../gen/assets.gen.dart';
-import '../home_layout/chats/chat_details/adm_chat_details.dart';
 import '../work_order_details/work_order_details.dart';
 
 class WorkOrders extends StatelessWidget {
@@ -83,7 +82,7 @@ class WorkOrders extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 180.w,
                                     child: AppText(
                                       text: 'محمد احمد السيد',
@@ -91,7 +90,7 @@ class WorkOrders extends StatelessWidget {
                                       start: 10.w,
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 180.w,
                                     child: AppText(
                                       text: 'سائق',

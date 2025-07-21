@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../user_screens/home_layout/chats/widgets/custom_previous_chats.dart';
+import 'widgets/driv_previousChats.dart';
 
 class DriverChats extends StatelessWidget {
   const DriverChats({super.key});
@@ -24,11 +24,13 @@ class DriverChats extends StatelessWidget {
             width: double.infinity,
             color: Colors.white.withAlpha(210),
           ),
-          Column(
-            children: [
-              CustomAppBar(title: LocaleKeys.chats.tr()),
-              const CustomChats(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(title: LocaleKeys.chats.tr()),
+                const DrivPreviousChats(),
+              ],
+            ),
           ),
         ],
       ),

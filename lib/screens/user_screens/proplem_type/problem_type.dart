@@ -78,6 +78,7 @@ class _ProblemTypeState extends State<ProblemType> {
                         } else {
                           final selectedIds =
                               selectedIndexes
+                                  .where((index) => index >= 0)
                                   .map(
                                     (index) =>
                                         AppCubit.get(

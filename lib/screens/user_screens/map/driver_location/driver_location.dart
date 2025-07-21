@@ -31,7 +31,7 @@ class DriverLocation extends StatelessWidget {
                 urlTemplate:
                     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: const ['a', 'b', 'c'],
-                userAgentPackageName: 'com.example.app',
+                userAgentPackageName: 'sathuh',
                 tileProvider: NetworkTileProvider(),
               ),
               MarkerLayer(
@@ -57,7 +57,10 @@ class DriverLocation extends StatelessWidget {
                 start: 20.w,
                 child: AppButton(
                   onPressed: () {
-                    AppRouter.navigateTo(context, const SathaService(serviceId: '',));
+                    AppRouter.navigateTo(
+                      context,
+                      const SathaService(serviceId: ''),
+                    );
                   },
                   child: AppText(
                     text: LocaleKeys.serviceRequest.tr(),

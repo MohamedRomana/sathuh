@@ -410,30 +410,6 @@ final class GetAllNearDriversFailure extends AppState {
   GetAllNearDriversFailure({required this.error});
 }
 
-class GetChatRoomsLoading extends AppState {}
-
-class GetChatRoomsSuccess extends AppState {
-  final List<ChatRoomModel> chatRooms;
-  GetChatRoomsSuccess(this.chatRooms);
-}
-
-class GetChatRoomsError extends AppState {
-  final String error;
-  GetChatRoomsError(this.error);
-}
-
-class GetChatMessagesLoading extends AppState {}
-
-class GetChatMessagesSuccess extends AppState {
-  final List<ChatMessageModel> messages;
-  GetChatMessagesSuccess(this.messages);
-}
-
-class GetChatMessagesError extends AppState {
-  final String error;
-  GetChatMessagesError(this.error);
-}
-
 class SendMessageLoading extends AppState {}
 
 class SendMessageSuccess extends AppState {}
@@ -518,3 +494,105 @@ class PendingRequestFailure extends AppState {
 }
 
 class NewPendingRequestAdded extends AppState {}
+
+class GetAllChatsLoading extends AppState {}
+
+class GetAllChatsSuccess extends AppState {}
+
+class GetAllChatsFailure extends AppState {
+  final String error;
+  GetAllChatsFailure({required this.error});
+}
+
+class AddPriceLoading extends AppState {}
+
+class AddPriceSuccess extends AppState {
+  final String message;
+  AddPriceSuccess({required this.message});
+}
+
+class AddPriceFailure extends AppState {
+  final String error;
+  AddPriceFailure({required this.error});
+}
+
+class AddPercentageLoading extends AppState {}
+
+class AddPercentageSuccess extends AppState {
+  final String message;
+  AddPercentageSuccess({required this.message});
+}
+
+class AddPercentageFailure extends AppState {
+  final String error;
+  AddPercentageFailure({required this.error});
+}
+
+class UpdatePercentageLoading extends AppState {}
+
+class UpdatePercentageSuccess extends AppState {
+  final String message;
+  UpdatePercentageSuccess({required this.message});
+}
+
+class UpdatePercentageFailure extends AppState {
+  final String error;
+  UpdatePercentageFailure({required this.error});
+}
+
+class AddSubscriptionLoading extends AppState {}
+
+class AddSubscriptionSuccess extends AppState {
+  final String message;
+  AddSubscriptionSuccess({required this.message});
+}
+
+class AddSubscriptionFailure extends AppState {
+  final String error;
+  AddSubscriptionFailure({required this.error});
+}
+
+class UploadDriverImageLoading extends AppState {}
+
+class UploadDriverImageSuccess extends AppState {
+  final String message;
+  UploadDriverImageSuccess({required this.message});
+}
+
+class UploadDriverImageFailure extends AppState {
+  final String error;
+  UploadDriverImageFailure({required this.error});
+}
+
+class ChooseServiceLoading extends AppState {}
+
+class ChooseServiceSuccess extends AppState {
+  final String message;
+  ChooseServiceSuccess({required this.message});
+}
+
+class ChooseServiceFailure extends AppState {
+  final String error;
+  ChooseServiceFailure({required this.error});
+}
+
+class RequestStatusDriverLoading extends AppState {}
+
+class RequestStatusDriverSuccess extends AppState {
+  final String message;
+  RequestStatusDriverSuccess({required this.message});
+}
+
+class RequestStatusDriverFailure extends AppState {
+  final String error;
+  RequestStatusDriverFailure({required this.error});
+}
+
+class GetChatsLoading extends AppState {}
+
+class GetChatsSuccess extends AppState {}
+
+class GetChatsFailure extends AppState {
+  final String error;
+  GetChatsFailure({required this.error});
+}

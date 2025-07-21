@@ -14,10 +14,9 @@ import 'widgets/edit_price.dart';
 import 'widgets/sub_price.dart';
 
 final _priceController = TextEditingController();
-final _monthPriceController = TextEditingController();
-final _yearPriceController = TextEditingController();
 final _priceController2 = TextEditingController();
 final _percentageController = TextEditingController();
+final _percentageController2 = TextEditingController();
 
 class Price extends StatelessWidget {
   const Price({super.key});
@@ -100,12 +99,10 @@ class Price extends StatelessWidget {
                                     priceController: _priceController,
                                     priceController2: _priceController2,
                                     percentageController: _percentageController,
+                                    percentageController2:
+                                        _percentageController2,
                                   ),
-                                  SubscribePrice(
-                                    monthPriceController2:
-                                        _monthPriceController,
-                                    yearspriceController: _yearPriceController,
-                                  ),
+                                  const SubscribePrice(),
                                 ],
                               ),
                             ),

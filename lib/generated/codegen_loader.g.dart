@@ -642,7 +642,17 @@ class CodegenLoader extends AssetLoader{
   "offline": "غير متصل",
   "driver_location_unavailable": "موقع السائق غير متوفر",
   "block_driver": "حظر السائق",
-  "unblock_driver": "إلغاء حظر السائق"
+  "unblock_driver": "إلغاء حظر السائق",
+  "add_price_per_meter": "اضافة سعر بالمتر",
+  "edit_price_per_meter": "تعديل سعر بالمتر",
+  "edit_price_per_meter_required": "تعديل سعر بالمتر مطلوب",
+  "add_price_per_meter_required": "اضافة سعر بالمتر مطلوب",
+  "add_percentage": "اضافة نسبة",
+  "add_percentage_required": "اضافة نسبة مطلوبه",
+  "edit_percentage": "تعديل النسبه",
+  "edit_percentage_required": "تعديل النسبه مطلوبه",
+  "regular_flatbed": "سطحه عاديه",
+  "hydraulic_flatbed": "سطحه هيدروليك"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1272,7 +1282,17 @@ static const Map<String,dynamic> _en = {
   "offline": "Offline",
   "driver_location_unavailable": "Driver location is unavailable",
   "block_driver": "Block Driver",
-  "unblock_driver": "Unblock Driver"
+  "unblock_driver": "Unblock Driver",
+  "add_price_per_meter": "Add price per meter",
+  "edit_price_per_meter": "Edit price per meter",
+  "edit_price_per_meter_required": "Edit price per meter is required",
+  "add_price_per_meter_required": "Add price per meter is required",
+  "add_percentage": "Add percentage",
+  "add_percentage_required": "Add percentage is required",
+  "edit_percentage": "Edit percentage",
+  "edit_percentage_required": "Edit percentage is required",
+  "regular_flatbed": "Regular flatbed",
+  "hydraulic_flatbed": "Hydraulic flatbed"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

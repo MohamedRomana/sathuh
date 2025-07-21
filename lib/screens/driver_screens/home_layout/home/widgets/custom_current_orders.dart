@@ -75,7 +75,7 @@ class _CustomCurrentOrdersState extends State<CustomCurrentOrders> {
                           onTap: () {
                             AppRouter.navigateTo(
                               context,
-                              DrivOrderDetails(index: index),
+                              DrivOrderDetails(index: index, isPending: true),
                             );
                           },
                           splashColor: Colors.transparent,

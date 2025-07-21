@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +19,14 @@ import 'package:sathuh/screens/admin_screens/home_layout/price/price.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/chats/driver_chats.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/home/driver_home.dart';
 import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
 import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
-import '../../../screens/user_screens/chat_details/chat_details.dart';
 import '../../../screens/user_screens/home_layout/chats/chats.dart';
 import '../../../screens/user_screens/home_layout/home/home.dart';
 import '../../../screens/user_screens/home_layout/orders/orders.dart';
 import '../../cache/cache_helper.dart';
 import '../../constants/contsants.dart';
-import '../../widgets/app_router.dart';
-import '../models/chat_models.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
@@ -123,6 +118,12 @@ class AppCubit extends Cubit<AppState> {
   int paymentIndex = -1;
   void changePaymentIndex({required int index}) {
     paymentIndex = index;
+    emit(ChangeIndex());
+  }
+
+  int paymentIndex2 = -1;
+  void changePaymentIndex2({required int index}) {
+    paymentIndex2 = index;
     emit(ChangeIndex());
   }
 
@@ -1234,7 +1235,7 @@ class AppCubit extends Cubit<AppState> {
       body: jsonEncode({
         "carId": carId,
         "problems": problemId,
-       if (otherProblemText.isNotEmpty)  "otherProblemText": otherProblemText,
+        if (otherProblemText.isNotEmpty) "otherProblemText": otherProblemText,
         "pickupLocation": {
           "coordinates": [pickLng, pickLat],
         },
@@ -1319,24 +1320,54 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  int completedCurrentPage = 1;
+  bool completedHasMore = true;
+  bool completedIsLoading = false;
+
   List completedRequestsList = [];
-  Future completedRequest() async {
+
+  Future completedRequest({bool isRefresh = false}) async {
+    if (completedIsLoading || !completedHasMore) return;
+
+    completedIsLoading = true;
     emit(GetCompletedRequestsLoading());
+
+    if (isRefresh) {
+      completedCurrentPage = 1;
+      completedRequestsList.clear();
+      completedHasMore = true;
+    }
+
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
-    http.Response response = await http.get(
-      Uri.parse("${baseUrl}request/completed?page=1&size=1"),
+
+    final response = await http.get(
+      Uri.parse(
+        "${baseUrl}request/completed?page=$completedCurrentPage&size=10",
+      ),
       headers: {"Authorization": token},
     );
+
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
-    Map<String, dynamic> data = jsonDecode(response.body);
+
+    final data = jsonDecode(response.body);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
-      completedRequestsList = data['data']['requests'];
+      final List newRequests = data['data']['requests']['data'];
+
+      if (newRequests.length < 10) {
+        completedHasMore = false;
+      }
+
+      completedRequestsList.addAll(newRequests);
+      completedCurrentPage++;
       emit(GetCompletedRequestsSuccess());
     } else {
       emit(GetCompletedRequestsFailure(error: data["message"]));
     }
+
+    completedIsLoading = false;
   }
 
   List inRoadRequestsList = [];
@@ -1359,24 +1390,54 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  int currentPage = 1;
+  int currentSize = 10;
+  bool isLoadingMore = false;
+  bool hasMoreData = true;
+
   List pendingRequestsList = [];
-  Future pendingRequest() async {
+
+  Future<void> pendingRequest({bool loadMore = false}) async {
+    if (isLoadingMore || !hasMoreData) return;
+
+    if (loadMore) {
+      currentSize += 10; // أو currentPage++ لو الـ API بيشتغل بالصفحات
+      isLoadingMore = true;
+    } else {
+      currentPage = 1;
+      currentSize = 10;
+      hasMoreData = true;
+      pendingRequestsList.clear();
+    }
+
     emit(PendingRequestLoading());
+
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
-    http.Response response = await http.get(
-      Uri.parse("${baseUrl}request/pending?page=1&size=10"),
+
+    final response = await http.get(
+      Uri.parse("${baseUrl}request/pending?page=1&size=$currentSize"),
       headers: {"Authorization": token},
     );
+
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
-    Map<String, dynamic> data = jsonDecode(response.body);
+
+    final data = jsonDecode(response.body);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
-      pendingRequestsList = data['data']['requests']['data'];
+      final List newData = data['data']['requests']['data'];
+
+      if (newData.length < 10) hasMoreData = false;
+
+      pendingRequestsList =
+          newData; // أو ممكن تستخدم addAll لو كنت بتزيد الصفحة
       emit(PendingRequestSuccess());
     } else {
-      emit(PendingRequestFailure(error: data["message"]));
+      emit(PendingRequestFailure(error: data["message"] ?? "خطأ"));
     }
+
+    isLoadingMore = false;
   }
 
   // ADMIN SERVICES
@@ -1498,173 +1559,26 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  final Dio _dio = Dio(); // استخدم Dio لجلب البيانات من الـ API
-  late IO.Socket socket; // اجعل السوكيت جزءًا من الـ Cubit لإدارة مركزية
-  List<ChatRoomModel> chatRooms = []; // قائمة الرومات
-  List<ChatMessageModel> currentChatMessages = []; // رسائل المحادثة الحالية
-
-  // بيانات المستخدم الحالي (افترض أنها موجودة في showProfileMap)
-  Map<String, dynamic> currentUser = {'_id': CacheHelper.getUserId()};
-
-  void initSocket() {
-    socket = IO.io(
-      'https://towtruck.cloud', // URL السيرفر
-      IO.OptionBuilder()
-          .setTransports(['websocket'])
-          .disableAutoConnect() // لا تتصل تلقائيًا، سنتحكم في الاتصال يدوياً
-          .setExtraHeaders({
-            'Authorization': CacheHelper.getUserToken(),
-          }) // التوكن
-          .build(),
-    );
-
-    socket.connect();
-
-    socket.onConnect((_) {
-      debugPrint('✅ Socket Connected to https://towtruck.cloud');
-      // يمكنك هنا إرسال حدث للـ server لإعلامه بأن المستخدم متصل
-      // مثلاً: socket.emit('userOnline', {'userId': showProfileMap['_id']});
-    });
-
-    socket.on('successMessage', (data) {
-      debugPrint('✅ successMessage: $data');
-      if (data != null && data['message'] != null) {
-        final newMessage = ChatMessageModel.fromJson(data['message']);
-        currentChatMessages.add(newMessage);
-        emit(SendMessageSuccess());
-      }
-    });
-
-    socket.on('receiveMessage', (data) {
-      debugPrint('📩 receiveMessage: $data');
-      if (data != null && data['message'] != null) {
-        final newMessage = ChatMessageModel.fromJson(data['message']);
-        currentChatMessages.add(newMessage);
-        emit(GetChatMessagesSuccess(List.from(currentChatMessages)));
-      }
-    });
-
-    socket.on('socket_Error', (error) {
-      debugPrint('❌ Socket Error: $error');
-      emit(AppError('Socket Error: $error'));
-    });
-
-    socket.onDisconnect((_) {
-      debugPrint('❌ Socket Disconnected');
-    });
-  }
-
-  Future<void> getChatRooms() async {
-    emit(GetChatRoomsLoading());
-    try {
-      final response = await _dio.get(
-        'https://towtruck.cloud/chat/getAllChats',
-        options: Options(
-          headers: {'Authorization': CacheHelper.getUserToken()},
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        chatRooms =
-            (response.data['data'] as List)
-                .map((e) => ChatRoomModel.fromJson(e))
-                .toList();
-        emit(GetChatRoomsSuccess(chatRooms));
-      } else {
-        emit(
-          GetChatRoomsError(
-            response.data['message'] ?? 'Failed to load chat rooms',
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('Error getting chat rooms: $e');
-      emit(GetChatRoomsError(e.toString()));
-    }
-  }
-
-  Future<void> getChatMessages(String destId) async {
-    emit(GetChatMessagesLoading());
-    try {
-      final response = await _dio.get(
-        'https://towtruck.cloud/api/chat/messages/$destId',
-        options: Options(
-          headers: {'Authorization': CacheHelper.getUserToken()},
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        currentChatMessages =
-            (response.data['data'] as List)
-                .map((e) => ChatMessageModel.fromJson(e))
-                .toList();
-        emit(GetChatMessagesSuccess(currentChatMessages));
-      } else {
-        emit(
-          GetChatMessagesError(
-            response.data['message'] ?? 'Failed to load messages',
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('Error getting chat messages: $e');
-      emit(GetChatMessagesError(e.toString()));
-    }
-  }
-
-  void sendMessage(String message, String destId) {
-    if (message.trim().isEmpty) return;
-
-    // Emit الرسالة للسيرفر
-    socket.emit('sendMessage', {'message': message, 'destId': destId});
-
-    // ضفها محليًا مؤقتًا بانتظار successMessage
-    currentChatMessages.add(
-      ChatMessageModel(
-        fromId: showProfileMap['_id'],
-        message: message,
-        timestamp: DateTime.now().toIso8601String(),
-      ),
-    );
-
-    emit(SendMessagePending()); // حالة pending بدل success مباشرة
-  }
-
-  Future<void> createNewChatRoom({
-    required String destId,
-    required String otherUserName,
-    required BuildContext context,
+  Future addPrice({
+    required String serviceId,
+    required String pricePerMeter,
   }) async {
-    emit(CreateChatRoomLoading());
-    try {
-      final response = await _dio.post(
-        'https://towtruck.cloud/api/chat/createRoom',
-        data: {'destId': destId},
-        options: Options(
-          headers: {'Authorization': CacheHelper.getUserToken()},
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        emit(CreateChatRoomSuccess());
-        AppRouter.navigateTo(
-          context,
-          ChatDetails(destId: destId, otherUserName: otherUserName),
-        );
-      } else {
-        emit(CreateChatRoomError('فشل إنشاء غرفة الدردشة'));
-      }
-    } catch (e) {
-      debugPrint('❌ Error creating chat room: $e');
-      emit(CreateChatRoomError(e.toString()));
+    emit(AddPriceLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}admin//pricePerMeter/$serviceId"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({"pricePerMeter": pricePerMeter}),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(AddPriceSuccess(message: data["message"]));
+    } else {
+      emit(AddPriceFailure(error: data["message"]));
     }
-  }
-
-  @override
-  Future<void> close() {
-    socket.disconnect();
-    socket.dispose();
-    return super.close();
   }
 
   Future updatePrice({
@@ -1676,7 +1590,7 @@ class AppCubit extends Cubit<AppState> {
     debugPrint("Token: $token");
     http.Response response = await http.patch(
       Uri.parse("${baseUrl}admin/updatePricePerMeter/$serviceId"),
-      headers: {"Authorization": token},
+      headers: {"Authorization": token, "Content-Type": "application/json"},
       body: jsonEncode({"pricePerMeter": pricePerMeter}),
     );
     debugPrint("Status Code: ${response.statusCode}");
@@ -1686,6 +1600,114 @@ class AppCubit extends Cubit<AppState> {
       emit(UpdatePriceSuccess(message: data["message"]));
     } else {
       emit(UpdatePriceFailure(error: data["message"]));
+    }
+  }
+
+  List<File> nationalImage = [];
+  Future<void> getNationalImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final int? pickedOption = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(LocaleKeys.select_image_source.tr()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
+                onTap: () => Navigator.pop(context, 1),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Gallery"),
+                onTap: () => Navigator.pop(context, 2),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedOption == null) return;
+
+    XFile? pickedImage;
+
+    if (pickedOption == 1) {
+      pickedImage = await picker.pickImage(source: ImageSource.camera);
+    } else if (pickedOption == 2) {
+      final pickedImages = await picker.pickMultiImage();
+      if (pickedImages.isNotEmpty) {
+        pickedImage = pickedImages.first;
+      }
+    }
+
+    if (pickedImage != null) {
+      nationalImage = [File(pickedImage.path)];
+      emit(ChooseImageSuccess());
+    }
+  }
+
+  void removeNationalImage() {
+    nationalImage.clear();
+    emit(RemoveImageSuccess());
+  }
+
+  Future<void> uploadDriverImage(File imageFile, {required String type}) async {
+    emit(UploadDriverImageLoading());
+
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+
+    final uri = Uri.parse(
+      "${baseUrl}driver/uploadImages",
+    ).replace(queryParameters: {'type': type});
+
+    var request = http.MultipartRequest('PATCH', uri);
+    request.headers['Authorization'] = token;
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'attachment',
+        imageFile.path,
+        contentType: MediaType('image', 'jpeg'),
+      ),
+    );
+
+    debugPrint('Sending file: ${imageFile.path}');
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    debugPrint('Status code: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      emit(
+        UploadDriverImageSuccess(message: data["message"] ?? "تم الرفع بنجاح"),
+      );
+      // ممكن تضيف reload أو تحديث للبيانات
+    } else {
+      emit(UploadDriverImageFailure(error: "فشل في رفع الصورة"));
+    }
+  }
+
+  Future chooseService({required String serviceId}) async {
+    emit(ChooseServiceLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}driver/chooseService/$serviceId"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(ChooseServiceSuccess(message: data["message"]));
+    } else {
+      emit(ChooseServiceFailure(error: data["message"]));
     }
   }
 
@@ -1709,6 +1731,91 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  Map subYearMap = {};
+  Future getSubYearscriptions() async {
+    emit(GetSubscriptionsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}driver/subscription/Price?type=yearly"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      subYearMap = data["data"]['subscription'];
+      emit(GetSubscriptionsSuccess());
+    } else {
+      emit(GetSubscriptionsFailure(error: data["message"]));
+    }
+  }
+
+  Future addPercentage({required String percentage}) async {
+    emit(AddPercentageLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}admin/percentage"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({"adminPercentage": percentage}),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(AddPercentageSuccess(message: data["message"]));
+    } else {
+      emit(AddPercentageFailure(error: data["message"]));
+    }
+  }
+
+  Future updatePercentage({required String percentage}) async {
+    emit(UpdatePercentageLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.patch(
+      Uri.parse("${baseUrl}admin/percentage"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({"adminPercentage": percentage}),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(UpdatePercentageSuccess(message: data["message"]));
+    } else {
+      emit(UpdatePercentageFailure(error: data["message"]));
+    }
+  }
+
+  Future addSubscription({
+    required String type,
+    required serviceId,
+    required String price,
+  }) async {
+    emit(AddSubscriptionLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.post(
+      Uri.parse("${baseUrl}admin/subscription"),
+      headers: {"Authorization": token, "Content-Type": "application/json"},
+      body: jsonEncode({
+        "planType": type,
+        "serviceId": serviceId,
+        "price": price,
+      }),
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(AddSubscriptionSuccess(message: data["message"]));
+    } else {
+      emit(AddSubscriptionFailure(error: data["message"]));
+    }
+  }
+
   Future updateSubscription({
     required String type,
     required serviceId,
@@ -1719,7 +1826,7 @@ class AppCubit extends Cubit<AppState> {
     debugPrint("Token: $token");
     http.Response response = await http.patch(
       Uri.parse("${baseUrl}admin/subscription/update"),
-      headers: {"Authorization": token},
+      headers: {"Authorization": token, "Content-Type": "application/json"},
       body: jsonEncode({
         "planType": type,
         "serviceId": serviceId,
@@ -1753,6 +1860,69 @@ class AppCubit extends Cubit<AppState> {
       emit(GetNotificationsSuccess());
     } else {
       emit(GetNotificationsFailure(error: data["message"]));
+    }
+  }
+
+  List chatList = [];
+  Future getAllChats() async {
+    emit(GetAllChatsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}chat/getAllChats"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      chatList = data["data"]['chats'];
+      emit(GetAllChatsSuccess());
+    } else {
+      emit(GetAllChatsFailure(error: data["message"]));
+    }
+  }
+
+  Future requestStatusDriver({
+    required String requestId,
+    required String type,
+  }) async {
+    emit(RequestStatusDriverLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.patch(
+      Uri.parse(
+        "${baseUrl}driver/request/$requestId",
+      ).replace(queryParameters: {"type": type}),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      emit(RequestStatusDriverSuccess(message: data["message"]));
+    } else {
+      emit(RequestStatusDriverFailure(error: data["message"]));
+    }
+  }
+
+  List chatsList = [];
+  Future getChats() async {
+    emit(GetChatsLoading());
+    String? token = CacheHelper.getUserToken();
+    debugPrint("Token: $token");
+    http.Response response = await http.get(
+      Uri.parse("${baseUrl}chat/getAllChats"),
+      headers: {"Authorization": token},
+    );
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      chatsList = data["data"]['currentChats'];
+      emit(GetChatsSuccess());
+    } else {
+      emit(GetChatsFailure(error: data["message"]));
     }
   }
 }

@@ -631,5 +631,15 @@ abstract class  LocaleKeys {
   static const driver_location_unavailable = 'driver_location_unavailable';
   static const block_driver = 'block_driver';
   static const unblock_driver = 'unblock_driver';
+  static const add_price_per_meter = 'add_price_per_meter';
+  static const edit_price_per_meter = 'edit_price_per_meter';
+  static const edit_price_per_meter_required = 'edit_price_per_meter_required';
+  static const add_price_per_meter_required = 'add_price_per_meter_required';
+  static const add_percentage = 'add_percentage';
+  static const add_percentage_required = 'add_percentage_required';
+  static const edit_percentage = 'edit_percentage';
+  static const edit_percentage_required = 'edit_percentage_required';
+  static const regular_flatbed = 'regular_flatbed';
+  static const hydraulic_flatbed = 'hydraulic_flatbed';
 
 }

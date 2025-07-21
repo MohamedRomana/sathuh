@@ -1,242 +1,121 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sathuh/core/cache/cache_helper.dart';
-import 'package:socket_io_client/socket_io_client.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:flutter_svg/svg.dart';
+import '../../../../../core/cache/cache_helper.dart';
 import '../../../../../core/constants/colors.dart';
-import '../../../../../core/widgets/app_input.dart';
+import '../../../../../core/service/models/chat_models.dart';
+import '../../../../../core/service/socket/sockey_service.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../generated/locale_keys.g.dart';
-import '../widgets/custom_chat_with_container.dart';
+import 'widgets/custom_chat_with_container.dart';
+import 'widgets/custom_send_messages.dart';
+
+final _replayMessageController = TextEditingController();
 
 class AdmChatDetails extends StatefulWidget {
-  final Map<String, dynamic> user;
-  const AdmChatDetails({super.key, required this.user});
+  final String id;
+  const AdmChatDetails({super.key, required this.id});
 
   @override
   State<AdmChatDetails> createState() => _AdmChatDetailsState();
 }
 
-class _AdmChatDetailsState extends State<AdmChatDetails>
-    with WidgetsBindingObserver {
-  IO.Socket? socket;
-  List<String> messages = [];
-  TextEditingController? messageSendController;
+class _AdmChatDetailsState extends State<AdmChatDetails> {
+  final List<ChatMessageModel> messages = [];
 
-  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    messageSendController = TextEditingController();
-    initSocket();
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToBottom();
-    });
-  }
+    SocketService().initSocket(CacheHelper.getUserId());
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void initSocket() {
-    final token = CacheHelper.getUserToken();
-
-    socket = IO.io("https://towtruck.cloud", {
-      'transports': ['websocket'],
-      'autoConnect': true,
-    });
-
-    debugPrint('📌 Token sent to socket: $token');
-
-    socket!.connect();
-
-    socket!.onConnect((_) {
-      debugPrint('✅ Connected to socket');
-
-      socket!.emit('Authorization', {'token': token});
-    });
-
-    socket!.on('socket_Error', (data) {
-      debugPrint('❌ Socket Error: $data');
-    });
-
-    socket!.onDisconnect((_) {
-      debugPrint('❌ Disconnected from socket');
-    });
-
-    socket!.on("successMessage", (data) {
-      debugPrint('✅ Message Sent and Stored: $data');
-      setState(() {
-        messages.add(data['message']);
-      });
-    });
-
-    socket!.on("receiveMessage", (data) {
-      debugPrint('📩 Received Message: $data');
-      setState(() {
-        messages.add(data['message']);
-      });
-    });
-  }
-
-  void sendMessage() {
-    final messageText = messageSendController!.text.trim();
-    if (messageText.isEmpty) return;
-
-    socket?.emit("sendMessage", {
-      "message": messageText,
-      "destId": widget.user['_id'],
-    });
-
-    messageSendController!.clear();
-  }
-
-  @override
-  void didChangeMetrics() {
-    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
-    if (bottomInset > 0.0) {
-      Future.delayed(const Duration(milliseconds: 100), _scrollToBottom);
-    }
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 12),
-        curve: Curves.easeOut,
+    SocketService().socket.on("successMessage", (data) {
+      print("SuccessMessage: $data");
+      final msgText = data['message'];
+      final senderId = CacheHelper.getUserId(); // انت المرسل
+      final newMsg = ChatMessageModel(
+        fromId: senderId,
+        message: msgText,
+        createdAt: DateTime.now().toString(),
       );
-    }
-  }
 
-  // void _sendMessage() {
-  //   Future.delayed(const Duration(milliseconds: 300), () {
-  //     _scrollController.animateTo(
-  //       _scrollController.position.maxScrollExtent,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeOut,
-  //     );
-  //   });
-  // }
+      setState(() => messages.insert(0, newMsg));
+    });
+
+    SocketService().socket.on("receiveMessage", (data) {
+      print("ReceiveMessage: $data");
+      final msgText = data['message'];
+      final senderId = widget.id; // المستقبل أرسلك
+      final newMsg = ChatMessageModel(
+        fromId: senderId,
+        message: msgText,
+        createdAt: DateTime.now().toString(),
+      );
+
+      setState(() => messages.insert(0, newMsg));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: AppInput(
-        controller: messageSendController,
-        enabledBorderColor: Colors.grey,
-        filled: true,
-        suffixIcon: GestureDetector(
-          onTap: sendMessage,
-          child: Icon(Icons.send, color: AppColors.primary, size: 30.sp),
-        ),
-        hint: LocaleKeys.write_message.tr(),
-      ),
-
-      body: Stack(
+      body: Column(
         children: [
-          Image.asset(
-            Assets.img.background.path,
-            height: double.infinity,
-            width: double.infinity,
-            fit: BoxFit.fill,
-          ),
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.white.withAlpha(210),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomAppBar(title: LocaleKeys.chat.tr()),
-              CustomChatWithContainer(user: widget.user),
-              Expanded(
-                child: ListView.separated(
-                  controller: _scrollController,
-                  padding: EdgeInsets.only(bottom: 120.h),
-                  itemCount: messages.length,
-                  physics: const BouncingScrollPhysics(),
-                  separatorBuilder: (context, index) => Container(height: 18.h),
-                  itemBuilder:
-                      (context, index) => Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(12.r),
-                              margin: EdgeInsetsDirectional.only(
-                                start: 6.w,
-                                end: 6.w,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                borderRadius: BorderRadiusDirectional.only(
-                                  topEnd: Radius.zero,
-                                  topStart: Radius.circular(8.r),
-                                  bottomEnd: Radius.circular(8.r),
-                                  bottomStart: Radius.circular(8.r),
-                                ),
-                              ),
-                              child: SizedBox(
-                                width: 250.w,
-                                child: AppText(
-                                  text: messages[index],
-                                  lines: 5,
-                                  size: 14.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 50.w,
-                              width: 50.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 2.w,
-                                ),
-                                borderRadius: BorderRadius.circular(100.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withAlpha(100),
-                                    blurRadius: 5.r,
-                                    spreadRadius: 1.r,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100.r),
-                                child: Image.asset(
-                                  Assets.img.driver.path,
-                                  height: 50.w,
-                                  width: 50.w,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                ),
+          CustomAppBar(title: LocaleKeys.chat.tr()),
+          const CustomChatWithAdminContainer(),
+          Expanded(
+            child: Container(
+              width: 343.w,
+              padding: EdgeInsets.all(16.r),
+              margin: EdgeInsets.only(bottom: 30.h),
+              decoration: BoxDecoration(
+                color: AppColors.third,
+                borderRadius: BorderRadius.circular(15.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withAlpha(50),
+                    blurRadius: 5.r,
+                    spreadRadius: 1.r,
+                    offset: Offset(0, 5.r),
+                  ),
+                ],
               ),
-            ],
+              child: ListView.separated(
+                itemCount: messages.length,
+                reverse: true, // أو false حسب الترتيب اللي تريده
+                physics: const BouncingScrollPhysics(),
+                separatorBuilder: (context, index) => SizedBox(height: 5.h),
+                itemBuilder: (context, index) {
+                  final msg = messages[index];
+                  final isMine = msg.fromId == CacheHelper.getUserId();
+                  return Align(
+                    alignment:
+                        isMine
+                            ? AlignmentDirectional.centerStart
+                            : AlignmentDirectional.centerEnd,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.svg.user,
+                          height: 40.w,
+                          width: 40.w,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(width: 7.w),
+                        AppText(text: msg.message, size: 16.sp),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          CustomAdminSendMessage(
+            replayMessageController: _replayMessageController,
+            id: widget.id,
           ),
         ],
       ),

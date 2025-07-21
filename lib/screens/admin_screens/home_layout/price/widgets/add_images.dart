@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:io';
+import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,10 @@ class _AddImagesState extends State<AddImages> {
                   child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     scrollDirection: Axis.horizontal,
-                    itemCount: AppCubit.get(context).banners.length,
+                    itemCount: min(
+                      AppCubit.get(context).banners.length,
+                      AppCubit.get(context).bannerIds.length,
+                    ),
                     separatorBuilder: (context, index) => Container(width: 16),
                     itemBuilder: (context, index) {
                       return Stack(

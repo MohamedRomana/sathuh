@@ -16,7 +16,8 @@ import '../../../../../generated/locale_keys.g.dart';
 class OrderDetails extends StatelessWidget {
   final int index;
   final bool isPending;
-  const OrderDetails({super.key, required this.index, this.isPending = false});
+  final bool isPen;
+  const OrderDetails({super.key, required this.index, this.isPending = false, this.isPen = false});
 
   void showAddressBottomSheet(
     BuildContext context,
@@ -206,7 +207,6 @@ class OrderDetails extends StatelessWidget {
                         //   padding: EdgeInsets.symmetric(vertical: 8.h),
                         //   child: const Divider(color: Colors.grey),
                         // ),
-                  
                         Row(
                           children: [
                             AppText(
@@ -243,7 +243,7 @@ class OrderDetails extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: const Divider(color: Colors.grey),
                         ),
-                     
+
                         // Row(
                         //   children: [
                         //     AppText(
@@ -304,7 +304,6 @@ class OrderDetails extends StatelessWidget {
                         //   padding: EdgeInsets.symmetric(vertical: 8.h),
                         //   child: const Divider(color: Colors.grey),
                         // ),
-                  
                         Row(
                           children: [
                             AppText(

@@ -206,10 +206,10 @@ class _ComplaintsState extends State<Complaints> {
                                               AppRouter.navigateTo(
                                                 context,
                                                 AdmChatDetails(
-                                                  user:
+                                                  id:
                                                       AppCubit.get(
                                                         context,
-                                                      ).complaintsList[index]['userId'],
+                                                      ).complaintsList[index]['userId']['_id'],
                                                 ),
                                               );
                                             },

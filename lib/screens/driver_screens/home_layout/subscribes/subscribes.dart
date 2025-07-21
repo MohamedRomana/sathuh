@@ -7,8 +7,8 @@ import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
-import 'widgets/custom_my_packages.dart';
-import 'widgets/custom_subscrip.dart';
+import 'custom_my_packages.dart';
+import 'custom_subscrip.dart';
 
 class Subscribes extends StatelessWidget {
   const Subscribes({super.key});

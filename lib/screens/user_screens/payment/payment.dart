@@ -5,11 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/service/cubit/app_cubit.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_router.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/flash_message.dart';
 import '../../../generated/locale_keys.g.dart';
-import '../home_layout/home_layout.dart';
+import '../home_layout/home/widgets/custom_driver_near_you.dart';
 
 class PaymentSheet extends StatefulWidget {
   const PaymentSheet({super.key});
@@ -195,8 +194,14 @@ class _PaymentSheetState extends State<PaymentSheet> {
                         type: FlashMessageType.success,
                         context: context,
                       );
-                      AppCubit.get(context).changebottomNavIndex(1);
-                      AppRouter.navigateAndFinish(context, const HomeLayout());
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder:
+                            (context) => CustomDriverNearYou(
+                              orderId: AppCubit.get(context).requestId,
+                            ),
+                      );
                     } else if (state is ConfirmRequestFailure) {
                       showFlashMessage(
                         message: state.error,

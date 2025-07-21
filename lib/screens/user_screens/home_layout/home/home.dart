@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
@@ -9,7 +8,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:sathuh/core/constants/contsants.dart';
 import '../../../../gen/assets.gen.dart';
-import 'widgets/custom_driver_near_you.dart';
 import 'widgets/custom_services.dart';
 import 'widgets/custom_swiper.dart';
 import 'widgets/custom_top_bar.dart';
@@ -128,7 +126,6 @@ class _HomeState extends State<Home> {
                 ),
                 const CustomSwiper(),
                 const CustomServices(),
-                const CustomDriverNearYou(),
                 Container(height: 120.h),
               ],
             ),

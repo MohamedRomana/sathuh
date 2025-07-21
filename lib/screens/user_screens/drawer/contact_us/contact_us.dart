@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -16,6 +17,7 @@ import '../../../../core/widgets/flash_message.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../home_layout/home_layout.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -163,11 +165,21 @@ class _ContactUsState extends State<ContactUs> {
                       BlocConsumer<AppCubit, AppState>(
                         listener: (context, state) {
                           if (state is ContactUsSuccess) {
-                            AppCubit.get(context).changebottomNavIndex(1);
-                            AppRouter.navigateAndFinish(
-                              context,
-                              const HomeLayout(),
-                            );
+                            if (CacheHelper.getUserType() == "user") {
+                              AppCubit.get(context).changebottomNavIndex(1);
+                              AppRouter.navigateAndFinish(
+                                context,
+                                const HomeLayout(),
+                              );
+                            } else if (CacheHelper.getUserType() == "driver") {
+                              AppCubit.get(
+                                context,
+                              ).changebottomDriverNavIndex(1);
+                              AppRouter.navigateAndFinish(
+                                context,
+                                const DriverHomeLayout(),
+                              );
+                            }
                             _nameController.clear();
                             _phoneController.clear();
                             _messageController.clear();

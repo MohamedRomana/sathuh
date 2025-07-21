@@ -24,8 +24,14 @@ class AdminChats extends StatelessWidget {
             width: double.infinity,
             color: Colors.white.withAlpha(210),
           ),
-          CustomAppBar(title: LocaleKeys.chats.tr()),
-          const AdmPreviousChats(),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(title: LocaleKeys.chats.tr()),
+                const AdmPreviousChats(),
+              ],
+            ),
+          ),
         ],
       ),
     );

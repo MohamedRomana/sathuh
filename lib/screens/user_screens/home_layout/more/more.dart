@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,7 @@ import 'package:sathuh/screens/user_screens/notifications/notifications.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/contsants.dart' show baseUrl;
+import '../../../../core/constants/contsants.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/alert_dialog.dart';
 import '../../../../core/widgets/app_router.dart';
@@ -20,7 +19,6 @@ import '../../../../generated/locale_keys.g.dart';
 import '../../../admin_screens/home_layout/admin_home_layout.dart';
 import '../../../admin_screens/notifications/notifications.dart';
 import '../../../admin_screens/profile/adm_profile.dart';
-import '../../../admin_screens/work_orders/work_orders.dart';
 import '../../../auth/views/login/login.dart';
 import '../../../driver_screens/home_layout/home_layout.dart';
 import '../../../driver_screens/notifications/driver_notifications.dart';
@@ -285,8 +283,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                       if (CacheHelper.getUserType() == "user") {
                         AppRouter.pop(context);
                         AppRouter.navigateTo(context, const Profile());
-                      } else if (CacheHelper.getUserType() ==
-                          "administration") {
+                      } else if (CacheHelper.getUserType() == "admin") {
                         AppRouter.pop(context);
                         AppRouter.navigateTo(context, const AdmProfile());
                       } else {
@@ -395,64 +392,64 @@ class _CustomDrawerState extends State<CustomDrawer>
                         ),
                       ),
                     )
-                    :
-                     AnimatedBuilder(
-                      animation: _animation4,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation4.value, 0),
-                          child: child,
-                        );
-                      },
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          AppCubit.get(context).changedrawerIndex(index: 2);
-                          AppRouter.navigateTo(context, const WorkOrders());
-                        },
-                        child: Container(
-                          width: 250.w,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 8.h,
-                          ),
-                          margin: EdgeInsetsDirectional.only(bottom: 8.h),
-                          decoration: BoxDecoration(
-                            color:
-                                AppCubit.get(context).drawerIndex == 2
-                                    ? AppColors.primary
-                                    : Colors.transparent,
-                            borderRadius: BorderRadius.circular(100.r),
-                          ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                Assets.svg.orderDetails,
-                                height: 24.w,
-                                width: 24.w,
-                                color:
-                                    AppCubit.get(context).drawerIndex == 2
-                                        ? Colors.white
-                                        : AppColors.secondray,
-                                fit: BoxFit.cover,
-                              ),
-                              AppText(
-                                start: 6.w,
-                                text: LocaleKeys.work_requests.tr(),
-                                color:
-                                    AppCubit.get(context).drawerIndex == 2
-                                        ? Colors.white
-                                        : Colors.black,
-                                size: 16.sp,
-                                family: FontFamily.tajawalBold,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    : Container(),
 
+                //  AnimatedBuilder(
+                //   animation: _animation4,
+                //   builder: (context, child) {
+                //     return Transform.translate(
+                //       offset: Offset(_animation4.value, 0),
+                //       child: child,
+                //     );
+                //   },
+                //   child: InkWell(
+                //     splashColor: Colors.transparent,
+                //     highlightColor: Colors.transparent,
+                //     onTap: () {
+                //       AppCubit.get(context).changedrawerIndex(index: 2);
+                //       AppRouter.navigateTo(context, const WorkOrders());
+                //     },
+                //     child: Container(
+                //       width: 250.w,
+                //       padding: EdgeInsets.symmetric(
+                //         horizontal: 16.w,
+                //         vertical: 8.h,
+                //       ),
+                //       margin: EdgeInsetsDirectional.only(bottom: 8.h),
+                //       decoration: BoxDecoration(
+                //         color:
+                //             AppCubit.get(context).drawerIndex == 2
+                //                 ? AppColors.primary
+                //                 : Colors.transparent,
+                //         borderRadius: BorderRadius.circular(100.r),
+                //       ),
+                //       child: Row(
+                //         children: [
+                //           SvgPicture.asset(
+                //             Assets.svg.orderDetails,
+                //             height: 24.w,
+                //             width: 24.w,
+                //             color:
+                //                 AppCubit.get(context).drawerIndex == 2
+                //                     ? Colors.white
+                //                     : AppColors.secondray,
+                //             fit: BoxFit.cover,
+                //           ),
+                //           AppText(
+                //             start: 6.w,
+                //             text: LocaleKeys.work_requests.tr(),
+                //             color:
+                //                 AppCubit.get(context).drawerIndex == 2
+                //                     ? Colors.white
+                //                     : Colors.black,
+                //             size: 16.sp,
+                //             family: FontFamily.tajawalBold,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 CacheHelper.getUserType() == 'user' ||
                         CacheHelper.getUserType() == 'driver'
                     ? AnimatedBuilder(

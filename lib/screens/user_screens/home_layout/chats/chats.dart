@@ -24,11 +24,13 @@ class Chats extends StatelessWidget {
             width: double.infinity,
             color: Colors.white.withAlpha(210),
           ),
-          Column(
-            children: [
-              CustomAppBar(title: LocaleKeys.chats.tr()),
-              const CustomChats(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(title: LocaleKeys.chats.tr()),
+                const CustomChats(),
+              ],
+            ),
           ),
         ],
       ),
