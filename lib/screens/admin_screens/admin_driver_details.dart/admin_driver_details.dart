@@ -15,7 +15,6 @@ import '../../../generated/locale_keys.g.dart';
 import '../../user_screens/driver_details/rates/product_rates.dart';
 import 'widgets/about_driver.dart';
 import 'widgets/driver_header.dart';
-import 'widgets/driver_orders.dart';
 
 class AdminDriverDetails extends StatelessWidget {
   final int index;
@@ -110,7 +109,6 @@ class AdminDriverDetails extends StatelessWidget {
                         );
                       },
                     ),
-                    CustomDriverOrders(index2: index),
                     ProductRates(index2: index),
 
                     AppButton(

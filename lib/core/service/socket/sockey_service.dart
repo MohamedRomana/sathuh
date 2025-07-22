@@ -62,13 +62,14 @@ class SocketService {
       debugPrint('New message from someone: $data');
     });
 
-    
-
     socket.on('socket_Error', (error) {
       debugPrint('Socket error: $error');
     });
 
     socket.onDisconnect((_) => debugPrint('Disconnected from socket'));
+    socket.onAny((event, data) {
+      debugPrint('📡 Event received: $event -> $data');
+    });
   }
 
   void sendMessage({required String message, required String destId}) {

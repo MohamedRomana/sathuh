@@ -29,6 +29,7 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
 
   void initState() {
     super.initState();
+    AppCubit.get(context).chatsList.clear();
     timeago.setLocaleMessages('ar', timeago.ArMessages());
 
     // استدعاء أول مرة
@@ -52,6 +53,7 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
       builder: (context, state) {
         return state is GetChatsLoading &&
                 AppCubit.get(context).chatsList.isEmpty
+                
             ? const CustomListShimmer()
             : AppCubit.get(context).chatsList.isEmpty
             ? Center(

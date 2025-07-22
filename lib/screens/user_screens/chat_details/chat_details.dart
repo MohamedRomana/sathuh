@@ -58,7 +58,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
 
     final currentChat = allChats.firstWhere(
       (chat) =>
-          chat['subParticipant']['\$__']['parent']['subParticipant']['_id'] ==
+          chat['mainUser']['\$__']['parent']['mainUser']['_id'] ==
           widget.id,
       orElse: () => null,
     );

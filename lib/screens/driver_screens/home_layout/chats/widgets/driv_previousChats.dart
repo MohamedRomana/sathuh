@@ -28,9 +28,9 @@ class _DrivPreviousChatsState extends State<DrivPreviousChats> {
   Timer? _chatRefreshTimer;
 
   @override
-
   void initState() {
     super.initState();
+    AppCubit.get(context).chatsList.clear();
     timeago.setLocaleMessages('ar', timeago.ArMessages());
 
     // استدعاء أول مرة

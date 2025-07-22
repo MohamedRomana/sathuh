@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sathuh/core/cache/cache_helper.dart';
 import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/contsants.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_input.dart';
@@ -227,7 +228,9 @@ class _ContactUsState extends State<ContactUs> {
                         top: 16.h,
                         borderColor: AppColors.secondray,
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          openWhatsApps();
+                        },
                         child: AppText(
                           text: 'تواصل عبر واتساب',
                           color: AppColors.secondray,

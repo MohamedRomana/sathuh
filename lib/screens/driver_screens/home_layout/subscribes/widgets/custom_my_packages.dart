@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/alert_dialog.dart';
 import 'package:sathuh/core/widgets/app_text.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../generated/locale_keys.g.dart';
+import '../../../../../core/constants/colors.dart';
+import '../../../../../generated/locale_keys.g.dart';
 import 'months_details.dart';
 import 'years_details.dart';
 

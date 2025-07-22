@@ -57,9 +57,11 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
   void _refreshChatMessages() async {
     final allChats = await AppCubit.get(context).getChats();
 
+    if (allChats == null) return; // 👈 تجنب استخدام null
+
     final currentChat = allChats.firstWhere(
       (chat) =>
-          chat['subParticipant']['\$__']['parent']['subParticipant']['_id'] ==
+          chat['subParticipant']?['\$__']?['parent']?['subParticipant']?['_id'] ==
           widget.id,
       orElse: () => null,
     );
@@ -77,15 +79,12 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
       ),
     );
 
-    // تحويل أي رسالة عندك من pending لـ confirmed لو اتقبلت
     setState(() {
       messages =
           messages.map((msg) {
             if (msg.isPending &&
                 updatedMessages.any((m) => m.message == msg.message)) {
-              return msg.copyWith(
-                isPending: false,
-              ); // لازم تعمل copyWith في الموديل
+              return msg.copyWith(isPending: false);
             }
             return msg;
           }).toList();
@@ -116,21 +115,35 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
       _scrollToBottom();
     });
 
-    // استقبال الرسائل الجديدة من السوكيت
     SocketService().socket.on("successMessage", (data) {
       final messageMap = data["chat"]["messages"].last;
-      final confirmedMsg = ChatMessageModel(
-        fromId: messageMap["senderId"],
-        message: messageMap["message"],
-        createdAt: messageMap["createdAt"],
-        isPending: false,
-      );
+      final isFromMe = messageMap["senderId"] == CacheHelper.getUserId();
 
-      setState(() {
-        messages.add(confirmedMsg);
-      });
+      if (isFromMe) {
+        // هذه رسالتك: حدث الـ pending ل confirmed
+        final index = messages.indexWhere(
+          (msg) => msg.message == messageMap["message"] && msg.isPending,
+        );
 
-      _scrollToBottom(); // عشان ينزل بعد إضافة رسالة جديدة
+        if (index != -1) {
+          setState(() {
+            messages[index] = messages[index].copyWith(isPending: false);
+          });
+        }
+      } else {
+        final confirmedMsg = ChatMessageModel(
+          fromId: messageMap["senderId"],
+          message: messageMap["message"],
+          createdAt: messageMap["createdAt"],
+          isPending: false,
+        );
+
+        setState(() {
+          messages.add(confirmedMsg);
+        });
+      }
+
+      _scrollToBottom();
     });
   }
 

@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sathuh/core/widgets/flash_message.dart';
 
-import '../../../../core/service/cubit/app_cubit.dart';
-import '../../../../core/widgets/app_button.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../gen/fonts.gen.dart';
-import '../../../../generated/locale_keys.g.dart';
+import '../../../../../core/service/cubit/app_cubit.dart';
+import '../../../../../core/widgets/app_button.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../gen/fonts.gen.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 class CustomUploadNationalImage extends StatelessWidget {
   const CustomUploadNationalImage({super.key});

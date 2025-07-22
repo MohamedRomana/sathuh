@@ -1,4 +1,5 @@
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String? token;
@@ -43,4 +44,20 @@ void shareLocation(double lat, double lng) {
 Future<void> openWhatsApp(String phoneNumber) async {
   final Uri launchUri = Uri.parse("https://wa.me/$phoneNumber");
   await launchUrl(launchUri);
+}
+
+Future<void> openWhatsApps() async {
+  final prefs = await SharedPreferences.getInstance();
+  final phoneNumber = prefs.getString('whatsapp_number');
+
+  if (phoneNumber != null && phoneNumber.isNotEmpty) {
+    final Uri launchUri = Uri.parse("https://wa.me/$phoneNumber");
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri, mode: LaunchMode.externalApplication);
+    } else {
+      print("Can't launch WhatsApp");
+    }
+  } else {
+    print("No phone number found in SharedPreferences");
+  }
 }

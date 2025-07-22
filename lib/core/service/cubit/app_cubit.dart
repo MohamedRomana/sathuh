@@ -1863,26 +1863,6 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  List chatList = [];
-  Future getAllChats() async {
-    emit(GetAllChatsLoading());
-    String? token = CacheHelper.getUserToken();
-    debugPrint("Token: $token");
-    http.Response response = await http.get(
-      Uri.parse("${baseUrl}chat/getAllChats"),
-      headers: {"Authorization": token},
-    );
-    debugPrint("Status Code: ${response.statusCode}");
-    debugPrint("Response Body: ${response.body}");
-    Map<String, dynamic> data = jsonDecode(response.body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      chatList = data["data"]['chats'];
-      emit(GetAllChatsSuccess());
-    } else {
-      emit(GetAllChatsFailure(error: data["message"]));
-    }
-  }
-
   Future requestStatusDriver({
     required String requestId,
     required String type,

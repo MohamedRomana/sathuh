@@ -23,12 +23,12 @@ class CustomChats extends StatefulWidget {
 }
 
 class _CustomChatsState extends State<CustomChats> {
-   Timer? _chatRefreshTimer;
+  Timer? _chatRefreshTimer;
 
   @override
-
   void initState() {
     super.initState();
+    AppCubit.get(context).chatsList.clear();
     timeago.setLocaleMessages('ar', timeago.ArMessages());
 
     // استدعاء أول مرة
@@ -48,7 +48,7 @@ class _CustomChatsState extends State<CustomChats> {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<AppCubit, AppState>(
+    return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return state is GetChatsLoading &&
                 AppCubit.get(context).chatsList.isEmpty
@@ -70,8 +70,7 @@ class _CustomChatsState extends State<CustomChats> {
               itemBuilder: (context, index) {
                 final chat = AppCubit.get(context).chatsList[index];
                 final messages =
-                    chat['subParticipant']['\$__']['parent']['messages']
-                        as List;
+                    chat['mainUser']['\$__']['parent']['messages'] as List;
                 final lastMessage =
                     messages.isNotEmpty
                         ? messages.last['message']
@@ -94,15 +93,15 @@ class _CustomChatsState extends State<CustomChats> {
                         id:
                             AppCubit.get(
                               context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['_id'],
+                            ).chatsList[index]['mainUser']['\$__']['parent']['mainUser']['_id'],
                         name:
                             AppCubit.get(
                               context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['userName'],
+                            ).chatsList[index]['mainUser']['\$__']['parent']['mainUser']['userName'],
                         image:
                             AppCubit.get(
                               context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['image'],
+                            ).chatsList[index]['mainUser']['\$__']['parent']['mainUser']['image'],
                         oldMessages:
                             AppCubit.get(context).chatsList[index]['messages'],
                       ),
@@ -132,7 +131,7 @@ class _CustomChatsState extends State<CustomChats> {
                             image:
                                 AppCubit.get(
                                   context,
-                                ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['image'],
+                                ).chatsList[index]['mainUser']['\$__']['parent']['mainUser']['image'],
                             width: 45.w,
                             height: 45.h,
                             fit: BoxFit.cover,
@@ -151,7 +150,7 @@ class _CustomChatsState extends State<CustomChats> {
                                     text:
                                         AppCubit.get(
                                           context,
-                                        ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['userName'],
+                                        ).chatsList[index]['mainUser']['\$__']['parent']['mainUser']['userName'],
                                     size: 16.sp,
                                     color: const Color(0xff8C6263),
                                     family: FontFamily.tajawalBold,
