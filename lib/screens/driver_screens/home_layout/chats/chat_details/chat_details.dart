@@ -57,28 +57,33 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
   void _refreshChatMessages() async {
     final allChats = await AppCubit.get(context).getChats();
 
-    if (allChats == null) return; // 👈 تجنب استخدام null
+    // final currentUserId = CacheHelper.getUserId();
 
-    final currentChat = allChats.firstWhere(
-      (chat) =>
-          chat['subParticipant']?['\$__']?['parent']?['subParticipant']?['_id'] ==
-          widget.id,
-      orElse: () => null,
-    );
+    final currentChat = allChats.firstWhere((chat) {
+      final parent = chat['mainUser']?['\$__']?['parent'];
+      final mainId = parent?['mainUser']?['_id'];
+      final subId = parent?['subParticipant']?['_id'];
+      return mainId == widget.id || subId == widget.id;
+    }, orElse: () => null);
 
     if (currentChat == null) return;
 
-    final updatedMessages = List<ChatMessageModel>.from(
-      (currentChat['messages'] as List).map(
-        (msg) => ChatMessageModel(
-          fromId: msg['senderId'],
-          message: msg['message'],
-          createdAt: msg['createdAt'],
-          isPending: false,
-        ),
-      ),
-    );
+    final parentData = currentChat['mainUser']?['\$__']?['parent'];
+    if (parentData == null) return;
 
+    final messagesList = parentData['messages'] as List;
+
+    final updatedMessages =
+        messagesList.map<ChatMessageModel>((msg) {
+          return ChatMessageModel(
+            fromId: msg['senderId'],
+            message: msg['message'],
+            createdAt: msg['createdAt'],
+            isPending: false,
+          );
+        }).toList();
+
+    // تأكيد الرسائل المعلقة
     setState(() {
       messages =
           messages.map((msg) {
@@ -97,7 +102,10 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
     _chatRefreshTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       _refreshChatMessages();
     });
-    SocketService().initSocket(CacheHelper.getUserId());
+    SocketService().initSocket(
+      CacheHelper.getUserId(),
+      CacheHelper.getUserToken(),
+    );
 
     // تحميل الرسائل القديمة
     messages =

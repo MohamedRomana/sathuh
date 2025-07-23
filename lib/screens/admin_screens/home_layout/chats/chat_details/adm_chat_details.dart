@@ -55,35 +55,39 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
   void _refreshChatMessages() async {
     final allChats = await AppCubit.get(context).getChats();
 
-    final currentChat = allChats.firstWhere(
-      (chat) =>
-          chat['subParticipant']['\$__']['parent']['subParticipant']['_id'] ==
-          widget.id,
-      orElse: () => null,
-    );
+    // final currentUserId = CacheHelper.getUserId();
+
+    final currentChat = allChats.firstWhere((chat) {
+      final parent = chat['mainUser']?['\$__']?['parent'];
+      final mainId = parent?['mainUser']?['_id'];
+      final subId = parent?['subParticipant']?['_id'];
+      return mainId == widget.id || subId == widget.id;
+    }, orElse: () => null);
 
     if (currentChat == null) return;
 
-    final updatedMessages = List<ChatMessageModel>.from(
-      (currentChat['messages'] as List).map(
-        (msg) => ChatMessageModel(
-          fromId: msg['senderId'],
-          message: msg['message'],
-          createdAt: msg['createdAt'],
-          isPending: false,
-        ),
-      ),
-    );
+    final parentData = currentChat['mainUser']?['\$__']?['parent'];
+    if (parentData == null) return;
 
-    // تحويل أي رسالة عندك من pending لـ confirmed لو اتقبلت
+    final messagesList = parentData['messages'] as List;
+
+    final updatedMessages =
+        messagesList.map<ChatMessageModel>((msg) {
+          return ChatMessageModel(
+            fromId: msg['senderId'],
+            message: msg['message'],
+            createdAt: msg['createdAt'],
+            isPending: false,
+          );
+        }).toList();
+
+    // تأكيد الرسائل المعلقة
     setState(() {
       messages =
           messages.map((msg) {
             if (msg.isPending &&
                 updatedMessages.any((m) => m.message == msg.message)) {
-              return msg.copyWith(
-                isPending: false,
-              ); // لازم تعمل copyWith في الموديل
+              return msg.copyWith(isPending: false);
             }
             return msg;
           }).toList();
@@ -96,7 +100,10 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
     _chatRefreshTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       _refreshChatMessages();
     });
-    SocketService().initSocket(CacheHelper.getUserId());
+    SocketService().initSocket(
+      CacheHelper.getUserId(),
+      CacheHelper.getUserToken(),
+    );
 
     // تحميل الرسائل القديمة
     messages =

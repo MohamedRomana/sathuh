@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import '../../../../../core/cache/cache_helper.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/service/cubit/app_cubit.dart';
 import '../../../../../core/widgets/app_cached.dart';
@@ -23,10 +24,9 @@ class AdmPreviousChats extends StatefulWidget {
 }
 
 class _AdmPreviousChatsState extends State<AdmPreviousChats> {
-    Timer? _chatRefreshTimer;
+  Timer? _chatRefreshTimer;
 
   @override
-
   void initState() {
     super.initState();
     AppCubit.get(context).chatsList.clear();
@@ -47,13 +47,31 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
     _chatRefreshTimer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> getOtherUserData(
+      Map<String, dynamic> chat,
+      String currentUserId,
+    ) {
+      final parentData = chat['mainUser']?['\$__']?['parent'];
+      final mainUser = parentData?['mainUser'];
+      final subParticipant = parentData?['subParticipant'];
+
+      if (mainUser == null || subParticipant == null) return {};
+
+      final isCurrentUserMain = mainUser['_id'] == currentUserId;
+
+      return {
+        'otherUser': isCurrentUserMain ? subParticipant : mainUser,
+        'messages': parentData['messages'] ?? [],
+      };
+    }
+
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return state is GetChatsLoading &&
                 AppCubit.get(context).chatsList.isEmpty
-                
             ? const CustomListShimmer()
             : AppCubit.get(context).chatsList.isEmpty
             ? Center(
@@ -70,10 +88,13 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
               physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => SizedBox(height: 16.h),
               itemBuilder: (context, index) {
+                final currentUserId = CacheHelper.getUserId();
+
                 final chat = AppCubit.get(context).chatsList[index];
-                final messages =
-                    chat['subParticipant']['\$__']['parent']['messages']
-                        as List;
+                final chatData = getOtherUserData(chat, currentUserId);
+                final otherUser = chatData['otherUser'];
+                final messages = chatData['messages'] as List;
+
                 final lastMessage =
                     messages.isNotEmpty
                         ? messages.last['message']
@@ -85,28 +106,16 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                           locale: 'ar',
                         )
                         : '';
-                return InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
 
+                return InkWell(
                   onTap: () {
                     AppRouter.navigateTo(
                       context,
                       AdmChatDetails(
-                        id:
-                            AppCubit.get(
-                              context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['_id'],
-                        name:
-                            AppCubit.get(
-                              context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['userName'],
-                        image:
-                            AppCubit.get(
-                              context,
-                            ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['image'],
-                        oldMessages:
-                            AppCubit.get(context).chatsList[index]['messages'],
+                        id: otherUser['_id'],
+                        name: otherUser['userName'],
+                        image: otherUser['image'],
+                        oldMessages: messages,
                       ),
                     );
                   },
@@ -116,7 +125,6 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                     decoration: BoxDecoration(
                       color: AppColors.third,
                       borderRadius: BorderRadius.circular(15.r),
-                      border: Border.all(color: AppColors.third, width: 1.w),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.third.withAlpha(70),
@@ -131,10 +139,7 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1000.r),
                           child: AppCachedImage(
-                            image:
-                                AppCubit.get(
-                                  context,
-                                ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['image'],
+                            image: otherUser['image'],
                             width: 45.w,
                             height: 45.h,
                             fit: BoxFit.cover,
@@ -150,10 +155,7 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                                   child: AppText(
                                     textAlign: TextAlign.start,
                                     start: 7.w,
-                                    text:
-                                        AppCubit.get(
-                                          context,
-                                        ).chatsList[index]['subParticipant']['\$__']['parent']['subParticipant']['userName'],
+                                    text: otherUser['userName'],
                                     size: 16.sp,
                                     color: const Color(0xff8C6263),
                                     family: FontFamily.tajawalBold,

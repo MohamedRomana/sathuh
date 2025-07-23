@@ -1,9 +1,7 @@
 // ignore_for_file: library_prefixes
 import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import '../../cache/cache_helper.dart';
 import '../../constants/contsants.dart';
 
 class SocketService {
@@ -13,9 +11,7 @@ class SocketService {
 
   late IO.Socket socket;
 
-  void initSocket(String userId) {
-    final token = CacheHelper.getUserToken();
-
+  void initSocket(String userId, String token) {
     socket = IO.io(
       baseUrl,
       IO.OptionBuilder()
@@ -27,7 +23,6 @@ class SocketService {
           .setQuery({'userId': userId})
           .build(),
     );
-
     socket.onConnect((_) {
       debugPrint('✅ Connected to socket server');
       socket.emit('join', {'userId': userId});
@@ -37,6 +32,7 @@ class SocketService {
     debugPrint(token);
     debugPrint('User ID: $userId');
     debugPrint('Socket URL: $baseUrl');
+    debugPrint("Socket Token $token");
 
     socket.onReconnect((_) {
       debugPrint('🔄 Reconnected to socket');

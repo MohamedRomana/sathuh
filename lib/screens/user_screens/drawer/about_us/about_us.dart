@@ -65,7 +65,7 @@ class _AboutUsState extends State<AboutUs> {
                       end: 16.w,
                       textAlign: TextAlign.center,
                       text:
-                          'test test test test test test test test test test test test test test test test test test test test test test test test test test test ',
+                          'تطبيق سطحه هو الحل السريع والآمن لمساعدتك على الطريق وقت الحاجة، سواء تعطلت سيارتك أو احتجت إلى نقلها من مكان لآخر. يوفر لك التطبيق إمكانية طلب ونش بأقرب موقع إليك بضغطة زر، مع متابعة مباشرة لموقع السائق ومدة وصوله. نحرص على تقديم خدمة احترافية على مدار الساعة بأسعار مناسبة وسرعة استجابة عالية. تطبيقنا مصمم بواجهة سهلة الاستخدام تضمن لك تجربة مريحة وآمنة في كل مرة تحتاج فيها إلى دعم على الطريق.',
                       lines: 100,
                       size: 16.sp,
                     ),
