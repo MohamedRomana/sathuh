@@ -55,8 +55,6 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
   void _refreshChatMessages() async {
     final allChats = await AppCubit.get(context).getChats();
 
-    // final currentUserId = CacheHelper.getUserId();
-
     final currentChat = allChats.firstWhere((chat) {
       final parent = chat['mainUser']?['\$__']?['parent'];
       final mainId = parent?['mainUser']?['_id'];
@@ -81,17 +79,11 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
           );
         }).toList();
 
-    // تأكيد الرسائل المعلقة
     setState(() {
-      messages =
-          messages.map((msg) {
-            if (msg.isPending &&
-                updatedMessages.any((m) => m.message == msg.message)) {
-              return msg.copyWith(isPending: false);
-            }
-            return msg;
-          }).toList();
+      messages = updatedMessages;
     });
+
+    _scrollToBottom();
   }
 
   @override

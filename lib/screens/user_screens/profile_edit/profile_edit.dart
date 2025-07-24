@@ -111,7 +111,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                               ),
                             ),
                           ),
-                           InkWell(
+                          InkWell(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () {
