@@ -15,7 +15,7 @@ class SocketService {
     socket = IO.io(
       baseUrl,
       IO.OptionBuilder()
-          .setTransports(['websocket'])
+          .setTransports(['polling', 'websocket'])
           .enableReconnection()
           .setReconnectionAttempts(5)
           .setReconnectionDelay(2000)
@@ -25,6 +25,11 @@ class SocketService {
     );
     socket.onConnect((_) {
       debugPrint('✅ Connected to socket server');
+      debugPrint(token);
+      debugPrint('User ID: $userId');
+      debugPrint('Socket URL: $baseUrl');
+      debugPrint("Socket Token $token");
+
       socket.emit('join', {'userId': userId});
       startPing();
     });
