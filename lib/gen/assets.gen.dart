@@ -48,9 +48,6 @@ class $AssetsImgGen {
   AssetGenImage get background =>
       const AssetGenImage('assets/img/background.png');
 
-  /// File path: assets/img/bmw.jpg
-  AssetGenImage get bmw => const AssetGenImage('assets/img/bmw.jpg');
-
   /// File path: assets/img/car.json
   String get car => 'assets/img/car.json';
 
@@ -69,10 +66,6 @@ class $AssetsImgGen {
   /// File path: assets/img/emptyseach.json
   String get emptyseach => 'assets/img/emptyseach.json';
 
-  /// File path: assets/img/forgotpass.png
-  AssetGenImage get forgotpass =>
-      const AssetGenImage('assets/img/forgotpass.png');
-
   /// File path: assets/img/loading.json
   String get loading => 'assets/img/loading.json';
 
@@ -81,9 +74,6 @@ class $AssetsImgGen {
 
   /// File path: assets/img/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/img/logo.png');
-
-  /// File path: assets/img/mail.png
-  AssetGenImage get mail => const AssetGenImage('assets/img/mail.png');
 
   /// File path: assets/img/manager.png
   AssetGenImage get manager => const AssetGenImage('assets/img/manager.png');
@@ -100,9 +90,6 @@ class $AssetsImgGen {
 
   /// File path: assets/img/social.png
   AssetGenImage get social => const AssetGenImage('assets/img/social.png');
-
-  /// File path: assets/img/swiper.png
-  AssetGenImage get swiper => const AssetGenImage('assets/img/swiper.png');
 
   /// File path: assets/img/time.json
   String get time => 'assets/img/time.json';
@@ -124,24 +111,20 @@ class $AssetsImgGen {
   List<dynamic> get values => [
     alert,
     background,
-    bmw,
     car,
     client,
     driver,
     easy,
     emptyorder,
     emptyseach,
-    forgotpass,
     loading,
     login,
     logo,
-    mail,
     manager,
     mony,
     notiEmpty,
     saudiArabia,
     social,
-    swiper,
     time,
     trak,
     unitedKingdom,

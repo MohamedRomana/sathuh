@@ -31,7 +31,7 @@ class _DrivPreviousChatsState extends State<DrivPreviousChats> {
   @override
   void initState() {
     super.initState();
-    AppCubit.get(context).chatsList.clear();
+    // AppCubit.get(context).chatsList.clear();
     timeago.setLocaleMessages('ar', timeago.ArMessages());
 
     // استدعاء أول مرة
@@ -116,7 +116,7 @@ class _DrivPreviousChatsState extends State<DrivPreviousChats> {
                       DrivChatDetails(
                         id: otherUser['_id'],
                         name: otherUser['userName'],
-                        image: otherUser['image'],
+                        image: otherUser['image'] ?? "",
                         oldMessages: messages,
                       ),
                     );
@@ -141,7 +141,7 @@ class _DrivPreviousChatsState extends State<DrivPreviousChats> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1000.r),
                           child: AppCachedImage(
-                            image: otherUser['image'],
+                            image: otherUser['image'] ?? "",
                             width: 45.w,
                             height: 45.h,
                             fit: BoxFit.cover,

@@ -99,6 +99,7 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
   @override
   void initState() {
     super.initState();
+    debugPrint('Chat Socket: ${CacheHelper.getUserToken()}');
     _chatRefreshTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       _refreshChatMessages();
     });
@@ -123,33 +124,22 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
       _scrollToBottom();
     });
 
-    SocketService().socket.on("successMessage", (data) {
-      final messageMap = data["chat"]["messages"].last;
-      final isFromMe = messageMap["senderId"] == CacheHelper.getUserId();
+    SocketService().socket.on("receiveMessage", (data) {
+      final messageMap = data;
+      final confirmedMsg = ChatMessageModel(
+        fromId: messageMap["senderId"],
+        message: messageMap["message"],
+        createdAt: messageMap["createdAt"],
+        isPending: false,
+      );
 
-      if (isFromMe) {
-        // هذه رسالتك: حدث الـ pending ل confirmed
-        final index = messages.indexWhere(
-          (msg) => msg.message == messageMap["message"] && msg.isPending,
+      // شيل الرسالة المعلقة لو كانت موجودة بنفس النص
+      setState(() {
+        messages.removeWhere(
+          (m) => m.isPending && m.message == confirmedMsg.message,
         );
-
-        if (index != -1) {
-          setState(() {
-            messages[index] = messages[index].copyWith(isPending: false);
-          });
-        }
-      } else {
-        final confirmedMsg = ChatMessageModel(
-          fromId: messageMap["senderId"],
-          message: messageMap["message"],
-          createdAt: messageMap["createdAt"],
-          isPending: false,
-        );
-
-        setState(() {
-          messages.add(confirmedMsg);
-        });
-      }
+        messages.add(confirmedMsg);
+      });
 
       _scrollToBottom();
     });
@@ -158,15 +148,15 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
   void _sendMessage(String text) {
     if (text.isEmpty) return;
 
-    final pendingMsg = ChatMessageModel(
+    final sentMsg = ChatMessageModel(
       fromId: CacheHelper.getUserId(),
       message: text,
       createdAt: DateTime.now().toIso8601String(),
-      isPending: true,
+      isPending: false,
     );
 
     setState(() {
-      messages.add(pendingMsg);
+      messages.add(sentMsg);
     });
 
     SocketService().sendMessage(destId: widget.id, message: text);
@@ -293,7 +283,7 @@ class _DrivChatDetailsState extends State<DrivChatDetails> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              msg.message + (msg.isPending ? ' ⏳' : ''),
+                              msg.message,
                               style: TextStyle(
                                 color: isMe ? Colors.black : Colors.white,
                               ),

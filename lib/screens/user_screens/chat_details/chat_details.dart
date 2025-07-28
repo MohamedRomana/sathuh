@@ -123,9 +123,8 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
       _scrollToBottom();
     });
 
-    // استقبال الرسائل الجديدة من السوكيت
-    SocketService().socket.on("successMessage", (data) {
-      final messageMap = data["chat"]["messages"].last;
+    SocketService().socket.on("receiveMessage", (data) {
+      final messageMap = data;
       final confirmedMsg = ChatMessageModel(
         fromId: messageMap["senderId"],
         message: messageMap["message"],
@@ -133,26 +132,30 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
         isPending: false,
       );
 
+      // شيل الرسالة المعلقة لو كانت موجودة بنفس النص
       setState(() {
+        messages.removeWhere(
+          (m) => m.isPending && m.message == confirmedMsg.message,
+        );
         messages.add(confirmedMsg);
       });
 
-      _scrollToBottom(); // عشان ينزل بعد إضافة رسالة جديدة
+      _scrollToBottom();
     });
   }
 
   void _sendMessage(String text) {
     if (text.isEmpty) return;
 
-    final pendingMsg = ChatMessageModel(
+    final sentMsg = ChatMessageModel(
       fromId: CacheHelper.getUserId(),
       message: text,
       createdAt: DateTime.now().toIso8601String(),
-      isPending: true,
+      isPending: false,
     );
 
     setState(() {
-      messages.add(pendingMsg);
+      messages.add(sentMsg);
     });
 
     SocketService().sendMessage(destId: widget.id, message: text);
@@ -279,7 +282,7 @@ class _ChatDetailsState extends State<ChatDetails> with WidgetsBindingObserver {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              msg.message + (msg.isPending ? ' ⏳' : ''),
+                              msg.message,
                               style: TextStyle(
                                 color: isMe ? Colors.black : Colors.white,
                               ),

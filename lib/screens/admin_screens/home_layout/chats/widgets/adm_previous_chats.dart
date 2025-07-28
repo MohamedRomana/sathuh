@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -50,24 +52,6 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> getOtherUserData(
-      Map<String, dynamic> chat,
-      String currentUserId,
-    ) {
-      final parentData = chat['mainUser']?['\$__']?['parent'];
-      final mainUser = parentData?['mainUser'];
-      final subParticipant = parentData?['subParticipant'];
-
-      if (mainUser == null || subParticipant == null) return {};
-
-      final isCurrentUserMain = mainUser['_id'] == currentUserId;
-
-      return {
-        'otherUser': isCurrentUserMain ? subParticipant : mainUser,
-        'messages': parentData['messages'] ?? [],
-      };
-    }
-
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return state is GetChatsLoading &&
@@ -91,9 +75,17 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                 final currentUserId = CacheHelper.getUserId();
 
                 final chat = AppCubit.get(context).chatsList[index];
-                final chatData = getOtherUserData(chat, currentUserId);
-                final otherUser = chatData['otherUser'];
-                final messages = chatData['messages'] as List;
+                final parentData = chat['subParticipant']?['\$__']?['parent'];
+                final mainUser = parentData?['mainUser'];
+                final subUser = parentData?['subParticipant'];
+
+                final isMeMain = mainUser['_id'] == currentUserId;
+
+                final String userA = mainUser['userName'];
+                final String userB = subUser['userName'];
+                final String userBImage =
+                    isMeMain ? subUser['image'] ?? "" : mainUser['image'] ?? "";
+                final List messages = parentData['messages'] ?? [];
 
                 final lastMessage =
                     messages.isNotEmpty
@@ -112,9 +104,9 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                     AppRouter.navigateTo(
                       context,
                       AdmChatDetails(
-                        id: otherUser['_id'],
-                        name: otherUser['userName'],
-                        image: otherUser['image'],
+                        id: isMeMain ? subUser['_id'] : mainUser['_id'],
+                        name: isMeMain ? userB : userA,
+                        image: userBImage,
                         oldMessages: messages,
                       ),
                     );
@@ -139,7 +131,7 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1000.r),
                           child: AppCachedImage(
-                            image: otherUser['image'],
+                            image: userBImage,
                             width: 45.w,
                             height: 45.h,
                             fit: BoxFit.cover,
@@ -155,7 +147,8 @@ class _AdmPreviousChatsState extends State<AdmPreviousChats> {
                                   child: AppText(
                                     textAlign: TextAlign.start,
                                     start: 7.w,
-                                    text: otherUser['userName'],
+                                    text: userB,
+                                    lines: 2,
                                     size: 16.sp,
                                     color: const Color(0xff8C6263),
                                     family: FontFamily.tajawalBold,

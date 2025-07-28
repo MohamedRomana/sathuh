@@ -1887,17 +1887,23 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List chatsList = [];
+
   Future getChats() async {
     emit(GetChatsLoading());
+
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
+
     http.Response response = await http.get(
       Uri.parse("${baseUrl}chat/getAllChats"),
       headers: {"Authorization": token},
     );
+
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
+
     Map<String, dynamic> data = jsonDecode(response.body);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       chatsList = data["data"]['currentChats'];
       emit(GetChatsSuccess());
@@ -1907,19 +1913,25 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List chatsCurrentList = [];
+
   Future getCurrentChats() async {
     emit(GetChatsLoading());
+
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
+
     http.Response response = await http.get(
       Uri.parse("${baseUrl}chat/getAllChats"),
       headers: {"Authorization": token},
     );
+
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
+
     Map<String, dynamic> data = jsonDecode(response.body);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
-      chatsCurrentList = data["data"]['previousChats'];
+      chatsCurrentList = data["data"]['previousChats']; // ✅ مش previousChats
       emit(GetChatsSuccess());
     } else {
       emit(GetChatsFailure(error: data["message"]));

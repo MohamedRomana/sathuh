@@ -59,7 +59,7 @@ class AppCachedImage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Icon(Icons.error, color: AppColors.primary, size: 20.r),
+            child: Image.asset(Assets.img.unphoto.path, fit: BoxFit.fill),
           ),
     );
   }

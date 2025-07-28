@@ -15,7 +15,7 @@ class SocketService {
     socket = IO.io(
       baseUrl,
       IO.OptionBuilder()
-          .setTransports(['polling', 'websocket'])
+          .setTransports(['websocket'])
           .enableReconnection()
           .setReconnectionAttempts(5)
           .setReconnectionDelay(2000)
@@ -59,6 +59,7 @@ class SocketService {
     socket.onError((data) {
       debugPrint("❌ General Error: $data");
     });
+
     socket.on('receiveMessage', (data) {
       debugPrint('New message from someone: $data');
     });

@@ -116,7 +116,7 @@ class _DrivCusrrentChatsState extends State<DrivCusrrentChats> {
                       DrivChatDetails(
                         id: otherUser['_id'],
                         name: otherUser['userName'],
-                        image: otherUser['image'],
+                        image: otherUser['image'] ?? "",
                         oldMessages: messages,
                       ),
                     );
@@ -141,7 +141,7 @@ class _DrivCusrrentChatsState extends State<DrivCusrrentChats> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1000.r),
                           child: AppCachedImage(
-                            image: otherUser['image'],
+                            image: otherUser['image'] ?? "",
                             width: 45.w,
                             height: 45.h,
                             fit: BoxFit.cover,

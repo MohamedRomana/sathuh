@@ -55,6 +55,8 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
   void _refreshChatMessages() async {
     final allChats = await AppCubit.get(context).getChats();
 
+    // final currentUserId = CacheHelper.getUserId();
+
     final currentChat = allChats.firstWhere((chat) {
       final parent = chat['mainUser']?['\$__']?['parent'];
       final mainId = parent?['mainUser']?['_id'];
@@ -79,16 +81,23 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
           );
         }).toList();
 
+    // تأكيد الرسائل المعلقة
     setState(() {
-      messages = updatedMessages;
+      messages =
+          messages.map((msg) {
+            if (msg.isPending &&
+                updatedMessages.any((m) => m.message == msg.message)) {
+              return msg.copyWith(isPending: false);
+            }
+            return msg;
+          }).toList();
     });
-
-    _scrollToBottom();
   }
 
   @override
   void initState() {
     super.initState();
+    debugPrint('Chat Socket: ${CacheHelper.getUserToken()}');
     _chatRefreshTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       _refreshChatMessages();
     });
@@ -113,9 +122,8 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
       _scrollToBottom();
     });
 
-    // استقبال الرسائل الجديدة من السوكيت
-    SocketService().socket.on("successMessage", (data) {
-      final messageMap = data["chat"]["messages"].last;
+    SocketService().socket.on("receiveMessage", (data) {
+      final messageMap = data;
       final confirmedMsg = ChatMessageModel(
         fromId: messageMap["senderId"],
         message: messageMap["message"],
@@ -123,26 +131,30 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
         isPending: false,
       );
 
+      // شيل الرسالة المعلقة لو كانت موجودة بنفس النص
       setState(() {
+        messages.removeWhere(
+          (m) => m.isPending && m.message == confirmedMsg.message,
+        );
         messages.add(confirmedMsg);
       });
 
-      _scrollToBottom(); // عشان ينزل بعد إضافة رسالة جديدة
+      _scrollToBottom();
     });
   }
 
   void _sendMessage(String text) {
     if (text.isEmpty) return;
 
-    final pendingMsg = ChatMessageModel(
+    final sentMsg = ChatMessageModel(
       fromId: CacheHelper.getUserId(),
       message: text,
       createdAt: DateTime.now().toIso8601String(),
-      isPending: true,
+      isPending: false,
     );
 
     setState(() {
-      messages.add(pendingMsg);
+      messages.add(sentMsg);
     });
 
     SocketService().sendMessage(destId: widget.id, message: text);
@@ -269,7 +281,7 @@ class _AdmChatDetailsState extends State<AdmChatDetails> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              msg.message + (msg.isPending ? ' ⏳' : ''),
+                              msg.message,
                               style: TextStyle(
                                 color: isMe ? Colors.black : Colors.white,
                               ),
