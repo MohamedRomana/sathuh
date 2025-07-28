@@ -641,10 +641,12 @@ class AppCubit extends Cubit<AppState> {
     Map<String, dynamic> data = jsonDecode(response.body);
     debugPrint(data.toString());
     debugPrint("Profile API response: $data");
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       CacheHelper.setUserId(data["data"]['user']['_id']);
       showProfileMap = data["data"]['user'];
+      if (data['message'] == 'in valid credintials') {
+        emit(InvalidCredentialsState());
+      }
       emit(GetProfileSuccess());
     } else {
       emit(GetProfileFailure(error: data["message"] ?? "حدث خطاء"));

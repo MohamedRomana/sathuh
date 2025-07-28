@@ -66,6 +66,9 @@ class $AssetsImgGen {
   /// File path: assets/img/emptyseach.json
   String get emptyseach => 'assets/img/emptyseach.json';
 
+  /// File path: assets/img/hydrolic.jpg
+  AssetGenImage get hydrolic => const AssetGenImage('assets/img/hydrolic.jpg');
+
   /// File path: assets/img/loading.json
   String get loading => 'assets/img/loading.json';
 
@@ -81,6 +84,9 @@ class $AssetsImgGen {
   /// File path: assets/img/mony.json
   String get mony => 'assets/img/mony.json';
 
+  /// File path: assets/img/normal.jpg
+  AssetGenImage get normal => const AssetGenImage('assets/img/normal.jpg');
+
   /// File path: assets/img/noti_empty.json
   String get notiEmpty => 'assets/img/noti_empty.json';
 
@@ -94,18 +100,8 @@ class $AssetsImgGen {
   /// File path: assets/img/time.json
   String get time => 'assets/img/time.json';
 
-  /// File path: assets/img/trak.png
-  AssetGenImage get trak => const AssetGenImage('assets/img/trak.png');
-
-  /// File path: assets/img/united-kingdom.png
-  AssetGenImage get unitedKingdom =>
-      const AssetGenImage('assets/img/united-kingdom.png');
-
   /// File path: assets/img/unphoto.jpg
   AssetGenImage get unphoto => const AssetGenImage('assets/img/unphoto.jpg');
-
-  /// File path: assets/img/winch-car.png
-  AssetGenImage get winchCar => const AssetGenImage('assets/img/winch-car.png');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -117,19 +113,18 @@ class $AssetsImgGen {
     easy,
     emptyorder,
     emptyseach,
+    hydrolic,
     loading,
     login,
     logo,
     manager,
     mony,
+    normal,
     notiEmpty,
     saudiArabia,
     social,
     time,
-    trak,
-    unitedKingdom,
     unphoto,
-    winchCar,
   ];
 }
 

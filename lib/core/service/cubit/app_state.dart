@@ -596,3 +596,5 @@ class GetChatsFailure extends AppState {
   final String error;
   GetChatsFailure({required this.error});
 }
+
+class InvalidCredentialsState extends AppState {}

@@ -110,13 +110,15 @@ class _CustomServicesState extends State<CustomServices> {
                                                 "",
                                             height: double.infinity,
                                             width: double.infinity,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                           )
                                           : Image.asset(
-                                            Assets.img.logo.path,
-                                            height: double.infinity,
+                                            index == 0
+                                                ? Assets.img.normal.path
+                                                : Assets.img.hydrolic.path,
+                                            height: 130.h,
                                             width: double.infinity,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                           ),
                                 ),
                                 Container(
