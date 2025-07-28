@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sathuh/core/constants/colors.dart';
 import 'package:sathuh/screens/user_screens/home_layout/home_layout.dart';
 import '../../../../gen/assets.gen.dart';
@@ -76,11 +77,20 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
 
   Future _customNavigation() {
+    bool isTokenValid(String token) {
+      try {
+        return !JwtDecoder.isExpired(token);
+      } catch (e) {
+        return false;
+      }
+    }
+
     return Future.delayed(const Duration(milliseconds: 1800), () {
       _shakeController.forward();
 
       CacheHelper.getLang() != ""
-          ? CacheHelper.getUserToken() != ""
+          ? CacheHelper.getUserToken() != "" ||
+                  !isTokenValid(CacheHelper.getUserToken())
               ? CacheHelper.getUserType() == "user"
                   ? AppRouter.navigateAndPop(context, const HomeLayout())
                   : CacheHelper.getUserType() == "admin"
@@ -88,6 +98,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                   : AppRouter.navigateAndPop(context, const DriverHomeLayout())
               : AppRouter.navigateAndPop(context, const TypesView())
           : AppRouter.navigateAndPop(context, const LanguageView());
+
       // CacheHelper.getLang() != ""
       //     ? CacheHelper.getUserId() != ""
       //         ? CacheHelper.getUserType() == "user"
