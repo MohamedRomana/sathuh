@@ -636,5 +636,6 @@
   "edit_percentage": "تعديل النسبه",
   "edit_percentage_required": "تعديل النسبه مطلوبه",
   "regular_flatbed": "سطحه عاديه",
-  "hydraulic_flatbed": "سطحه هيدروليك"
+  "hydraulic_flatbed": "سطحه هيدروليك",
+  "onWayOrders" : "الطلبات في الطريق"
 }

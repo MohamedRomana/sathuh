@@ -636,5 +636,6 @@
       "edit_percentage": "Edit percentage",
       "edit_percentage_required": "Edit percentage is required",
       "regular_flatbed": "Regular flatbed",
-      "hydraulic_flatbed": "Hydraulic flatbed"
-}
+      "hydraulic_flatbed": "Hydraulic flatbed",
+      "onWayOrders" : "On Way Orders"
+    }

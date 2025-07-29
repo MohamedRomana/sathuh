@@ -641,5 +641,6 @@ abstract class  LocaleKeys {
   static const edit_percentage_required = 'edit_percentage_required';
   static const regular_flatbed = 'regular_flatbed';
   static const hydraulic_flatbed = 'hydraulic_flatbed';
+  static const onWayOrders = 'onWayOrders';
 
 }

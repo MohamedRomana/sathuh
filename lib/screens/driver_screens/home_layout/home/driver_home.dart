@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sathuh/core/cache/cache_helper.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../../../../core/constants/contsants.dart';
 import '../../../../core/service/cubit/app_cubit.dart';
 import '../../../../gen/assets.gen.dart';
 import 'widgets/custom_current_orders.dart';
@@ -21,10 +23,16 @@ class DriverHome extends StatefulWidget {
 class _DriverHomeState extends State<DriverHome> {
   IO.Socket? socket;
   void initSocketConnection() {
-    socket = IO.io("https://towtruck.cloud", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-    });
+    socket = IO.io(
+      baseUrl,
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .enableReconnection()
+          .setReconnectionAttempts(5)
+          .setReconnectionDelay(2000)
+          .setExtraHeaders({'Authorization': CacheHelper.getUserToken()})
+          .build(),
+    );
 
     socket!.connect();
 

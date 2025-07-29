@@ -61,7 +61,7 @@ class Orders extends StatelessWidget {
                         ),
                         tabs: [
                           Tab(text: LocaleKeys.currentOrders.tr()),
-                          Tab(text: LocaleKeys.ordersHistory.tr()),
+                          Tab(text: LocaleKeys.completedOrders.tr()),
                         ],
                       ),
                     ),

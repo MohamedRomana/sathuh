@@ -652,7 +652,8 @@ class CodegenLoader extends AssetLoader{
   "edit_percentage": "تعديل النسبه",
   "edit_percentage_required": "تعديل النسبه مطلوبه",
   "regular_flatbed": "سطحه عاديه",
-  "hydraulic_flatbed": "سطحه هيدروليك"
+  "hydraulic_flatbed": "سطحه هيدروليك",
+  "onWayOrders": "الطلبات في الطريق"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1292,7 +1293,8 @@ static const Map<String,dynamic> _en = {
   "edit_percentage": "Edit percentage",
   "edit_percentage_required": "Edit percentage is required",
   "regular_flatbed": "Regular flatbed",
-  "hydraulic_flatbed": "Hydraulic flatbed"
+  "hydraulic_flatbed": "Hydraulic flatbed",
+  "onWayOrders": "On Way Orders"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

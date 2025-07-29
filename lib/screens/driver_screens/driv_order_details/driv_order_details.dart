@@ -186,55 +186,6 @@ class DrivOrderDetails extends StatelessWidget {
                             );
                           },
                         ),
-                        // Row(
-                        //   children: [
-                        //     AppText(
-                        //       text: LocaleKeys.customer_name.tr(),
-                        //       size: 16.sp,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //     const Spacer(),
-                        //     SizedBox(
-                        //       width: 150.w,
-                        //       child: AppText(
-                        //         textAlign: TextAlign.end,
-                        //         text:
-                        //             AppCubit.get(
-                        //               context,
-                        //             ).pendingRequestsList[index]['userId'],
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.grey,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                        //   child: const Divider(color: Colors.grey),
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     AppText(
-                        //       text: LocaleKeys.driver_name.tr(),
-                        //       size: 16.sp,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //     const Spacer(),
-                        //     SizedBox(
-                        //       width: 150.w,
-                        //       child: const AppText(
-                        //         textAlign: TextAlign.end,
-                        //         text: 'خالد علي',
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.grey,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                        //   child: const Divider(color: Colors.grey),
-                        // ),
                         Row(
                           children: [
                             AppText(
@@ -271,67 +222,6 @@ class DrivOrderDetails extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: const Divider(color: Colors.grey),
                         ),
-
-                        // Row(
-                        //   children: [
-                        //     AppText(
-                        //       text: LocaleKeys.customer_phone.tr(),
-                        //       size: 16.sp,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //     const Spacer(),
-                        //     InkWell(
-                        //       splashColor: Colors.transparent,
-                        //       highlightColor: Colors.transparent,
-                        //       onTap: () {
-                        //         makePhoneCall('0100000000');
-                        //       },
-                        //       child: SizedBox(
-                        //         width: 150.w,
-                        //         child: const AppText(
-                        //           textAlign: TextAlign.end,
-                        //           text: '0100000000',
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Colors.blue,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                        //   child: const Divider(color: Colors.grey),
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     AppText(
-                        //       text: LocaleKeys.driver_phone.tr(),
-                        //       size: 16.sp,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //     const Spacer(),
-                        //     InkWell(
-                        //       splashColor: Colors.transparent,
-                        //       highlightColor: Colors.transparent,
-                        //       onTap: () {
-                        //         makePhoneCall('0100000000');
-                        //       },
-                        //       child: SizedBox(
-                        //         width: 150.w,
-                        //         child: const AppText(
-                        //           textAlign: TextAlign.end,
-                        //           text: '0100000000',
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Colors.blue,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                        //   child: const Divider(color: Colors.grey),
-                        // ),
                         Row(
                           children: [
                             AppText(
