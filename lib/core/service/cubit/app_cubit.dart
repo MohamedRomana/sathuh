@@ -19,6 +19,7 @@ import 'package:sathuh/screens/admin_screens/home_layout/price/price.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/chats/driver_chats.dart';
 import 'package:sathuh/screens/driver_screens/home_layout/home/driver_home.dart';
 import 'package:sathuh/screens/user_screens/home_layout/my_cars/my_cars.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../generated/locale_keys.g.dart';
 import '../../../screens/driver_screens/home_layout/orders/driver_orders.dart';
 import '../../../screens/driver_screens/home_layout/subscribes/subscribes.dart';
@@ -1302,74 +1303,187 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  List allNearDriversList = [];
+  List<dynamic> allNearDriversList = [];
+  IO.Socket? socket;
+  String? currentRequestId;
+
+  // دالة تحميل السائقين من الـ API
   Future allNearDrivers({required String requestId}) async {
     emit(GetAllNearDriversLoading());
+    currentRequestId = requestId;
+
     String? token = CacheHelper.getUserToken();
     debugPrint("Token: $token");
-    http.Response response = await http.get(
-      Uri.parse("${baseUrl}request/allNearDrivers/$requestId"),
-      headers: {"Authorization": token},
-    );
-    debugPrint("Status Code: ${response.statusCode}");
-    debugPrint("Response Body: ${response.body}");
-    Map<String, dynamic> data = jsonDecode(response.body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      allNearDriversList = data['data']['nearbyDrivers'];
-      emit(GetAllNearDriversSuccess());
-    } else {
-      emit(GetAllNearDriversFailure(error: data["message"]));
+
+    try {
+      final response = await http.get(
+        Uri.parse("${baseUrl}request/allNearDrivers/$requestId"),
+        headers: {"Authorization": token},
+      );
+
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
+
+      Map<String, dynamic> data = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        allNearDriversList = data['data']['nearbyDrivers'];
+        emit(GetAllNearDriversSuccess());
+
+        // بعد نجاح تحميل البيانات، فعل السوكيت
+        initSocket(requestId);
+      } else {
+        emit(GetAllNearDriversFailure(error: data["message"]));
+      }
+    } catch (e) {
+      emit(GetAllNearDriversFailure(error: "خطأ في الاتصال بالسيرفر"));
     }
   }
 
-  int completedCurrentPage = 1;
-  bool completedHasMore = true;
-  bool completedIsLoading = false;
+  // دالة ربط الـ WebSocket
+  void initSocket(String requestId) {
+    if (socket != null && socket!.connected) return;
+
+    socket = IO.io(
+      'https://your-server-url.com',
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .disableAutoConnect()
+          .build(),
+    );
+
+    socket!.connect();
+
+    socket!.onConnect((_) {
+      debugPrint("✅ Socket connected");
+    });
+
+    socket!.on('newDriversAdded', (data) {
+      debugPrint("📡 newDriversAdded event: $data");
+
+      if (data['requestId'] == requestId) {
+        List<dynamic> newDrivers = data['newDrivers'];
+
+        for (var driver in newDrivers) {
+          final exists = allNearDriversList.any(
+            (d) => d['user']['_id'] == driver['user']['_id'],
+          );
+          if (!exists) {
+            allNearDriversList.add(driver);
+          }
+        }
+
+        emit(UpdateNearDriversList());
+      }
+    });
+
+    socket!.onDisconnect((_) => debugPrint("❌ Socket disconnected"));
+  }
+
+  void disconnectSocket() {
+    if (socket != null && socket!.connected) {
+      socket!.disconnect();
+      debugPrint("🛑 Socket manually disconnected");
+    }
+  }
+
+  int currentcomPage = 1;
+  int currentcomSize = 10;
+  bool isLoadingcomMore = false;
+  bool comhasMoreData = true;
 
   List completedRequestsList = [];
 
-  Future completedRequest({bool isRefresh = false}) async {
-    if (completedIsLoading || !completedHasMore) return;
+  Future<void> completedRequest({bool loadMore = false}) async {
+    if (isLoadingcomMore || !comhasMoreData) return;
 
-    completedIsLoading = true;
-    emit(GetCompletedRequestsLoading());
-
-    if (isRefresh) {
-      completedCurrentPage = 1;
+    if (loadMore) {
+      currentcomPage += 1;
+      isLoadingcomMore = true;
+    } else {
+      currentcomPage = 1;
+      currentcomSize = 10;
+      comhasMoreData = true;
       completedRequestsList.clear();
-      completedHasMore = true;
     }
 
+    emit(GetComplaintsLoading());
+
     String? token = CacheHelper.getUserToken();
-    debugPrint("Token: $token");
 
     final response = await http.get(
       Uri.parse(
-        "${baseUrl}request/completed?page=$completedCurrentPage&size=10",
+        "${baseUrl}request/completed?page=$currentcomPage&size=$currentcomSize",
       ),
       headers: {"Authorization": token},
     );
 
+    final data = jsonDecode(response.body);
+
     debugPrint("Status Code: ${response.statusCode}");
     debugPrint("Response Body: ${response.body}");
 
-    final data = jsonDecode(response.body);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final List newRequests = data['data']['requests']['data'];
+      final List newComData = data['data']['requests'];
 
-      if (newRequests.length < 10) {
-        completedHasMore = false;
-      }
+      if (newComData.length < currentcomSize) comhasMoreData = false;
 
-      completedRequestsList.addAll(newRequests);
-      completedCurrentPage++;
-      emit(GetCompletedRequestsSuccess());
+      completedRequestsList.addAll(newComData);
+      emit(GetComplaintsSuccess());
     } else {
-      emit(GetCompletedRequestsFailure(error: data["message"]));
+      emit(GetComplaintsFailure(error: data["message"] ?? "خطأ"));
     }
 
-    completedIsLoading = false;
+    isLoadingcomMore = false;
+  }
+
+  int currentPage = 1;
+  int currentSize = 10;
+  bool isLoadingMore = false;
+  bool hasMoreData = true;
+
+  List pendingRequestsList = [];
+
+  Future<void> pendingRequest({bool loadMore = false}) async {
+    if (isLoadingMore || !hasMoreData) return;
+
+    if (loadMore) {
+      currentPage += 1; // 👈 زوّد الصفحة بدل الـ size
+      isLoadingMore = true;
+    } else {
+      currentPage = 1;
+      currentSize = 10;
+      hasMoreData = true;
+      pendingRequestsList.clear();
+    }
+
+    emit(PendingRequestLoading());
+
+    String? token = CacheHelper.getUserToken();
+
+    final response = await http.get(
+      Uri.parse(
+        "${baseUrl}request/pending?page=$currentPage&size=$currentSize",
+      ),
+      headers: {"Authorization": token},
+    );
+
+    final data = jsonDecode(response.body);
+    debugPrint("Status Code: ${response.statusCode}");
+    debugPrint("Response Body: ${response.body}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final List newData = data['data']['requests']['data'];
+
+      if (newData.length < currentSize) hasMoreData = false;
+
+      pendingRequestsList.addAll(newData);
+      emit(PendingRequestSuccess());
+    } else {
+      emit(PendingRequestFailure(error: data["message"] ?? "خطأ"));
+    }
+
+    isLoadingMore = false;
   }
 
   List inRoadRequestsList = [];
@@ -1390,56 +1504,6 @@ class AppCubit extends Cubit<AppState> {
     } else {
       emit(InRoadRequestFailure(error: data["message"]));
     }
-  }
-
-  int currentPage = 1;
-  int currentSize = 10;
-  bool isLoadingMore = false;
-  bool hasMoreData = true;
-
-  List pendingRequestsList = [];
-
-  Future<void> pendingRequest({bool loadMore = false}) async {
-    if (isLoadingMore || !hasMoreData) return;
-
-    if (loadMore) {
-      currentSize += 10; // أو currentPage++ لو الـ API بيشتغل بالصفحات
-      isLoadingMore = true;
-    } else {
-      currentPage = 1;
-      currentSize = 10;
-      hasMoreData = true;
-      pendingRequestsList.clear();
-    }
-
-    emit(PendingRequestLoading());
-
-    String? token = CacheHelper.getUserToken();
-    debugPrint("Token: $token");
-
-    final response = await http.get(
-      Uri.parse("${baseUrl}request/pending?page=1&size=$currentSize"),
-      headers: {"Authorization": token},
-    );
-
-    debugPrint("Status Code: ${response.statusCode}");
-    debugPrint("Response Body: ${response.body}");
-
-    final data = jsonDecode(response.body);
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final List newData = data['data']['requests']['data'];
-
-      if (newData.length < 10) hasMoreData = false;
-
-      pendingRequestsList =
-          newData; // أو ممكن تستخدم addAll لو كنت بتزيد الصفحة
-      emit(PendingRequestSuccess());
-    } else {
-      emit(PendingRequestFailure(error: data["message"] ?? "خطأ"));
-    }
-
-    isLoadingMore = false;
   }
 
   // ADMIN SERVICES

@@ -598,3 +598,5 @@ class GetChatsFailure extends AppState {
 }
 
 class InvalidCredentialsState extends AppState {}
+
+class UpdateNearDriversList extends AppState {}

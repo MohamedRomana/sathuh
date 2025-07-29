@@ -26,7 +26,9 @@ class CustomDriverNearYou extends StatefulWidget {
 class _CustomDriverNearYouState extends State<CustomDriverNearYou> {
   @override
   void initState() {
-    AppCubit.get(context).allNearDrivers(requestId: widget.orderId);
+    final cubit = AppCubit.get(context);
+    cubit.allNearDrivers(requestId: widget.orderId);
+    cubit.initSocket(widget.orderId);
     super.initState();
   }
 
@@ -48,7 +50,7 @@ class _CustomDriverNearYouState extends State<CustomDriverNearYou> {
             type: FlashMessageType.error,
             context: context,
           );
-        }
+        } else if (state is UpdateNearDriversList) {}
       },
       builder: (context, state) {
         return AppCubit.get(context).allNearDriversList.isEmpty

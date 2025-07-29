@@ -29,9 +29,10 @@ class _DriveOrdersHistoryState extends State<DriveOrdersHistory> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        return state is GetCompletedRequestsLoading
+        return state is GetCompletedRequestsLoading &&
+                AppCubit.get(context).completedRequestsList.isEmpty
             ? const CustomListShimmer()
-            : AppCubit.get(context).inRoadRequestsList.isEmpty
+            : AppCubit.get(context).completedRequestsList.isEmpty
             ? Center(
               child: CustomLottieWidget(lottieName: Assets.img.emptyorder),
             )
