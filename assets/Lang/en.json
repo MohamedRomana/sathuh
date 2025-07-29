@@ -637,5 +637,6 @@
       "edit_percentage_required": "Edit percentage is required",
       "regular_flatbed": "Regular flatbed",
       "hydraulic_flatbed": "Hydraulic flatbed",
-      "onWayOrders" : "On Way Orders"
+      "onWayOrders" : "On Way Orders",
+      "noDriversNearby" : "No drivers nearby at the moment, please try again in 10 minutes"
     }

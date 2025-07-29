@@ -637,5 +637,6 @@
   "edit_percentage_required": "تعديل النسبه مطلوبه",
   "regular_flatbed": "سطحه عاديه",
   "hydraulic_flatbed": "سطحه هيدروليك",
-  "onWayOrders" : "الطلبات في الطريق"
+  "onWayOrders" : "الطلبات في الطريق",
+  "noDriversNearby" : "لا يوجد سائقين قريبين منك الآن، الرجاء المحاولة بعد 10 دقائق"
 }

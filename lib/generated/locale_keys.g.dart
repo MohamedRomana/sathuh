@@ -642,5 +642,6 @@ abstract class  LocaleKeys {
   static const regular_flatbed = 'regular_flatbed';
   static const hydraulic_flatbed = 'hydraulic_flatbed';
   static const onWayOrders = 'onWayOrders';
+  static const noDriversNearby = 'noDriversNearby';
 
 }

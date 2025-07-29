@@ -653,7 +653,8 @@ class CodegenLoader extends AssetLoader{
   "edit_percentage_required": "تعديل النسبه مطلوبه",
   "regular_flatbed": "سطحه عاديه",
   "hydraulic_flatbed": "سطحه هيدروليك",
-  "onWayOrders": "الطلبات في الطريق"
+  "onWayOrders": "الطلبات في الطريق",
+  "noDriversNearby": "لا يوجد سائقين قريبين منك الآن، الرجاء المحاولة بعد 10 دقائق"
 };
 static const Map<String,dynamic> _en = {
   "chooseLang": "Choose the appropriate language",
@@ -1294,7 +1295,8 @@ static const Map<String,dynamic> _en = {
   "edit_percentage_required": "Edit percentage is required",
   "regular_flatbed": "Regular flatbed",
   "hydraulic_flatbed": "Hydraulic flatbed",
-  "onWayOrders": "On Way Orders"
+  "onWayOrders": "On Way Orders",
+  "noDriversNearby": "No drivers nearby at the moment, please try again in 10 minutes"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};
 }

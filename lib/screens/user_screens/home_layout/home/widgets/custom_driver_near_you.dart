@@ -45,11 +45,25 @@ class _CustomDriverNearYouState extends State<CustomDriverNearYou> {
         } else if (state is GetAllNearDriversFailure) {
           AppCubit.get(context).changebottomNavIndex(1);
           AppRouter.navigateAndFinish(context, const HomeLayout());
-          showFlashMessage(
-            message: state.error,
-            type: FlashMessageType.error,
-            context: context,
-          );
+          state.error == "No nearby drivers found for this request"
+              ? showDialog(
+                context: context,
+
+                builder:
+                    (_) => AlertDialog(
+                      backgroundColor: Colors.white,
+                      title: AppText(
+                        text: LocaleKeys.noDriversNearby.tr(),
+                        lines: 2,
+                        size: 14.sp,
+                      ),
+                    ),
+              )
+              : showFlashMessage(
+                message: state.error,
+                type: FlashMessageType.error,
+                context: context,
+              );
         } else if (state is UpdateNearDriversList) {}
       },
       builder: (context, state) {
