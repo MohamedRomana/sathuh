@@ -543,7 +543,7 @@ class DrivOrderDetails extends StatelessWidget {
                                           AppCubit.get(
                                             context,
                                           ).pendingRequestsList[index]['id'],
-                                      type: 'compelete',
+                                      type: 'complete',
                                     );
                                   },
                                   color: Colors.black,
