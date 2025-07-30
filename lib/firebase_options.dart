@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '107015053698',
     projectId: 'sathuh-4ddcb',
     storageBucket: 'sathuh-4ddcb.firebasestorage.app',
-    iosBundleId: 'com.example.sathuh',
+    iosBundleId: 'com.towtruck.sathuh',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '107015053698',
     projectId: 'sathuh-4ddcb',
     storageBucket: 'sathuh-4ddcb.firebasestorage.app',
-    iosBundleId: 'com.example.sathuh',
+    iosBundleId: 'com.towtruck.sathuh',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

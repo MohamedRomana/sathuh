@@ -1,4 +1,4 @@
-package com.example.sathuh
+package com.towtruck.sathuh
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
