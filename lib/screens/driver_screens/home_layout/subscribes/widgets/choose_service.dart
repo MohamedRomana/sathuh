@@ -12,7 +12,7 @@ import '../../../../../core/widgets/flash_message.dart';
 import '../../../../../gen/fonts.gen.dart';
 import '../../../../../generated/locale_keys.g.dart';
 import '../../home_layout.dart';
-import 'upload_national_image.dart';
+// import 'upload_national_image.dart';
 
 class ChooseService extends StatelessWidget {
   const ChooseService({super.key});
@@ -23,7 +23,7 @@ class ChooseService extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            const CustomUploadNationalImage(),
+            // const CustomUploadNationalImage(),
             AppText(
               top: 16.h,
               bottom: 16.h,
